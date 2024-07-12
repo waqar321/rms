@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prod-front-admin  
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: prod-front-admin
+  template:
+    metadata:
+      name: prod-front-admin
+      labels:
+        app: prod-front-admin
+    spec:
+      containers:
+      - name: prod-front-admin
+        image: swr.ap-southeast-3.myhuaweicloud.com/prod-repo/front-admin-prod:latest
+        imagePullPolicy: Always
+        env:
+        - name: REDIS_HOST
+          value: "prod-admin-sts-0.prod-admin-svc-sts"
+        - name: REDIS_PORT
+          value: "6379"
+        # resources:
+        #   limits:
+        #     memory: "250Mi"
+        #     cpu: "500m"
+      imagePullSecrets:
+        - name: default-secret
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 50
+              podAffinityTerm:
+                labelSelector:                       
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - prod-front-admin
+                namespaces:
+                  - default
+                topologyKey: topology.kubernetes.io/zone   # It takes effect in the same AZ.

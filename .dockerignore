@@ -1,0 +1,7 @@
+Dockerfile
+kubernetes/
+.env.example
+.gitignore
+.git/
+*.md
+public/video

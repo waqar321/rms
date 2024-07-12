@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: prod-admin-sts
+spec:
+  replicas: 1 
+  serviceName: prod-admin-svc-sts
+  selector:
+    matchLabels:
+      app: prod-admin-sts
+  template:
+    metadata:
+      labels:
+        app: prod-admin-sts
+    spec:
+      containers:
+        - name: prod-admin-sts
+          image: redis:latest
+          ports:
+            - containerPort: 6379
+  volumeClaimTemplates:
+    - metadata:
+        name: prod-data-admin-statefulset-0
+      spec:
+       accessModes: [ "ReadWriteOnce" ]
+       storageClassName: csi-disk
+       resources:
+         requests:
+           storage: 1Gi

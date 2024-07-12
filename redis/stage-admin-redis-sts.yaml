@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: stage-admin-sts
+spec:
+  replicas: 1 
+  serviceName: stage-admin-svc-sts
+  selector:
+    matchLabels:
+      app: stage-admin-sts
+  template:
+    metadata:
+      labels:
+        app: stage-admin-sts
+    spec:
+      containers:
+        - name: stage-admin-sts
+          image: redis:latest
+          ports:
+            - containerPort: 6379
+  volumeClaimTemplates:
+    - metadata:
+        name: data-admin-statefulset-0
+      spec:
+       accessModes: [ "ReadWriteOnce" ]
+       storageClassName: csi-disk
+       resources:
+         requests:
+           storage: 1Gi

@@ -1,0 +1,65 @@
+.toggle-icon
+{
+   cursor: pointer; /* Change cursor to pointer */
+}
+
+.toggle-icon:hover
+{
+   cursor: grab; /* Change cursor to grab when hovering */
+}
+.cleanuphead
+{
+   margin-top: 11px;
+   font-size: 20px;
+}
+.cleanup-button {
+   border: none;
+   background: none;
+   color: #1b2e3f;
+   cursor: pointer;
+   font: inherit;
+   padding: 0;
+   outline: none; /* Remove outline on click */
+     
+}
+.cleanup-button:focus {
+    outline: none !important;
+    /* outline: 5px auto -webkit-focus-ring-color; */
+}
+.cleanup-button:hover
+{
+    text-decoration: none; /* Remove underline on hover */
+    color: #23527c; 
+}
+.cleanup-button:active 
+{
+   text-decoration: none; /* Remove underline on hover */
+   /* color: #23527c;  */
+}
+
+.broomImage
+{
+    width: 22px;
+    height: 24px;
+    /* background-color: red; */
+}
+.sweepupLoading
+{
+    text-align: center;
+}
+
+@media only screen and (min-width:400px) and (max-width:767) {
+    .SearchButton {
+        width: 108%;
+    }
+}
+@media only screen and (min-width:768px) and (max-width:800px) {
+    .SearchButton {
+        width: 212%;
+    }
+}
+@media only screen and (min-width:801px) and (max-width:1200px) {
+    .SearchButton {
+        width: 108%;
+    }
+}
