@@ -52,7 +52,7 @@
                     <h3>General</h3>
                     
 
-                    <ul wire:sortable="updateOrder" class="nav side-menu">
+                    <ul class="nav side-menu">
 
                         @foreach ($menus as $key => $menu)
                                 <?php   
@@ -66,12 +66,7 @@
                             @isset($menu->permission)                    <!--  if permission exists -->                            
                                 @can($menu->permission->title ?? '')     <!--  check for permission -->
 
-                                    <li 
-                                        wire:sortable.item="{{ $menu->id }}" 
-                                        wire:key="menu-{{ $menu->id }}" 
-                                        id="{{ !empty($menu->IdNames) ? implode(' ', $menu->IdNames) : '' }}" 
-                                        class="{{ !empty($menu->ClassNames) ? implode(' ', $menu->ClassNames) : '' }}"
-                                        >
+                                    <li id="{{ !empty($menu->IdNames) ? implode(' ', $menu->IdNames) : '' }}"  class="{{ !empty($menu->ClassNames) ? implode(' ', $menu->ClassNames) : '' }}">
                                         
                                         @if ($menu->subMenus->count() > 0)
                                             <a >
@@ -80,7 +75,7 @@
                                         @endif 
                                                 <i class="{{ $menu->icon }}" ></i> {{ $menu->title }} 
                                                 @if ($menu->subMenus->count() > 0)
-                                                    <span class="fa fa-chevron-down" wire:ignore.self></span>
+                                                    <span class="fa fa-chevron-down"></span>
                                                 @endif
                                             </a>
                            
@@ -103,19 +98,14 @@
                                     @endcan
                                 @else   
                                     <!--  open for everyone -->
-                                    <li 
-                                        wire:sortable.item="{{ $menu->id }}" 
-                                        wire:key="menu-{{ $menu->id }}" 
-                                        id="{{ !empty($menu->IdNames) ? implode(' ', $menu->IdNames) : '' }}" 
-                                        class="{{ !empty($menu->ClassNames) ? implode(' ', $menu->ClassNames) : '' }}"
-                                        >
+                                    <li id="{{ !empty($menu->IdNames) ? implode(' ', $menu->IdNames) : '' }}" class="{{ !empty($menu->ClassNames) ? implode(' ', $menu->ClassNames) : '' }}">
                                         
                                         @if ($menu->subMenus->count() > 0)
-                                            <a wire:ignore >
+                                            <a >
                                         @else 
-                                            <a wire:ignore href="{{ $menu->url ? url_secure($menu->url) : '#' }}">
+                                            <a href="{{ $menu->url ? url_secure($menu->url) : '#' }}">
                                         @endif 
-                                                <i class="{{ $menu->icon }}"></i> {{ $menu->title }} 
+                                                <i class="{{ $menu->icon }}" ></i> {{ $menu->title }} 
                                                 @if ($menu->subMenus->count() > 0)
                                                     <span class="fa fa-chevron-down"></span>
                                                 @endif
@@ -134,7 +124,6 @@
                                         @endif
                                     </li>
                                 @endisset
-
 
                                 @if($key == 1)
                        
