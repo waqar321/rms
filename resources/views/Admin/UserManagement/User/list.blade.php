@@ -88,6 +88,7 @@
                                     @if($readyToLoad)
                                         @forelse($userListing as $user)
 
+                                     
                                             <tr>
                                                 <td>
                                                     <input type="checkbox" wire:model="selectedRows.{{ $user->id }}">

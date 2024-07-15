@@ -217,6 +217,7 @@ class Home extends Controller
     // ------------------ zone tasks----------------------------
     public function fetchEmployees()
     {
+        // dd('fetchEmployees');
         FetchEmployeeApiDataJob::dispatch();
     }
     public function fetchdepartment()

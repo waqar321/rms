@@ -23,10 +23,9 @@ class FetchEmployeeApiDataJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-
     public function __construct()
     {
-
+        
 
     }
     public function handle()
@@ -51,11 +50,14 @@ class FetchEmployeeApiDataJob implements ShouldQueue
                 // Decode the JSON response into an array
                 // $count =0;
                 $employees = $response->json();
+                
+                // dd($employees[0]);
+
                 $batchSize = 500;
                 $totalCount = count($employees);
                 Log::info('total employees '.$totalCount);   // primt total employees 9510
                 $batches = array_chunk($employees, $batchSize);
-
+                $ChunkQuantity = 0;
                 foreach ($batches as $batch) 
                 {
                     DB::beginTransaction();
@@ -172,14 +174,15 @@ class FetchEmployeeApiDataJob implements ShouldQueue
                             }
                             catch (\Exception $e) 
                             {
-                                Log::error('Failed to save employee data for: '. $employee->employee_id . $e->getMessage());
+                                // Log::error('Failed to save employee data for: '. $employee->employee_id . $e->getMessage());
+                                Log::error('Failed to save employee data for: '. $employee['EMP_NO'] . $e->getMessage());
                                 continue; // Skip to the next employee in case of an error
                             }
 
                         }
                         DB::commit();
-                        Log::info('First '. ($chunk+1) .' processed successfully');
-                        
+                        $ChunkQuantity = ($ChunkQuantity + $chunk);
+                        Log::info(($ChunkQuantity+1) .' processed successfully');
                     } 
                     catch (\Exception $e) 
                     {
