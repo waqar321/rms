@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
 use App\Models\Admin\ecom_admin_user;
 use App\Models\Admin\ecom_department;
-use App\Models\Admin\zone;
+use App\Models\Admin\Zone;
 use App\Models\Admin\central_ops_city;
 use App\Models\Admin\ecom_employee_time_slots;
 
