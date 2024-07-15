@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Admin\CourseContent;
 use Livewire\Component;
 use App\Models\Admin\ecom_course;
 use App\Models\Admin\CoursesRegistered;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 
@@ -68,10 +69,30 @@ class MyCourse extends Component
                                 }) 
                                 ->orderBy('id', 'DESC')
                                 ->where('is_active', 1)
-                                // ->get();
-                                ->paginate(6);
+                                ->get();
+                                
+        $filteredCourses = $courses->filter(function ($course) {
+            return CheckAlignment($course, 'course') && $this->checkMycourse($course);
+        });
 
-        $data['coursesListing'] = $this->readyToLoad ? $courses : [];
+        // Step 3: Paginate the filtered courses
+        $perPage = 4; // Number of items per page
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $currentItems = $filteredCourses->slice(($currentPage - 1) * $perPage, $perPage)->all();
+        $filteredCourses = new LengthAwarePaginator($currentItems, count($filteredCourses), $perPage, $currentPage);
+
+        // ->paginate(6);
+                // if(CheckAlignment($course, 'course'))
+                // {
+                //     if($this->checkMycourse($course))
+                //     {
+
+                //     }
+                // }   
+
+                // dd($courses);
+
+        $data['coursesListing'] = $this->readyToLoad ? $filteredCourses : [];
         return $data;
     }
 }

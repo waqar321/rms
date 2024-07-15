@@ -66,9 +66,8 @@
                                                 <!-- ------------------- 1 ------------------------ -->
                                                 @if($readyToLoad)
                                                     @forelse($coursesListing as $key => $course)
-                                                        @if(CheckAlignment($course, 'course'))
 
-                                                            @if($this->checkMycourse($course))
+
 
                                                             <div class="col-lg-3" style="padding-top: 10px;">
                                                                 <div class="card text-center">
@@ -127,8 +126,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            @endif <!-- check if it is my course -->
-                                                        @endif   <!-- check if alignment --> 
+
                                                     @empty 
                                                         <div class="col-lg-12 text-center">
                                                                 not Found !!!
