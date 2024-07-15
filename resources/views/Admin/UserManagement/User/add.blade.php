@@ -162,7 +162,7 @@
                                     <label>City <span class="danger">*</span></label>
 
                                     <select class="select2 form-control Select2DropDown" data-table="ecom_city" data-table-field="" data-id="city_id" name="city_id" id="city_id" 
-                                            tabindex="-1" required>
+                                            tabindex="-1">
 
                                             @if($this->ecom_admin_user->city)
                                                 <option value="{{ $this->ecom_admin_user->city_id }}"> {{ $this->ecom_admin_user->city->city_name }} </option>

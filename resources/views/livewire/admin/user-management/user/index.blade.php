@@ -149,6 +149,9 @@
             }
             if($(this).attr('data-id') === 'city_id')
             {
+                // do nothing because i have comment city work
+                // return false;
+
                 console.log('print city');
                 const CtiyValues = $('#city_id').val();
                 console.log('Selected city:', CtiyValues);

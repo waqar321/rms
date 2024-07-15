@@ -92,7 +92,7 @@
                                                 <td>
                                                     <input type="checkbox" wire:model="selectedRows.{{ $user->id }}">
                                                 </td>
-                                                <td>{{ $user->employee_id }}</td>
+                                                <td data-id="{{ $user->id }}">{{ $user->employee_id }}</td>
                                                 <td>{{ $user->full_name  }}</td>
                                                 <td>{{ $user->email }}</td>
                                                 <td>{{ $user->city->city_name ?? ' - '  }}</td>
