@@ -53,11 +53,8 @@
                             </tbody>
 
                         </table>
-                        <div>
-                            @if($readyToLoad)
-                                {{ $AllZone->links() }} 
-                            @endif 
-                        </div>
+
+                        @include('Admin.partial.livewire.pagination', ['ModelListing' => $AllZone, 'Model' => 'ZoneListing'])  
 
                     </div>
                 </div>

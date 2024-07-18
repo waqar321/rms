@@ -29,7 +29,6 @@
                          <i class="fa fa-search"></i>
                     </button>
                 </div>
-                
 
                 <ul class="nav navbar-right panel_toolbox justify-content-end">
                     <li>
@@ -41,18 +40,19 @@
                      
             </div>
             <div class="x_content">
-                <div class="col-lg-4" wire:ignore>               
-                    <select id="framework" name="framework[]" multiple class="form-control">
-                            @foreach($availableColumns as $column)
-                                @if($column != 'Image' && $column != 'Actions')
-                                    <option value="{{ $column }}">{{ ucfirst($column) }}</option>
-                                @endif 
-                            @endforeach
-                    </select>
-                </div>
 
-                    @include('Admin.partial.livewire.exportButtons')  
-                    <hr>
+                        <!-- <div class="col-lg-4" wire:ignore>               
+                            <select id="framework" name="framework[]" multiple class="form-control">
+                                    @foreach($availableColumns as $column)
+                                        @if($column != 'Image' && $column != 'Actions')
+                                            <option value="{{ $column }}">{{ ucfirst($column) }}</option>
+                                        @endif 
+                                    @endforeach
+                            </select>
+                        </div>
+
+                        @include('Admin.partial.livewire.exportButtons')  
+                        <hr> -->
         
                         <table class="table table-striped">
                             <thead>
@@ -67,7 +67,6 @@
                                 
                                 @if($readyToLoad)
                                     @forelse($PermissionListing as $permission)
-
                                         <tr>
                                             <td>
                                                 <input type="checkbox" wire:model="selectedRows.{{ $permission->id }}">
@@ -99,12 +98,8 @@
 
                             </tbody>
                         </table>
-                      
-                        <div>
-                            @if($readyToLoad)
-                                {{ $PermissionListing->links() }} 
-                            @endif 
-                        </div>
+
+                        @include('Admin.partial.livewire.pagination', ['ModelListing' => $PermissionListing, 'Model' => 'PermissionListing'])       
             
             </div>
         </div>

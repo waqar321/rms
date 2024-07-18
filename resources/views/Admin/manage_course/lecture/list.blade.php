@@ -23,22 +23,28 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
+                        <div class="col-lg-4" wire:ignore>               
+                            <select id="framework" name="framework[]" multiple class="form-control">
+                                    @foreach($availableColumns as $column)
+                                        @if($column != 'Image' && $column != 'Actions')
+                                            <option value="{{ $column }}">{{ ucfirst($column) }}</option>
+                                        @endif 
+                                    @endforeach
+                            </select>
+                        </div>
+
+                        @include('Admin.partial.livewire.exportButtons')  
+
+                        <hr>
+
                         <table class="table table-striped">
                             <thead>
-                            <tr>
-                                <th> </th>
-                                <th>ID#</th>
-                                <th>Lecture Title</th>
-                                <!-- <th>Image</th> -->
-                                <th>Course</th>
-                                <th>Description</th>
-                                <th>Instructor</th>
-                                <th>Duration</th>
-                                <th>Tags</th>
-                                <th>Status</th>
-                                <th>Date Created</th>
-                                <th>Actions</th>
-                            </tr>
+                                <tr>
+                                    <th> </th>
+                                    @foreach($availableColumns as $column)
+                                        <th> {{ $column }} </th>                                        
+                                    @endforeach 
+                                </tr>
                             </thead>
                         
                             <tbody>
@@ -97,11 +103,8 @@
                             </tbody>
 
                         </table>
-                        <div>
-                            @if($readyToLoad)
-                                {{ $lectures->links() }} 
-                            @endif 
-                        </div>
+
+                        @include('Admin.partial.livewire.pagination', ['ModelListing' => $lectures, 'Model' => 'LectureListing'])  
 
                     </div>
                 </div>
@@ -109,3 +112,28 @@
         </div>
     </div>
 
+
+    
+@push('scripts')
+
+    <script>
+
+        $(document).ready(function()
+        {    
+            $('#framework').multiselect({
+                nonSelectedText: 'Select Framework',
+                enableFiltering: true,
+                enableCaseInsensitiveFiltering: true,
+                buttonWidth:'400px'
+            });
+
+            $('.ExportButtonLivewire').on('click', function() 
+            {       
+                var selectedColumns = $('#framework').val();
+                Livewire.emit('selectedColumns', selectedColumns.join(', '), $(this).data('export-type'));
+            });
+        });
+
+    </script>
+
+@endpush 

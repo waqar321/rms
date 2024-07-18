@@ -4,6 +4,7 @@
 namespace App\Traits\livewireComponentTraits;
 
 use App\Models\Admin\ecom_course;
+use App\Models\Admin\ecom_course_assign;
 use App\Models\Admin\ecom_category;
 use App\Models\Admin\ecom_department;
 use App\Models\Admin\ecom_admin_user;
@@ -28,7 +29,17 @@ trait CourseComponent
 
     public function __construct()
     {       
-        $this->availableColumns = ['S.No', 'Code', 'Title', 'Image', 'Description', 'Category', 'Sub-Category', 'Level', 'Prerequisites', 'Language', 'Tags', 'Status', 'Date Created', 'Action'];
+        
+        // $ecom_course = ecom_course::first();
+        // dd($ecom_course->alignment->delete());
+    //    $ecom_course_assign = ecom_course_assign::where('course_id', $ecom_course)->delete();
+
+
+        // $ecom_course = ecom_course::first();
+        // dd($ecom_course_assign);
+        // dd($ecom_course->alignment);
+
+        $this->availableColumns = ['S.No', 'Code', 'Title', 'Image', 'Description', 'Category', 'Sub-Category', 'Level', 'Prerequisites', 'Language', 'Tags', 'Status', 'Date', 'Action'];
        
         $this->Tablename = 'ecom_course';        
         $this->selectedRows = collect();
@@ -101,7 +112,6 @@ trait CourseComponent
     }
     public function updated($value)
     {       
-        // dd($this->Collapse);
         // dd(request()->input('video_url'));
         // dd(empty(request()->input('video_url')));
 
@@ -227,6 +237,15 @@ trait CourseComponent
         {
             deleteFile($ecom_course->course_image);
         }
+        
+        if(isset($ecom_course->alignment))
+        {
+
+            $ecom_course->alignment->delete();
+            // ecom_course_assign::where('course_id', $ecom_course->id)->delete();
+            // deleteFile($ecom_course->alignment);
+        }
+
         $ecom_course->delete();    
 
         $this->dispatchBrowserEvent('deleted_scene', ['name' => $ecom_course->name]);
@@ -246,7 +265,7 @@ trait CourseComponent
         //    $this->MainTitle = 'Course';
         $this->pageTitle = 'Course Manage';
         $this->MainTitle = 'CourseManage';
-
+        $this->paginateLimit = 10;
         $this->categories = GetAllCategories();
         // dd($this->categories->pluck('name'));
 
@@ -293,14 +312,17 @@ trait CourseComponent
                                     })
                                     // ->whereHas('roles', function ($query) {
                                     // ->where('is_active', 1)
-                                    ->paginate(8);
-                                    // ->get();
+                                    // ->paginate(8);
+                                    ->get();
         }
         else
         {
             $courses = collect(); 
         }
-        $this->total_courses = ecom_course::where('is_active', 1)->count();
+        
+        $data['coursesListing'] = $this->readyToLoad ? $this->PaginateData($courses) : [];
+
+        // $this->total_courses = ecom_course::where('is_active', 1)->count();
         // $total_courses = $courses->count();
         // dd($courses->count());
         // ->whereHas('roles', function ($query) {
@@ -319,7 +341,7 @@ trait CourseComponent
         //     $data['coursesListing'] = [];
         // }
 
-        $data['coursesListing'] = $this->readyToLoad ? $courses : [];
+        // $data['coursesListing'] = $this->readyToLoad ? $courses : [];
         return $data;
     }
 }

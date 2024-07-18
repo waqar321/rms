@@ -31,7 +31,7 @@
                             </div>
                             <div class="col-md-6 col-lg-6 d-flex justify-content-end">
                                 <h2 class="total_courses"> 
-                                    Total Courses:  {{ $total_courses }}
+                                    Total Courses:  {{ $total_records }}
                                 </h2>
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li>
@@ -61,6 +61,21 @@
                         <div class="clearfix"></div> -->
                     </div>
                     <div class="x_content">
+
+                            <div class="col-lg-4" wire:ignore>               
+                                <select id="framework" name="framework[]" multiple class="form-control">
+                                        @foreach($availableColumns as $column)
+                                            @if($column != 'Image' && $column != 'Action')
+                                                <option value="{{ $column }}">{{ ucfirst($column) }}</option>
+                                            @endif 
+                                        @endforeach
+                                </select>
+                            </div>
+
+                            @include('Admin.partial.livewire.exportButtons')  
+
+                            <hr>
+                            
                             <table class="table table-striped">
                             <thead>
                                 <tr>
@@ -102,7 +117,7 @@
                                                         <span class="fa fa-toggle-off toggle-icon" wire:click="updateStatus({{ $course->id }}, 1)"></span>
                                                     @endif
                                                 </td>
-                                                <td>{{ $course->created_at }}</td>
+                                                <td>{{ $course->created_at->format('F j, Y') }}</td>
                                                 <td>
                                                     <a data-screen-permission-id="33" href="{{ url_secure_api('content-management/course?id=') . base64_encode($course->id) }}" class="btn btn-primary">Edit</a>
                                                    
@@ -130,11 +145,8 @@
                             </tbody>
 
                         </table>
-                        <div>
-                            @if($readyToLoad)
-                                {{ $coursesListing->links() }} 
-                            @endif 
-                        </div>
+
+                        @include('Admin.partial.livewire.pagination', ['ModelListing' => $coursesListing, 'Model' => 'CourseListing'])  
 
                     </div>
                 </div>
@@ -142,3 +154,28 @@
         </div>
     </div>
 
+
+
+@push('scripts')
+
+    <script>
+
+        $(document).ready(function()
+        {    
+            $('#framework').multiselect({
+                nonSelectedText: 'Select Framework',
+                enableFiltering: true,
+                enableCaseInsensitiveFiltering: true,
+                buttonWidth:'400px'
+            });
+
+            $('.ExportButtonLivewire').on('click', function() 
+            {       
+                var selectedColumns = $('#framework').val();
+                Livewire.emit('selectedColumns', selectedColumns.join(', '), $(this).data('export-type'));
+            });
+        });
+
+    </script>
+
+@endpush 

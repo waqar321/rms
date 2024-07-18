@@ -68,7 +68,7 @@ trait RolesComponent
     {
         $this->emit('select2');
 
-        if($value == 'searchByName' || strpos($value, 'selectedRows') !== false)
+        if($value == 'paginateLimit' || $value == 'searchByName' || strpos($value, 'selectedRows') !== false)
         {
             $this->Collapse = "collapse";
         }
@@ -102,14 +102,15 @@ trait RolesComponent
     }
     protected function RenderData()
     {
-        $users = Role::when($this->searchByName !== '', function ($query) 
+        $roles = Role::when($this->searchByName !== '', function ($query) 
                             {
                                 $query->where('title', 'like', '%' . $this->searchByName . '%');
                             })
                             ->orderBy('id', 'ASC')
-                            ->paginate($this->paginateLimit);
-                
-        $data['roleListing'] = $this->readyToLoad ? $users : [];
+                            // ->paginate($this->paginateLimit);
+                             ->get();
+
+        $data['roleListing'] = $this->readyToLoad ? $this->PaginateData($roles) : [];
         return $data;  
 
     }        

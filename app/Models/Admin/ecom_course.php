@@ -42,5 +42,15 @@ class ecom_course extends Model
         // 'is_deleted',
     ];
 
+    // protected static function boot()
+    // {
+    //     parent::boot();
+
+    //     static::deleting(function ($course) {
+    //         // Delete related course assignments
+    //         $course->assignment->delete();
+    //     });
+    // }
+
 
 }

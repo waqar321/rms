@@ -51,7 +51,7 @@ class Home extends Controller
      // dashboard starts
      public function dashboard()
      {
-        // dd(config('livewire.asset_url'));
+        // dd(auth()->user());
          //================== testing end ====================================
  
          // Artisan::call('make:command RunComposerInstall');

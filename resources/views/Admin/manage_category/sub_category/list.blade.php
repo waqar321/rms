@@ -95,12 +95,7 @@
                         </tbody>
                     </table>
 
-
-                    <div>
-                        @if($readyToLoad)
-                            {{ $categoryListing->links() }} 
-                        @endif 
-                    </div>      
+                    @include('Admin.partial.livewire.pagination', ['ModelListing' => $categoryListing, 'Model' => 'CategoryListing'])  
                  
             </div>
         </div>

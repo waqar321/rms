@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\DB;
 
 use App\Traits\livewireComponentTraits\CourseAssignCSVComponent;
 use App\Traits\livewireComponentTraits\GlobalVariablesForComponents;
-
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 
 trait LivewireComponentsCommon
 {
@@ -84,8 +85,9 @@ trait LivewireComponentsCommon
             'model' => $this->Tablename,
             'IDs' => $this->getSelectedRowIDs(),
         );
-        
-        
+               
+        // dd($this->Exportdata);
+
         abort_if(!in_array($ext, ['csv', 'xlsx', 'pdf']), Response::HTTP_NOT_FOUND);
         // dd($this->Exportdata);
         return Excel::download(new Exports($this->Exportdata), $this->Exportdata['table'].'s.'. $ext);
@@ -124,7 +126,6 @@ trait LivewireComponentsCommon
     }
     public function loadDropDownData($Mount=false)
     {
-
         if($Mount)
         {       
             $this->GetDropDownData();     
@@ -210,6 +211,26 @@ trait LivewireComponentsCommon
         //     $this->dispatchBrowserEvent('LoadedCities', ['cities' => $cities, 'citiesCount' => $cities->count()]);
         // }
 
+    }
+    function PaginateData($Records)
+    {
+        $this->total_records = $Records->count();
+
+        if($this->readyToLoad)
+        {        
+            $page = Paginator::resolveCurrentPage('page'); // Get the current page number
+            $offset = ($page * $this->paginateLimit) - $this->paginateLimit; // Number of items per page
+            
+            // Step 2: Paginate the filtered data
+            $Records = new LengthAwarePaginator(
+                $Records->slice($offset, $this->paginateLimit)->values(), // Items for the current page
+                $Records->count(), // Total items
+                $this->paginateLimit, // Items per page
+                $page, // Current page
+                ['path' => Paginator::resolveCurrentPath()] // Path for pagination links
+            );
+        }
+        return $Records; 
     }
 
 }

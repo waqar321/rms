@@ -67,13 +67,13 @@ trait SidebarComponent
     {       
         $this->searchByName = "";
     }
-    public function updated($propertyName)
+    public function updated($value)
     {
-        if ($propertyName == 'searchByName')
+        if ($value == 'searchByName' || $value == 'paginateLimit')
         {
             $this->Collapse = "collapse";
         } 
-        else if ($propertyName == 'IdNames') 
+        else if ($value == 'IdNames') 
         {
             if (!preg_match('/^([\w-]+,? ?)*[\w-]+$/', $this->IdNames))           
             {
@@ -81,7 +81,7 @@ trait SidebarComponent
             }
             $this->Collapse = "uncollapse";
         }
-        else if ($propertyName == 'ClassNames') 
+        else if ($value == 'ClassNames') 
         {
             if (!preg_match('/^([\w-]+,? ?)*[\w-]+$/', $this->ClassNames))           
             {
@@ -92,7 +92,7 @@ trait SidebarComponent
         }
         else
         {
-            $this->validateOnly($propertyName);
+            $this->validateOnly($value);
             $this->Collapse = "uncollapse";
         }
     }
@@ -146,15 +146,10 @@ trait SidebarComponent
                                     // ->where('parent_id', null)
                                     ->orderBy('id', 'ASC')
                                     // ->where('is_active', 1)
-                                    // ->get();
-                                    ->paginate($this->paginateLimit);
+                                    ->get();
+                                    // ->paginate($this->paginateLimit);
 
-        if($this->readyToLoad)
-        {
-            // dd($parent_SideBars);
-        }
-
-        $data['SideBars'] = $this->readyToLoad ? $parent_SideBars : [];
+        $data['SideBars'] = $this->readyToLoad ? $this->PaginateData($parent_SideBars) : [];
         return $data;  
 
     }        

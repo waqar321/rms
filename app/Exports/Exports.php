@@ -3,6 +3,8 @@
 namespace App\Exports;
 
 use App\Models\Admin\ecom_category;
+use App\Models\Admin\ecom_course;
+use App\Models\Admin\ecom_lecture;
 use App\Models\Admin\ecom_department;
 use App\Models\Admin\ecom_admin_user;
 use Maatwebsite\Excel\Concerns\WithMapping;
@@ -16,7 +18,10 @@ class Exports implements FromCollection, WithHeadings, WithMapping
 
     public function __construct($data) 
     {
-        $this->Modeldata = $data; 
+        $this->Modeldata = $data;
+
+        // dd(ecom_course::find(20)->category->name);
+        // dd($this->Modeldata);
     }
     public function headings(): array
     {
@@ -26,19 +31,21 @@ class Exports implements FromCollection, WithHeadings, WithMapping
     {
         foreach($this->Modeldata['column'] as $column)
         {
-            if($this->Modeldata['table'] == 'department')
-            {
-                $departmentRow[] = UpdateDepartmentExportColumns($column, $ModelIteration);
-            }
-            else if($this->Modeldata['table'] == 'category')
-            {
-                $departmentRow[] = UpdateCategoryExportColumns($column, $ModelIteration);
-            }
-            else if($this->Modeldata['table'] == 'admin_user')
-            {
-                $departmentRow[] = UpdateUserExportColumns($column, $ModelIteration);
-            }
+            // if($this->Modeldata['table'] == 'department')
+            // {
+            //     $departmentRow[] = UpdateDepartmentExportColumns($column, $ModelIteration);
+            // }
+            // else if($this->Modeldata['table'] == 'category')
+            // {
+            //     $departmentRow[] = UpdateCategoryExportColumns($column, $ModelIteration);
+            // }
+            // else if($this->Modeldata['table'] == 'admin_user')
+            // {
+            //     $departmentRow[] = UpdateUserExportColumns($column, $ModelIteration);
+            // }
+            $departmentRow[] = ExportValues($column, $ModelIteration, $this->Modeldata['table']);
         }
+
         return $departmentRow;
     }
     public function collection()
@@ -55,6 +62,15 @@ class Exports implements FromCollection, WithHeadings, WithMapping
         {
             return ecom_admin_user::find($this->Modeldata['IDs']);
         }
+        if($this->Modeldata['table'] == 'course')
+        {
+            return ecom_course::find($this->Modeldata['IDs']);
+        }
+        if($this->Modeldata['table'] == 'lecture')
+        {
+            return ecom_lecture::find($this->Modeldata['IDs']);
+        }
+
         // return DB::table($this->Modeldata['model'])->whereIn('id', $this->Modeldata['IDs'])->get();
     }
 }

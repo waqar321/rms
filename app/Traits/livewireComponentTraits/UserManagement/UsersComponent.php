@@ -21,6 +21,7 @@ use Illuminate\Support\Collection;
 use Symfony\Component\HttpFoundation\Response;
 use Maatwebsite\Excel\Facades\Excel;
 
+
 trait UsersComponent
 {
     use LivewireComponentsCommon;
@@ -36,6 +37,8 @@ trait UsersComponent
     public $password;
     public $confirm_password;
     public $selectRoles = [];
+    public $selectUserIDS = [];
+    public $CurrentPaginatedUsers;
     
     public function __construct()
     {       
@@ -108,9 +111,8 @@ trait UsersComponent
         }
     }
     public function updated($value)
-    {
-    
-        
+    {   
+            
         $this->emit('select2');
         
         // return true; //stop real time validation at a time
@@ -118,7 +120,6 @@ trait UsersComponent
         if($value == 'ecom_admin_user.employee_id')
         {
             $this->exists = ecom_admin_user::where('employee_id', $this->ecom_admin_user->employee_id)->exists();
-
 
             if($this->exists)
             {
@@ -130,7 +131,6 @@ trait UsersComponent
                 $this->ecom_admin_user->username = $this->ecom_admin_user->employee_id;
             }
         }
-
         if($value == 'csv_file')
         {
             $this->Collapse = "uncollapse";
@@ -139,14 +139,21 @@ trait UsersComponent
         else
         {
    
-            
-        // public $searchByEmployeeCode = '';
-        // public $searchByEmployeeRole = '';
-        // public $searchByEmployeeDesignation = '';
-        // public $searchByEmployeeCity = '';
+            // public $searchByEmployeeCode = '';
+            // public $searchByEmployeeRole = '';
+            // public $searchByEmployeeDesignation = '';
+            // public $searchByEmployeeCity = '';
 
-            if($value == 'searchByName' || $value == 'searchByEmployeeCode' || $value == 'searchByEmployeeRole' || $value == 'searchByEmployeeDesignation' || $value == 'searchByEmployeeCity' ||  strpos($value, 'selectedRows') !== false)
+            if($value == 'paginateLimit' || 
+                $value == 'searchByName' || 
+                $value == 'searchByEmployeeCode' || 
+                $value == 'searchByEmployeeRole' || 
+                $value == 'searchByEmployeeDesignation' || 
+                $value == 'searchByEmployeeCity' ||  
+                strpos($value, 'selectedRows') !== false
+            )
             {
+                // dd('row selected');
                 $this->Collapse = "collapse";
             }
             else
@@ -163,7 +170,6 @@ trait UsersComponent
        $this->ecom_admin_user = $ecom_admin_user ?? new ecom_admin_user(); 
        //$this->ecom_admin_user->phone = '03072948013';
        //dd($this->ecom_admin_user);
-
 
        $this->ecom_admin_user->load('roles'); 
 
@@ -184,8 +190,6 @@ trait UsersComponent
     }
     protected function RenderData()
     {
-        
-
         $users = ecom_admin_user::when($this->searchByName !== '', function ($query) 
                                     {
                                         $query->where('full_name', 'like', '%' . $this->searchByName . '%');
@@ -216,17 +220,10 @@ trait UsersComponent
                                         $query->where('title', '!=', 'Super Admin'); // Exclude users with Super Admin role
                                     })
                                     ->orderBy('id', 'ASC')
-                                    ->paginate($this->paginateLimit);
-                                    // ->get();
-                                    // ->count();
-                
-                                    // if($this->readyToLoad)
-                                    // {
-                                    //     dd($users);
-
-                                    // }
-
-        $data['userListing'] = $this->readyToLoad ? $users : [];
+                                    // ->paginate($this->paginateLimit);
+                                    ->get();
+        $this->CurrentPaginatedUsers =  $users;      
+        $data['userListing'] = $this->readyToLoad ? $this->PaginateData($users) : [];
         return $data;  
 
     }        
@@ -243,26 +240,29 @@ trait UsersComponent
         $ecom_admin_user->delete();    
         $this->dispatchBrowserEvent('deleted_scene', ['name' => $name]);
     }
-    public function selectAll()
-    {
-        // // dd($this->selectAll);
-        // if($this->selectAll)
-        // {
-        //     $this->selectedRows = ecom_admin_user::orderBy('id', 'DESC')->paginate($this->paginateLimit)->pluck('id');  
-        //     dd($this->selectedRows);
+    // public function selectAll()
+    // {
+    //     $this->CurrentPaginatedUsers = $this->PaginateData($this->CurrentPaginatedUsers);
+    //     dd($this->CurrentPaginatedUsers);
+
+    //     // // dd($this->selectAll);
+    //     // if($this->selectAll)
+    //     // {
+    //     //     $this->selectedRows = ecom_admin_user::orderBy('id', 'DESC')->paginate($this->paginateLimit)->pluck('id');  
+    //     //     dd($this->selectedRows);
            
-        //     // dd($this->selectedRows->contains(88));
-        //     // dd('collection', $this->selectedRows);
-        //     // dd($notificationIds);
+    //     //     // dd($this->selectedRows->contains(88));
+    //     //     // dd('collection', $this->selectedRows);
+    //     //     // dd($notificationIds);
 
-        // }
-        // else
-        // {
-        //     $this->selectedRows = collect();
-        // }
-        // // dd($this->selectedRows);
-        // // $this->emit('$refresh');
-        // // dd($this->selectedRows);            
+    //     // }
+    //     // else
+    //     // {
+    //     //     $this->selectedRows = collect();
+    //     // }
+    //     // // dd($this->selectedRows);
+    //     // // $this->emit('$refresh');
+    //     // // dd($this->selectedRows);            
 
-    }
+    // }
 }

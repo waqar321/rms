@@ -63,7 +63,7 @@ trait PermissionsComponent
     {
         $this->emit('select2');
 
-        if($value == 'searchByName' || strpos($value, 'selectedRows') !== false)
+        if($value == 'paginateLimit' || $value == 'searchByName' || strpos($value, 'selectedRows') !== false)
         {
             $this->Collapse = "collapse";
         }
@@ -89,10 +89,10 @@ trait PermissionsComponent
                                         $query->where('title', 'like', '%' . $this->searchByName . '%');
                                     })
                                     ->orderBy('id', 'DESC')
-                                    // ->get();
-                                    ->paginate($this->paginateLimit);
-                
-        $data['PermissionListing'] = $this->readyToLoad ? $permissions : [];
+                                    // ->paginate($this->paginateLimit);
+                                    ->get();
+
+        $data['PermissionListing'] = $this->readyToLoad ? $this->PaginateData($permissions) : [];
         return $data;  
 
     }        

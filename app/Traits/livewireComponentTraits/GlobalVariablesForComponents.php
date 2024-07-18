@@ -22,7 +22,7 @@ trait GlobalVariablesForComponents
     public $total_schedules=0;
     public $total_cities=0;
     public $total_course=0;
-    
+    public $total_records=0;
     
     public $categories;
     public $subcategories;

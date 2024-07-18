@@ -54,11 +54,8 @@
                             </tbody>
 
                         </table>
-                        <div>
-                            @if($readyToLoad)
-                                {{ $AllCity->links() }} 
-                            @endif 
-                        </div>
+
+                        @include('Admin.partial.livewire.pagination', ['ModelListing' => $AllCity, 'Model' => 'CityListing'])  
 
                     </div>
                 </div>

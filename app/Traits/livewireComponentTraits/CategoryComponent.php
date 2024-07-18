@@ -38,7 +38,7 @@ trait CategoryComponent
     public function __construct()
     {            
         $this->Tablename = 'ecom_category';    
-        $this->availableColumns = ['ID', 'Category', 'Image',  'Parent Category', 'Date Created', 'Status', 'Actions'];
+        $this->availableColumns = ['ID', 'Category', 'Image',  'Parent Category', 'Date', 'Status', 'Actions'];
         $this->selectedRows = collect();
 
         // $this->parent_categories = ecom_category::where('parent_id', null)->get();
@@ -125,9 +125,12 @@ trait CategoryComponent
                                                 $query->where('name', 'like', '%' . $this->searchByName . '%');
                                             }) 
                                             ->orderBy('id', 'DESC')
-                                            ->paginate(3);        
+                                            // ->paginate(3);
+                                            ->get();        
 
-        $data['categoryListing'] = $this->readyToLoad ? $loadCategories : [];
+        $data['categoryListing'] = $this->readyToLoad ? $this->PaginateData($loadCategories) : [];
+
+        // $data['categoryListing'] = $this->readyToLoad ? $loadCategories : [];
         // $data['products'] = $this->readyToLoad ? Product::take(1220000)->orderBy('id', 'DESC')->paginate(10) : [];
         return $data;      
     }
@@ -160,7 +163,7 @@ trait CategoryComponent
 
         $this->pageTitle = request()->segment(2) == 'category' ? 'Category Manage' : 'SubCategory Manage';
         $this->MainTitle = request()->segment(2) == 'category' ? 'CategoryManage' : 'SubCategoryManage';
-
+        $this->paginateLimit = 10;
         // added here becuase was not able to set at  protected $messages = [
         $this->messages = [
             'ecom_category.parent_id.required' => 'The parent Category is must required.',

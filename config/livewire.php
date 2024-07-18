@@ -99,14 +99,16 @@ return [
 
     'temporary_file_upload' => [
         'disk' => null,        // Example: 'local', 's3'              Default: 'default'
-        'rules' => null,       // Example: ['file', 'mimes:png,jpg']  Default: ['required', 'file', 'max:12288'] (12MB)
+        // 'rules' => null,       // Example: ['file', 'mimes:png,jpg']  Default: ['required', 'file', 'max:12288'] (12MB).
+        // 'rules' => ['required', 'file', 'max:512000', 'mimetypes:video/mp4,video/webm,video/quicktime'],  // 500MB limit
+        'rules' => ['required', 'file', 'max:512000'],  // 500MB limit
         'directory' => null,   // Example: 'tmp'                      Default  'livewire-tmp'
         'middleware' => null,  // Example: 'throttle:5,1'             Default: 'throttle:60,1'
         'preview_mimes' => [   // Supported file types for temporary pre-signed file URLs.
             'png', 'gif', 'bmp', 'svg', 'wav', 'mp4',
             'mov', 'avi', 'wmv', 'mp3', 'm4a',
             'jpg', 'jpeg', 'mpga', 'webp', 'wma',
-            'pdf', 'webm', 
+            'pdf', 'webm', 'jfif' 
         ],
         'max_upload_time' => 5, // Max duration (in minutes) before an upload gets invalidated.
     ],

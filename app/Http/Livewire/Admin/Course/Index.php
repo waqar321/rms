@@ -15,11 +15,11 @@ class Index extends Component
 {
     use WithPagination, WithFileUploads, CourseComponent;
     protected $paginationTheme = 'bootstrap';  
-    protected $listeners = ['deleteCourseManage' => 'deleteCourseRecord'];
+    protected $listeners = ['deleteCourseManage' => 'deleteCourseRecord', 'selectedColumns' => 'export'];
 
     public function mount(ecom_course $ecom_course)
     {  
-
+        
         $this->setMountData($ecom_course);
     }
     public function render()

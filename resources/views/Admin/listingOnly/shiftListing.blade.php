@@ -54,11 +54,7 @@
                             </tbody>
 
                         </table>
-                        <div>
-                            @if($readyToLoad)
-                                {{ $AllShift->links() }} 
-                            @endif 
-                        </div>
+                        @include('Admin.partial.livewire.pagination', ['ModelListing' => $AllShift, 'Model' => 'ShiftListing'])  
 
                     </div>
                 </div>

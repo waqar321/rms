@@ -69,6 +69,32 @@
                                 @endforeach
                         </select>
                     </div>
+                    <div class="col-lg-3">
+                        <!-- <button
+                            class="btn btn-primary btn-sm uppercase mr-1 selectingvalue"
+                            type="button"
+                            data-export-type="1"
+                            wire:loading.attr="disabled"
+                        >
+                            Select All 
+                        </button> -->
+                        <!-- <button
+                            class="btn btn-primary btn-sm uppercase mr-1 selectingvalue"
+                            type="button"
+                            data-export-type="0"
+                            wire:loading.attr="disabled"
+                        >
+                            De-Select All 
+                        </button> -->
+                        <!-- <button
+                            class="btn btn-primary btn-sm uppercase mr-1 selectingvalue"
+                            type="button"
+                            data-export-type="0"
+                            wire:loading.attr="disabled"
+                        >
+                            {{ $selectedRows }}
+                        </button> -->
+                    </div>
 
                         @include('Admin.partial.livewire.exportButtons')  
 
@@ -87,11 +113,11 @@
                                     
                                     @if($readyToLoad)
                                         @forelse($userListing as $user)
-
                                      
                                             <tr>
                                                 <td>
                                                     <input type="checkbox" wire:model="selectedRows.{{ $user->id }}">
+                                                    <!-- <input type="checkbox" wire:model="selectUserIDS" value="{{ $user->id }}"> -->
                                                 </td>
                                                 <td data-id="{{ $user->id }}">{{ $user->employee_id }}</td>
                                                 <td>{{ $user->full_name  }}</td>
@@ -136,13 +162,9 @@
 
                                 </tbody>
                             </table>
-                        
-                            <div>
-                                @if($readyToLoad)
-                                    {{ $userListing->links() }} 
-                                @endif 
-                            </div>
                 
+                            @include('Admin.partial.livewire.pagination', ['ModelListing' => $userListing, 'Model' => 'UserListing'])       
+
                 </div>
             </div>
         </div>
@@ -196,7 +218,15 @@
             var selectedColumns = $('#framework').val();
             Livewire.emit('selectedColumns', selectedColumns.join(', '), $(this).data('export-type'));
         });
+        $('.selectingvalue').on('click', function() 
+        {       
+            // alert($(this).data('export-type'));
+            // return false;
+            // var selectedColumns = $('#framework').val();
+            Livewire.emit('selectAll', $(this).data('export-type'));
+        });
 
+        
         // -------------------- load the dropdown data  ----------------------
         // window.addEventListener('ResetColumns', event => 
         // {  

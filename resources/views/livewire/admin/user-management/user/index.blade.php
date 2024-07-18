@@ -31,8 +31,6 @@
                 padding: 4px !important;
             }
             /* elect2-search--inline .select2-search__field */
-
-
         </style>
 
 

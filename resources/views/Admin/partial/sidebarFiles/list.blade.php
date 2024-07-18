@@ -133,11 +133,8 @@
                     </tbody>
                 </table>
                     
-                <div>
-                    @if($readyToLoad)
-                        {{ $SideBars->links() }} 
-                    @endif 
-                </div>            
+                @include('Admin.partial.livewire.pagination', ['ModelListing' => $SideBars, 'Model' => 'SidebarListing'])   
+
             </div>
         </div>
     </div>

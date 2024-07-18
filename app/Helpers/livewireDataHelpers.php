@@ -46,12 +46,74 @@ function deleteFile($path)
 }
 function storeFile($path, $file)
 {
-    // Store the file in the specified path
-    $filename = $file->store($path, 'public');
-    // Extract the filename without the path
-    $filenameOnly = basename($filename);
-    // Set the storage type and file path in your model
-    return $path . '/' . $filenameOnly;
+    // $filename = $file->store($path, 'public');  // Store the file in the specified path
+    // $filenameOnly = basename($filename);        // Extract the filename without the path
+    // return $path . '/' . $filenameOnly;         // Set the storage type and file path in your model
+
+    // $file = $request->file('file_name');
+    $imagePath = null;
+    if ($file) 
+    // if (!empty($file)) .
+    {
+        // dd($file);
+
+        $imageResponse = ImageUploadOnLeopardsWebFtp($file);
+        dd($imageResponse);
+
+        $response = json_decode($imageResponse);
+        if ($response->success == true) {
+            $imagePath = $response->file_path;
+        }
+    }
+    
+}
+function ImageUploadOnLeopardsWebFtp($file)
+{
+    ini_set('memory_limit', '1024M'); // Increase memory limit to 1GB
+
+    $filePath = $file->getRealPath();   // Get the real path of the temporary file
+
+    $handle = fopen($filePath, 'rb');
+    if ($handle === false) {
+        throw new \Exception('Failed to open the file for reading.');
+    }
+
+    // Initialize a variable to store the base64-encoded data
+    $base64Data = '';
+
+    // Read the file in chunks and encode each chunk in base64
+    while (!feof($handle)) 
+    {
+        $chunk = fread($handle, 8192); // Read 8KB at a time
+        if ($chunk === false) {
+            throw new \Exception('Error reading the file.');
+        }
+        $base64Data .= base64_encode($chunk);
+    }
+
+    // Close the file handle
+    fclose($handle);
+
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        // CURLOPT_URL => 'https://www.leopardscourier.com/ticket_attachments.php',
+        CURLOPT_URL => 'https://www.leopardscourier.com/lms_videos_upload.php',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => array('video' => $base64Data, 'extension' => pathinfo($filePath, PATHINFO_EXTENSION)),
+    ));
+
+    $response = curl_exec($curl);
+
+    curl_close($curl);
+    return $response;
+
 }
 function ScanTempDirectory()
 {
@@ -116,53 +178,131 @@ function UpdateDepartmentExportColumns($column, $department)
     }
 
 }
-function UpdateUserExportColumns($column, $ecom_admin_user)
+function ExportValues($column, $Model, $table)
 {
    
     // $this->availableColumns = ['Employee Code', 'Name', 'Email', 'City', 'Roles', 'Designation', 'Date', 'Status', 'Action'];
-
-    if($column == 'Employee Code')
+ 
+    if($column == 'ID' || $column == 'S.No')                         //ID for all, S/.No for course
     {
-       return $ecom_admin_user->employee_id;
+       return $Model->id ?? null;
     }
-    else if($column == 'Name')
+    else if($column == 'Employee Code')         // for user
     {
-       return $ecom_admin_user->full_name;
+       return $Model->employee_id ?? null;
     }
-    else if($column == 'Email')
+    else if($column == 'Code')                  // for course
     {
-       return $ecom_admin_user->email;
+       return $Model->course_code ?? null;
     }
-    else if($column == 'City')
+    else if($column == 'Name')                  // for all
     {
-       return $ecom_admin_user->city->city_name;
+       return $Model->full_name ?? null;
     }
-    else if($column == 'Roles')
+    else if($column == 'Title')                  // for course, lecture
     {
-        // return $ecom_admin_user->roles->pluck('title');
-        return $ecom_admin_user->roles->pluck('title')->implode(', ');
-
-    }
-
-    else if($column == 'Designation')
-    {
-       return $ecom_admin_user->designation;
-    }
-    else if($column == 'Date Created')
-    {
-        if ($ecom_admin_user->created_at) 
+        if($table == 'course')                    // for category
         {
-            $date = Carbon::createFromFormat('Y-m-d H:i:s', $ecom_admin_user->created_at);
-            return $date->format('d-m-Y');
+            return $Model->name ?? null;            
+        }
+        else if($table == 'lecture')                 // for course
+        {
+            return $Model->{strtolower($column)} ?? null;
+        }       
+    }
+    else if($column == 'Description')           // for course
+    {
+       return $Model->description ?? null;
+    }
+    else if($column == 'Category')             
+    {
+        if($table == 'category')                    // for category
+        {
+            return $Model->name ?? null;            
+        }
+        else if($table == 'course')                 // for course
+        {
+            return $Model->category->name ?? null;   
+        }
+    }
+    else if($column == 'Sub-Category')              
+    {
+        if($table == 'course')                      // for course
+        {
+            return $Model->subCategory->name ?? null; 
+        }
+    }    
+    else if($column == 'Course')              
+    {
+        if($table == 'lecture')                      // for lecture
+        {
+            return $Model->course->name ?? null; 
+        }
+    }    
+    else if($column == 'Instructor')              
+    {
+        if($table == 'lecture')                      // for lecture
+        {
+            return $Model->Instructor->full_name ?? null; 
+        }
+    }    
+    else if($column == 'Parent Category')     // for sub category
+    {
+       return $Model->parentCategory->name ?? null;
+    }
+    else if($column == 'Level')             // for course
+    {
+       return $Model->{strtolower($column)} ?? null;
+    }
+    else if($column == 'Prerequisites')             // for course
+    {
+       return $Model->{strtolower($column)} ?? null;
+    }
+    else if($column == 'Language')             // for course
+    {
+       return $Model->{strtolower($column)} ?? null;
+    }
+    else if($column == 'Tags')             // for course
+    {
+       return $Model->{strtolower($column)} ?? null;
+    }
+    else if($column == 'Duration')             // for lecture
+    {
+       return $Model->{strtolower($column)} ?? null;
+    }
+    else if($column == 'Email')              // for user
+    {
+       return $Model->{strtolower($column)} ?? null;
+    }
+    else if($column == 'City')              // for user, course, notification
+    {
+       return $Model->city->city_name ?? null;
+    }
+    else if($column == 'Roles')             // for user, course, notification
+    {
+        // return $Model->roles->pluck('title');
+        return $Model->roles->pluck('title')->implode(', ') ?? null;
+    }
+
+    else if($column == 'Designation')      // for user
+    {
+       return $Model->designation;
+    }
+    else if($column == 'Date')               // for all
+    {
+        if ($Model->created_at) 
+        {
+            $date = Carbon::createFromFormat('Y-m-d H:i:s', $Model->created_at);
+            return $date->format('F j, Y');
         }
         else
         {
            return 'N/A';
         }
     }
-    else if($column == 'Status')
+    else if($column == 'Status')           // for all
     {
-       return $category->is_active ? "Active" : "Not Active";
+       return $Model->is_active ? "Active" : "Not Active";
     }
 
 }

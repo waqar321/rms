@@ -11,6 +11,7 @@ use App\Models\Admin\LectureAssessmentLevel;
 use App\Traits\livewireComponentTraits\LivewireComponentsCommon;
 use App\Rules\EitherOrRule;
 use Illuminate\Support\Facades\DB;
+use Auth;
 
 trait LectureComponent
 {
@@ -24,6 +25,8 @@ trait LectureComponent
     public $document_url;
     public ecom_lecture $ecom_lecture;  
     public $courses;
+    public $availableColumns;
+
     // public Collection $selectedRows; 
 
     public $videoSet="empty";
@@ -31,33 +34,48 @@ trait LectureComponent
 
     public function __construct()
     {       
+        // dd(ecom_lecture::first()->Instructor);
+
+        $this->availableColumns = [ 'ID', 'Title', 'Course', 'Description', 'Instructor', 'Duration', 'Tags', 'Status', 'Date', 'Actions'];
         $this->Tablename = 'ecom_lecture';        
         $this->selectedRows = collect();
         $this->update = request()->has('id') == true;
         $this->Collapse = $this->update ? 'uncollapse' : 'collapse';
     }
+    
+    protected function rules()
+    {
+        return [
+            'ecom_lecture.title' => 'required|min:2',
+            'ecom_lecture.description' => 'required|min:20',
+            'ecom_lecture.instructor_id' => Auth::user()->isInstructor() ? '' : 'required',
+            'ecom_lecture.course_id' => 'required',
+            'ecom_lecture.tags' => 'required',
+            'ecom_lecture.passing_ratio' => '',
+        ];
+    }
 
-    protected $rules = [
-        'ecom_lecture.title' => 'required|min:2',
-        'ecom_lecture.description' => 'required|min:20',
-        // 'ecom_lecture.instructor_id' => 'required',
-        'ecom_lecture.course_id' => 'required',
-        // 'ecom_lecture.duration' => 'required',
-        'ecom_lecture.tags' => 'required',
-        'ecom_lecture.passing_ratio' => '',
-        // 'ecom_lecture.Attachments' => 'required',
-        // 'ecom_lecture.tags' => 'required',
-        // 'video' => '',
-        // 'video_url' => '',
-        // 'document' => '',
-        // 'document_url' => '',
-        // 'photo' => '',
-        // 'local_video',
-        // 'url_video',
-        // 'local_document',
-        // 'url_document',
-            // 'Attachments',
-    ];
+    // protected $rules = [
+    //     'ecom_lecture.title' => 'required|min:2',
+    //     'ecom_lecture.description' => 'required|min:20',
+    //     'ecom_lecture.instructor_id' => auth()->user()->isInstructor() ? 'required' : '',
+    //     'ecom_lecture.course_id' => 'required',
+    //     // 'ecom_lecture.duration' => 'required',
+    //     'ecom_lecture.tags' => 'required',
+    //     'ecom_lecture.passing_ratio' => '',
+    //     // 'ecom_lecture.Attachments' => 'required',
+    //     // 'ecom_lecture.tags' => 'required',
+    //     // 'video' => '',
+    //     // 'video_url' => '',
+    //     // 'document' => '',
+    //     // 'document_url' => '',
+    //     // 'photo' => '',
+    //     // 'local_video',
+    //     // 'url_video',
+    //     // 'local_document',
+    //     // 'url_document',
+    //         // 'Attachments',
+    // ];
 
     protected $messages = [
         'ecom_lecture.title.required' => 'The Lecture Title field is required.',
@@ -93,7 +111,6 @@ trait LectureComponent
     {       
         // dd(request()->input('video_url'));
         // dd(empty(request()->input('video_url')));
-        // dd($value);
 
         if (in_array($value, ['photo', 'video', 'document', 'video_url', 'document_url'])) 
         {
@@ -109,7 +126,7 @@ trait LectureComponent
                     break;
                 case 'video':
                     $this->validate([
-                        'video' => 'mimetypes:video/mp4,video/webm,video/quicktime|max:500000',
+                        'video' => 'mimetypes:video/mp4,video/webm,video/quicktime|max:512000',
                         // 'video' => [new EitherOrRule($this), 'mimetypes:video/mp4,video/webm,video/quicktime', 'max:50000']
                     ]);            
                     break;
@@ -199,7 +216,7 @@ trait LectureComponent
         // $this->MainTitle = 'Lecture';
         $this->pageTitle = 'Lecture Manage';
         $this->MainTitle = 'LectureManage';
-
+        $this->paginateLimit = 10;
         $this->instructors = GetAllInstructors();
         $this->courses = GetAllCourses();
         
@@ -219,13 +236,13 @@ trait LectureComponent
                                         ->orderBy('id', 'DESC')
                                         ->paginate(12);
 
-        $data['lectures'] = $this->readyToLoad ? $lectures : [];
+        // $data['lectures'] = $this->readyToLoad ? $lectures : [];
+        $data['lectures'] = $this->readyToLoad ? $this->PaginateData($lectures) : [];
         return $data;
     }
-
     public function deleteLectureAndRelatedRecords($lectureId)
     {
-        dd($lectureId);
+        // dd($lectureId);
 
         DB::transaction(function () use ($lectureId) {
             $lectureAssessmentLevels = LectureAssessmentLevel::where('lecture_id', $lectureId)->get();

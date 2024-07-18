@@ -1,5 +1,13 @@
 <div class="d-flex justify-content-end">
         <button
+                class="btn btn-primary btn-sm uppercase mr-1 selectingvalue"
+                type="button"
+                data-export-type="1"
+                wire:loading.attr="disabled"
+            >
+                    Select All 
+        </button>
+        <button
             class="btn btn-primary btn-sm uppercase mr-1 ExportButtonLivewire"
             type="button"
             data-export-type="csv"

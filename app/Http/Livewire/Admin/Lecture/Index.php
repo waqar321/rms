@@ -151,7 +151,7 @@ class Index extends Component
         }
         
         $this->updateFiles();
-        
+        dd('done testing');
         // dd($this->ecom_lecture);
 
         // if(auth()->user()->role->id == 31)
@@ -160,7 +160,7 @@ class Index extends Component
             $this->ecom_lecture->instructor_id = auth()->user()->id; 
             // $this->ecom_lecture->instructor_id = auth()->user()->role->id == 31 ? auth()->user()->id : $this->ecom_lecture->instructor_id; 
         }
- 
+        
         $this->ecom_lecture->save();
 
         if (json_decode($FormData) !== null) 
@@ -202,7 +202,8 @@ class Index extends Component
     } 
     public function updateFiles()
     {
-     
+
+
         // dd($this->video);
         if ($this->photo) 
         {
@@ -216,6 +217,10 @@ class Index extends Component
             $this->validate([
                 'video' => 'mimetypes:video/mp4,video/webm,video/quicktime'
             ]); 
+
+            // dd($this->video);
+            // dd($this->ecom_lecture);
+
             $this->ecom_lecture->local_video = storeFile('lecture/videos', $this->video);
         }
         if ($this->video_url) 

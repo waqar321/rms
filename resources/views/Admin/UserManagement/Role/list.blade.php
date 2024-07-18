@@ -153,13 +153,8 @@
 
                             </tbody>
                         </table>
-                      
-                        <div>
-                            @if($readyToLoad)
-                                {{ $roleListing->links() }} 
-                            @endif 
-                        </div>
-            
+
+                        @include('Admin.partial.livewire.pagination', ['ModelListing' => $roleListing, 'Model' => 'RoleListing'])               
             </div>
         </div>
     </div>
