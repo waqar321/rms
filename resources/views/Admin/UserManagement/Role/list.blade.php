@@ -41,7 +41,7 @@
                      
             </div>
             <div class="x_content">
-                <div class="col-lg-4" wire:ignore>               
+                <!-- <div class="col-lg-4" wire:ignore>               
                     <select id="framework" name="framework[]" multiple class="form-control">
                             @foreach($availableColumns as $column)
                                 @if($column != 'Image' && $column != 'Actions')
@@ -49,15 +49,16 @@
                                 @endif 
                             @endforeach
                     </select>
-                </div>
+                </div> -->
 
-                    @include('Admin.partial.livewire.exportButtons')  
-                    <hr>
+                    <!-- @include('Admin.partial.livewire.exportButtons')   -->
+
+                    <!-- <hr> -->
         
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th> </th>
+                                    <!-- <th> </th> -->
                                     @foreach($availableColumns as $column)
                                             <th>{{ $column }}</th>
                                     @endforeach
@@ -77,9 +78,9 @@
                                             @if($AuthUserRoles->contains($role->title))
 
                                                 <tr>
-                                                    <td>
+                                                    <!-- <td>
                                                         <input type="checkbox" wire:model="selectedRows.{{ $role->id }}">
-                                                    </td>
+                                                    </td> -->
                                                     <td>{{ $role->id }}</td>
                                                     <td>{{ $role->title  }}</td>
 
@@ -111,9 +112,9 @@
                                             @endif 
                                         @else  
                                             <tr>
-                                                <td>
+                                                <!-- <td>
                                                     <input type="checkbox" wire:model="selectedRows.{{ $role->id }}">
-                                                </td>
+                                                </td> -->
                                                 <td>{{ $role->id }}</td>
                                                 <td>{{ $role->title  }}</td>
 

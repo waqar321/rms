@@ -17,7 +17,7 @@
 
                     @if ($errors->any())
                         @foreach ($errors->all() as $key => $error)
-
+        
                             <div class="col-mb-12 col-lg-12">
                                 <div class="alert alert-danger" style="font-size: 13.5px;">
                                     {{ $error }} !!!

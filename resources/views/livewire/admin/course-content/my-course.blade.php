@@ -68,7 +68,6 @@
                                                     @forelse($coursesListing as $key => $course)
 
 
-
                                                             <div class="col-lg-3" style="padding-top: 10px;">
                                                                 <div class="card text-center">
                                                                     <div class="card-header">
@@ -128,8 +127,10 @@
 
 
                                                     @empty 
-                                                        <div class="col-lg-12 text-center">
-                                                                not Found !!!
+                                                        <div class="col-lg-12 text-center mt-4">
+                                                            <h1>
+                                                                <span> You Are Not Enrolled In Any Course !!! </span> 
+                                                            </h1>     
                                                         </div>
                                                     @endforelse 
                                                 @endif 

@@ -24,10 +24,11 @@ trait CourseComponent
     public $availableColumns;
     public $videoSet="empty";
     public $URLvideoSet="empty";
+    public $total_courses=0;
 
     public function __construct()
     {       
-        $this->availableColumns = ['ID', 'Title', 'Image', 'Description', 'Category', 'Sub-Category', 'Duration', 'Level', 'Prerequisites', 'Language', 'Code', 'Tags', 'Status', 'Date Created', 'Action'];
+        $this->availableColumns = ['S.No', 'Code', 'Title', 'Image', 'Description', 'Category', 'Sub-Category', 'Level', 'Prerequisites', 'Language', 'Tags', 'Status', 'Date Created', 'Action'];
        
         $this->Tablename = 'ecom_course';        
         $this->selectedRows = collect();
@@ -294,13 +295,14 @@ trait CourseComponent
                                     // ->where('is_active', 1)
                                     ->paginate(8);
                                     // ->get();
-
         }
         else
         {
             $courses = collect(); 
         }
-
+        $this->total_courses = ecom_course::where('is_active', 1)->count();
+        // $total_courses = $courses->count();
+        // dd($courses->count());
         // ->whereHas('roles', function ($query) {
         //     $query->where('title', '!=', 'Super Admin')->where('title', '!=', 'instructor'); // Exclude users with Super Admin role
         // })
@@ -309,6 +311,7 @@ trait CourseComponent
         // {
 
         //     $data['coursesListing'] = $courses;
+
         //     // dd($data['coursesListing']);
         // }
         // else

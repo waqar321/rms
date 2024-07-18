@@ -57,8 +57,8 @@
                                                         <img src="{{ asset('/storage/'.$lecture->course_image) }}" style="width: 70px; height: 45px;" class="me-4" alt="Img">
                                                     @endif
                                                 </td> -->
-                                                <td>{{ $lecture->course->name }}</td>
-                                                <td>{{ $lecture->description }}</td>
+                                                <td>{{ $lecture->course->name ?? ''}}</td>
+                                                <td>{{ $lecture->description ?? '' }}</td>
                                                 <td>{{ $lecture->Teacher->first_name ?? ' - '}}</td>
                                                 <td>{{ $lecture->duration }} Mins</td>
                                                 <td>{{ $lecture->tags }}</td>

@@ -168,10 +168,9 @@ trait SidebarComponent
     }
     public function updateStatus(SideBar $SideBar, $toggle)
     {
-        // dd($SideBar);
         $SideBar->is_active = $toggle == 0 ? 0 : 1;
         $SideBar->save();
         $this->dispatchBrowserEvent('status_updated', ['name' => $SideBar->title]);
-    }
-   
+        $this->emit('sidebarUpdated');
+    }  
 }

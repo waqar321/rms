@@ -9,10 +9,10 @@
                 <td>Course Levels</td>
                 <td> {{ $ecom_course->level }} </td>
             </tr>
-            <tr>
+            <!-- <tr>
                 <td>Course Duration</td>
                 <td> {{ $ecom_course->duration }} </td>
-            </tr>
+            </tr> -->
             <tr>
                 <td>Start Date</td>
                 <td>{{ \Carbon\Carbon::parse($ecom_course->start_date)->format('d F Y') }}</td>

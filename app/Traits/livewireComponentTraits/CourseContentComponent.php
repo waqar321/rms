@@ -268,6 +268,7 @@ trait CourseContentComponent
     }
     protected function RenderData()
     {
+        
         $courses = ecom_course::when($this->title !== '', function ($query) {
                                     $query->where('name', 'like', '%' . $this->title . '%');
                                 }) 
@@ -275,32 +276,14 @@ trait CourseContentComponent
                                 ->where('is_active', 1)
                                 // ->paginate(4);
                                 ->get();
-        
+                            
         $courses = $courses->filter(function ($course)
-        {
-            if($course->alignment)
-            {
-                if (is_null($course->alignment->employee_id) 
-                    && is_null($course->alignment->department_id)
-                    && is_null($course->alignment->sub_department_id)
-                    && is_null($course->alignment->zone_code)
-                    && is_null($course->alignment->city_id)
-                    && is_null($course->alignment->branch_id)
-                    && is_null($course->alignment->role_id)
-                    && is_null($course->alignment->shift_time_id)
-                    && is_null($course->alignment->upload_csv)
-                    && is_null($course->alignment->upload_csv_json_data)
-                ) 
-                {
-                    return true; 
-                }
-                else
-                {
-                    return CheckAlignment($course, 'course');
-                }
-            }
-        });
-
+                    {
+                        return CheckAlignment($course, 'course');
+                    });
+                
+        // dd($courses);
+        
         if($this->readyToLoad)
         {
         

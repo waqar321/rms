@@ -1,9 +1,49 @@
+@push('styles')
+    <style>
+
+        .total_courses 
+        {
+            min-width: 0px !important;
+            margin-left: 10px !important;
+        }
+
+    </style>
+@endpush
 
     <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <div class="col-md-4 col-lg-4">
+
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6">
+                                <div class="col-md-12 col-lg-12">
+                                    <div class="col-md-8 col-lg-8">
+                                        <input type="search" wire:model="searchByName" class="form-control" placeholder="Search By Course Title...">
+                                    </div>
+                                    <div class="col-md-4 col-lg-4">
+                                        <button type="button" wire:click="resetInput(true)" class="btn btn-danger SearchButton">
+                                            Clear
+                                            <i class="fa fa-search"></i>
+                                        </button>                                    
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6 d-flex justify-content-end">
+                                <h2 class="total_courses"> 
+                                    Total Courses:  {{ $total_courses }}
+                                </h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li>
+                                        <a ><i class="fa fa-chevron-up" ></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+
+                        </div> 
+                    
+                        <!-- <div class="col-md-4 col-lg-4">
                             <input type="search" wire:model="searchByName" class="form-control" placeholder="Search By Course Title...">
                         </div>
                         <div  class="col-md-1 col-lg-1">
@@ -11,14 +51,14 @@
                                 Clear
                                 <i class="fa fa-search"></i>
                             </button>
-                        </div>
-
+                        </div> -->
+<!-- 
                         <ul class="nav navbar-right panel_toolbox justify-content-end">
                             <li>
                                 <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                             </li>
                         </ul> 
-                        <div class="clearfix"></div>
+                        <div class="clearfix"></div> -->
                     </div>
                     <div class="x_content">
                             <table class="table table-striped">
@@ -39,7 +79,8 @@
                                                 <td>
                                                     <input type="checkbox" wire:model="selectedRows.{{ $course->id }}">
                                                 </td>
-                                                <td>{{ $course->id }}</td>
+                                                <td>{{ $course->id }} </td>
+                                                <td>{{ $course->course_code }}</td>
                                                 <td>{{ $course->name ?? 'not found '}}</td>
                                                 <td>
                                                     @if($course->course_image)
@@ -49,11 +90,10 @@
                                                 <td>{{ $course->description }}</td>
                                                 <td>{{ $course->category->name }}</td>
                                                 <td>{{ $course->subCategory->name }}</td>
-                                                <td>{{ $course->duration }}</td>
+                                                <!-- <td>{{ $course->duration }}</td> -->
                                                 <td>{{ $course->level }}</td>
                                                 <td>{{ $course->prerequisites }}</td>
                                                 <td>{{ $course->language }}</td>
-                                                <td>{{ $course->course_code }}</td>
                                                 <td>{{ $course->tags }}</td>
                                                 <td>
                                                     @if($course->is_active == 1)

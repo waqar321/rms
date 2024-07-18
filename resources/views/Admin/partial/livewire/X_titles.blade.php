@@ -23,20 +23,19 @@
             <div class="col-lg-6 text-left">
                 <h2> {{ explode(" ", $pageTitle)[0] }}</h2>
             </div>
+            <div class="col-lg-6 d-flex justify-content-end">
+                @if(!$update)
+                    <h2 class="blink"> 
+                        Click To Create {{ explode(" ", $pageTitle)[0] }} 
+                    </h2>
+                @endif 
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a ><i class="fa fa-chevron-up" ></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div> 
         
-        <div class="col-lg-6 d-flex justify-content-end">
-            @if(!$update)
-                <h2 class="blink"> 
-                    Click To Create {{ explode(" ", $pageTitle)[0] }} 
-                </h2>
-            @endif 
-            <ul class="nav navbar-right panel_toolbox">
-                <li>
-                    <a ><i class="fa fa-chevron-up" ></i></a>
-                </li>
-            </ul>
-        </div>
-        
-    </div> 
         <div class="clearfix"></div>
     </div>

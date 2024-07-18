@@ -66,7 +66,9 @@
                         // }, 100);
                         ApplyAllSelect2(); 
                     });
-                    var ModuleName = 'SidebarOperation';
+                    // var ModuleName = 'SidebarOperation';
+                    var ModuleName = '{!! $MainTitle !!}';
+                    // MainTitle
                     var readyToLoad = {!! json_encode($readyToLoad) !!};
                     var GetEmployeeDataRoute = "{{ route('get.EmployeeData') }}";
 

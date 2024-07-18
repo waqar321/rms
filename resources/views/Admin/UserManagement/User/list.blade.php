@@ -63,7 +63,7 @@
 
                         <select id="framework" name="framework[]" multiple class="form-control">
                                 @foreach($availableColumns as $column)
-                                    @if($column != 'Status' && $column != 'Action' && $column != 'Date')
+                                    @if($column != 'Status' && $column != 'Action')
                                         <option value="{{ $column }}">{{ ucfirst($column) }}</option>
                                     @endif 
                                 @endforeach
@@ -72,7 +72,7 @@
 
                         @include('Admin.partial.livewire.exportButtons')  
 
-                        <hr>
+                            <hr>
             
                             <table class="table table-striped">
                                 <thead>
@@ -127,7 +127,7 @@
                                             </tr>
                                         @empty
                                             <tr>
-                                                <td colspan="9" class="text-center"> <h2> No User Record Found!!! </h2></td>
+                                                <td colspan="10" class="text-center"> <h2> No User Record Found!!! </h2></td>
                                             </tr>
                                         @endforelse
                                     @endif 

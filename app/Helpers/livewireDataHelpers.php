@@ -489,7 +489,6 @@ function CheckAlignment($model, $tablename)
         }
     }
 
-
     //------------ check who is aligned notify
     if ($AlignedIDs) 
     { 
@@ -509,6 +508,7 @@ function CheckAlignment($model, $tablename)
                 $found = true;
             }
         }    
+
         if($AlignedIDs['branch_id'] != null)
         {
             if($UserIDs['branch_id'] == $AlignedIDs['branch_id'])
@@ -534,11 +534,20 @@ function CheckAlignment($model, $tablename)
 
         if($AlignedIDs['role_id'] != null)
         {
-            if($UserIDs['role_id'] == $AlignedIDs['role_id'])
+            $currentUserRoles = $currentUser->roles->pluck('id')->toArray();
+            $AlignedRoleID = $AlignedIDs['role_id'];
+
+            if (in_array($AlignedRoleID, $currentUserRoles)) 
             {
                 $found = true;
-            }
+            } 
+         
+            // if($UserIDs['role_id'] == $AlignedIDs['role_id'])
+            // {
+            //     $found = true;
+            // }
         }
+
         if($AlignedIDs['shift_time_id'] != null)
         {
             if($UserIDs['time_slot_id'] == $AlignedIDs['shift_time_id'])

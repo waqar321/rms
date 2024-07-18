@@ -21,12 +21,14 @@ class SidebarOperation extends Component
                                 'selectedColumns' => 'export'
                             ];
                             
-
-
     public function mount($id)
     {
         $this->update = $id != 0 ? true : false;
         $this->setMountData($id);
+
+        $this->pageTitle = 'SideBar Manage';
+        $this->MainTitle = 'SideBarManage';
+        
     }
     public function render()
     {

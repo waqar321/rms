@@ -87,7 +87,7 @@ trait RolesComponent
         $this->MainTitle = 'RoleManage';
         $this->searchByName = '';
         $this->bodyMessage = '';
-        $this->paginateLimit = 3;
+        $this->paginateLimit = 20;
         $this->permissionLists = Permission::pluck('title', 'id');
         $this->cities = collect(); 
         

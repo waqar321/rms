@@ -13,7 +13,7 @@
         .NoFoundID
         {
             color: #1b1a1a !important;
-            background-color: #d26e78 !important;
+            background-color: #fb0e25 !important;
             border-color: #dc3545 !important;
         }
         a
@@ -85,8 +85,8 @@
                                                     $urlRoute = route($sidebar->url);
                                                 }
                                             @endphp
-                                                <a href="{{ $urlRoute }}">
-                                                    {{ $sidebar->url }}                                            
+                                                <a class="text-light" href="{{ $urlRoute }}">
+                                                    {{ $sidebar->url }}                                     
                                                 </a>
                                             </span>
                                             @else

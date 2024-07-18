@@ -19,6 +19,7 @@ class Index extends Component
 
     public function mount(ecom_course $ecom_course)
     {  
+
         $this->setMountData($ecom_course);
     }
     public function render()

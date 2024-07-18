@@ -35,12 +35,20 @@
         });                
     })
     window.addEventListener('status_updated', event => 
-    {        
+    {       
+        // var ModuleName =  event.detail.name;
+        
+        // if(ModuleName == 'SidebarOperation')
+        // {
+        //     ModuleName = ModuleName.split("SidebarOperation");
+        // }
+        
         Swal.fire({
             icon: 'success',
             title: ModuleName.replace('Manage', '') + ' ' +  'Updated Successfully!',
             text: 'The ' + event.detail.name  + ' has been Updated.',
         });                
+
     })
     window.addEventListener('created_module', event => 
     {

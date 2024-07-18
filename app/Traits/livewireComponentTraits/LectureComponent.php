@@ -40,9 +40,9 @@ trait LectureComponent
     protected $rules = [
         'ecom_lecture.title' => 'required|min:2',
         'ecom_lecture.description' => 'required|min:20',
-        'ecom_lecture.instructor_id' => 'required',
+        // 'ecom_lecture.instructor_id' => 'required',
         'ecom_lecture.course_id' => 'required',
-        'ecom_lecture.duration' => 'required',
+        // 'ecom_lecture.duration' => 'required',
         'ecom_lecture.tags' => 'required',
         'ecom_lecture.passing_ratio' => '',
         // 'ecom_lecture.Attachments' => 'required',
@@ -93,12 +93,14 @@ trait LectureComponent
     {       
         // dd(request()->input('video_url'));
         // dd(empty(request()->input('video_url')));
+        // dd($value);
 
         if (in_array($value, ['photo', 'video', 'document', 'video_url', 'document_url'])) 
         {
             // dd('video uploading');
 
             $this->Collapse = "uncollapse";
+          
 
             switch ($value) 
             {

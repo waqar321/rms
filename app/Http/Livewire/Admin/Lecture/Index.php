@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Admin\Lecture;
 
 use Livewire\Component;
 use App\Models\Admin\ecom_lecture;
+use App\Models\Admin\ecom_admin_user;
 // use App\Models\Admin\LectureQuestionLevel;
 // use App\Models\Admin\LectureAssessmentLevel;
 // use App\Models\Admin\LectureAssessmentLevelStatus;
@@ -28,6 +29,8 @@ class Index extends Component
 
     public function mount(ecom_lecture $ecom_lecture)
     {
+
+        // dd(auth()->user()->roles[0]->title);
 
         if($this->update)
         {
@@ -200,6 +203,7 @@ class Index extends Component
     public function updateFiles()
     {
      
+        // dd($this->video);
         if ($this->photo) 
         {
             $this->validate([
@@ -208,8 +212,7 @@ class Index extends Component
             $this->ecom_lecture->course_image = storeFile('lecture/photos', $this->photo);    
         }
         if ($this->video) 
-        {
-            
+        {   
             $this->validate([
                 'video' => 'mimetypes:video/mp4,video/webm,video/quicktime'
             ]); 

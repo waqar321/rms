@@ -125,9 +125,11 @@
                                                             </div>
                                                       
                                                     @empty 
-                                                        <div class="col-lg-12 text-center">
-                                                                No Courses For You !!! 
-                                                        </div>
+                                                            <div class="col-lg-12 text-center mt-4">
+                                                                <h1>
+                                                                    <span> No Courses For You !!! </span> 
+                                                                </h1>     
+                                                            </div>
                                                     @endforelse 
                                                 @endif  
                                                 <div style="text-align: center; margin-top: 70px;" wire:init="pageLoaded">

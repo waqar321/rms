@@ -11,6 +11,7 @@ use App\Models\Admin\ecom_user_roles;
 use App\Models\Admin\ecom_course_assign;
 use App\Models\Admin\central_ops_city;
 use App\Models\Admin\Role;
+use Illuminate\Validation\Rule;
 use App\Traits\livewireComponentTraits\LivewireComponentsCommon;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 //export excels
@@ -75,12 +76,12 @@ trait UsersComponent
     
     protected $messages = 
     [
-        'ecom_admin_user.username.required' => 'The Username is unique required.',
-        'ecom_admin_user.first_name.required' => 'The First Name is required.',
-        'ecom_admin_user.last_name.required' => 'The Last Name is required.',
-        'ecom_admin_user.phone.required' => 'The phone number is required.',
-        'ecom_admin_user.full_name' => 'The Name Must be String!!.',
-        // 'ecom_admin_user.email' => 'The Email must be a valid email address.',
+        'ecom_admin_user.username.required' => 'The Username is unique required',
+        'ecom_admin_user.first_name.required' => 'The First Name is required',
+        'ecom_admin_user.last_name.required' => 'The Last Name is required',
+        'ecom_admin_user.phone.required' => 'The phone number is required',
+        'ecom_admin_user.full_name' => 'The Name Must be String',
+        // 'ecom_admin_user.email' => 'The Email must be a valid email address',
     ];
 
     public function resetInput($searchReset=false)
@@ -116,7 +117,18 @@ trait UsersComponent
 
         if($value == 'ecom_admin_user.employee_id')
         {
-            $this->ecom_admin_user->username = $this->ecom_admin_user->employee_id;
+            $this->exists = ecom_admin_user::where('employee_id', $this->ecom_admin_user->employee_id)->exists();
+
+
+            if($this->exists)
+            {
+                $this->addError('employee_id_error', 'Employee Id Already Exists');
+                $this->ecom_admin_user->employee_id = "";
+            }
+            else
+            {
+                $this->ecom_admin_user->username = $this->ecom_admin_user->employee_id;
+            }
         }
 
         if($value == 'csv_file')
