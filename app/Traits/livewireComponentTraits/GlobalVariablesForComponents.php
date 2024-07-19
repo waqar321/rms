@@ -42,10 +42,20 @@ trait GlobalVariablesForComponents
     public $update =false;
     public $pageTitle;
     public $MainTitle;
+    
+    // #[Url(as : 's')]
     public $searchByName='';
+    //#[Url(as : 'st')]
+    public $sortBy = '';
+    //#[Url(as : 'st_d')]
+    public $sortDirection = '';
+    //#[Url(as : 'E_C')]
     public $searchByEmployeeCode = '';
+    //#[Url(as : 'E_R')]
     public $searchByEmployeeRole = '';
+    //#[Url(as : 'E_D')]
     public $searchByEmployeeDesignation = '';
+    //#[Url(as : 'E_CY')]
     public $searchByEmployeeCity = '';
 
     public $Collapse = 'collapse'; 
@@ -55,7 +65,20 @@ trait GlobalVariablesForComponents
     public $readyToLoad = false;
     public $selectedRows;
 
+    //#[Url()]
     public $paginateLimit;
+
+
+    // protected $queryString = [
+    //     'searchByName' => ['except' => ''],
+    //     'page' => ['except' => 1],
+    //     'sortBy',
+    //     'sortDirection',
+    //     'searchByEmployeeCode',
+    //     'searchByEmployeeRole',
+    //     'searchByEmployeeDesignation',
+    //     'searchByEmployeeCity',
+    // ];
 
 
 }

@@ -10,6 +10,18 @@
             unicode-bidi: isolate !important;
             padding-top: 20px;
         }
+        .toggle-icon
+        {
+            cursor: pointer; /* Change cursor to pointer */
+            font-size: 24px;
+            color: blue;
+            padding-left: 10px;
+        }
+
+        .toggle-icon:hover
+        {
+            cursor: grab; /* Change cursor to grab when hovering */
+        }
 
     </style>
 @endpush 
@@ -39,8 +51,7 @@
                             Clear Filter
                             <i class="fa fa-search"></i>
                         </button>
-                    </div>
-                    
+                    </div>                    
                     <ul class="nav navbar-right panel_toolbox justify-content-end">
                         <li>
                             <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -69,32 +80,15 @@
                                 @endforeach
                         </select>
                     </div>
-                    <div class="col-lg-3">
-                        <!-- <button
-                            class="btn btn-primary btn-sm uppercase mr-1 selectingvalue"
-                            type="button"
-                            data-export-type="1"
-                            wire:loading.attr="disabled"
-                        >
-                            Select All 
-                        </button> -->
-                        <!-- <button
-                            class="btn btn-primary btn-sm uppercase mr-1 selectingvalue"
-                            type="button"
-                            data-export-type="0"
-                            wire:loading.attr="disabled"
-                        >
-                            De-Select All 
-                        </button> -->
-                        <!-- <button
-                            class="btn btn-primary btn-sm uppercase mr-1 selectingvalue"
-                            type="button"
-                            data-export-type="0"
-                            wire:loading.attr="disabled"
-                        >
-                            {{ $selectedRows }}
-                        </button> -->
+                    <div class="col-lg-4">
+                        <div wire:loading wire:target="resetInput" class="loader">
+                            <img  style="height:31px;" src="{{ url_secure('build/images/loadingData.gif') }}" alt="Loading123!!"> 
+                        </div>
+                        <div wire:loading wire:target="selectAllmethod" class="loader">
+                            <img  style="height:31px;" src="{{ url_secure('build/images/loadingData.gif') }}" alt="Loading123!!"> 
+                        </div>
                     </div>
+
 
                         @include('Admin.partial.livewire.exportButtons')  
 
@@ -105,7 +99,9 @@
                                     <tr>
                                         <th> </th>
                                         @foreach($availableColumns as $column)
-                                                <th>{{ $column }}</th>
+                                                <th wire:click="sortBy( {{ $column }})"> 
+                                                    {{ $column }} @include('admin.partial.livewire.sort-icon', ['field' => $column]) 
+                                                </th>
                                         @endforeach
                                     </tr>
                                 </thead>
@@ -220,9 +216,6 @@
         });
         $('.selectingvalue').on('click', function() 
         {       
-            // alert($(this).data('export-type'));
-            // return false;
-            // var selectedColumns = $('#framework').val();
             Livewire.emit('selectAll', $(this).data('export-type'));
         });
 

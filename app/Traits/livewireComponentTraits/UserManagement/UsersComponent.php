@@ -50,18 +50,18 @@ trait UsersComponent
         $this->ecom_course_assign = new ecom_course_assign();
     }
 
-    // protected $rules = [
-    //     'password' => '',
-    //     'confirm_password' => '',
-    //     'ecom_admin_user.employee_id' => '',
-    //     'ecom_admin_user.username' => '',
-    //     'ecom_admin_user.first_name' => '',
-    //     'ecom_admin_user.last_name' => '',
-    //     'ecom_admin_user.email' => '',
-    //     'ecom_admin_user.phone' => '',
-    //     'ecom_admin_user.password' => '',
-    //     'ecom_admin_user.gender' => '',
-    // ];
+    public function sortBy($field)
+    {
+        if ($this->sortBy === $field) 
+        {
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        }
+        else
+        {
+            $this->sortBy = $field;
+            $this->sortDirection = 'asc';
+        }
+    }
 
     protected $rules = 
     [
@@ -175,8 +175,10 @@ trait UsersComponent
 
        $this->pageTitle = 'User Manage';
        $this->MainTitle = 'UserManage';
-
        $this->paginateLimit = 10;
+       $this->sortBy = 'employee_id';
+       $this->sortDirection = 'asc';
+
        $this->rolesLists = Role::where('title','!=','Super Admin')->where('title','!=','User')->pluck('title', 'id');;
        $this->cities = collect(); 
 
@@ -219,9 +221,11 @@ trait UsersComponent
                                     ->whereHas('roles', function ($query) {
                                         $query->where('title', '!=', 'Super Admin'); // Exclude users with Super Admin role
                                     })
-                                    ->orderBy('id', 'ASC')
+                                    ->orderBy($this->sortBy, $this->sortDirection)
+                                    // ->orderBy('id', 'ASC')
                                     // ->paginate($this->paginateLimit);
                                     ->get();
+
         $this->CurrentPaginatedUsers =  $users;      
         $data['userListing'] = $this->readyToLoad ? $this->PaginateData($users) : [];
         return $data;  

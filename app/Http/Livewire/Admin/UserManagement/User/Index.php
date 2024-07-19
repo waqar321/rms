@@ -14,6 +14,7 @@ class Index extends Component
     use WithPagination, WithFileUploads, UsersComponent;
     protected $paginationTheme = 'bootstrap';
 
+
     protected $listeners = [
                             'UpdateRoleIds' => 'handleUpdateRoleIds',
                             'UpdateCityID' => 'handleUpdateCityID',
@@ -25,6 +26,16 @@ class Index extends Component
                             'selectAll' => 'selectAllmethod'
                         ];
 
+    protected $queryString = [
+        'sortBy' => ['except' => 'employee_id'],
+        'sortDirection' => ['except' => 'asc'],
+        'searchByEmployeeCode' => ['except' => '', 'as' => 's_C'],
+        'searchByName' => ['except' => '', 'as' => 's_N'],
+        'searchByEmployeeRole' => ['except' => '', 'as' => 's_R'],
+        'searchByEmployeeDesignation' => ['except' => '', 'as' => 's_D'],
+        'searchByEmployeeCity' => ['except' => '', 'as' => 's_Cy'],
+    ];
+    
     public function mount(ecom_admin_user $user)
     {
         $this->setMountData($user);
@@ -114,54 +125,17 @@ class Index extends Component
     {
         if($select)
         {
-
-                    $users = ecom_admin_user::when($this->searchByName !== '', function ($query) 
-                                    {
-                                        $query->where('full_name', 'like', '%' . $this->searchByName . '%');
-                                    })
-                                    ->when($this->searchByEmployeeCode !== '', function ($query) 
-                                    {
-                                        $query->where('employee_id', 'like', '%' . $this->searchByEmployeeCode . '%');
-                                    })
-                                    ->when($this->searchByEmployeeDesignation !== '', function ($query) 
-                                    {
-                                        $query->where('designation', 'like', '%' . $this->searchByEmployeeDesignation . '%');
-                                    })
-                                    ->when($this->searchByEmployeeRole !== '', function ($query) 
-                                    {
-                                        $query->whereHas('roles', function ($query) 
-                                        {
-                                            $query->where('title', 'like', '%' . $this->searchByEmployeeRole . '%'); 
-                                        });
-                                    })
-                                    ->when($this->searchByEmployeeCity !== '', function ($query) 
-                                    {
-                                        $query->whereHas('city', function ($query) 
-                                        {
-                                            $query->where('city_name', 'like', '%' . $this->searchByEmployeeCity . '%'); 
-                                        });
-                                    })
-                                    ->whereHas('roles', function ($query) {
-                                        $query->where('title', '!=', 'Super Admin'); // Exclude users with Super Admin role
-                                    })
-                                    ->limit($this->paginateLimit)
-                                    ->orderBy('id', 'ASC')
-                                    ->get();
-
-                    foreach ($users as $user) 
-                    {
-                        $this->selectedRows[$user->id] = true;
-                    }
+            foreach ($this->CurrentPaginatedUsers->take($this->paginateLimit) as $user) 
+            {
+                $this->selectedRows[$user->id] = true;
+            }
         }
         else
         {
             $this->selectedRows = collect();
         }   
-        $this->render();
-        // $this->selectedRows->filter(fn($p) => $p)->keys();
-        // $this->CurrentPaginatedUsers = $this->PaginateData($this->CurrentPaginatedUsers);
-        // dd($this->CurrentPaginatedUsers);
     }
+    // selectImportType
     public function selectAll()
     {
         foreach ($this->users as $user) {

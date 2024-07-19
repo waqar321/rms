@@ -1,12 +1,19 @@
 <div class="d-flex justify-content-end">
-        <button
-                class="btn btn-primary btn-sm uppercase mr-1 selectingvalue"
-                type="button"
-                data-export-type="1"
-                wire:loading.attr="disabled"
-            >
-                    Select All 
-        </button>
+        
+        @if(isset($CurrentPaginatedUsers))
+
+            <button
+                    class="btn btn-primary btn-sm uppercase mr-1 selectingvalue"
+                    type="button"
+                    data-export-type="1"
+                    wire:click="selectAllmethod('1')"
+                    wire:loading.attr="disabled"
+                >
+                        Select All 
+            </button>
+            
+        @endif 
+        
         <button
             class="btn btn-primary btn-sm uppercase mr-1 ExportButtonLivewire"
             type="button"
