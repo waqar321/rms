@@ -31,6 +31,13 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
+
+                    <div wire:offline>
+                        <div class="alert alert-warning" role="alert">
+                            This is a warning alert—check it out!
+                        </div>
+                    </div>
+
                     <div class="col-md-3 col-lg-3">
                         <input type="search" wire:model="searchByEmployeeCode" class="form-control" placeholder="Search By Employee Code...">
                     </div>
@@ -99,9 +106,7 @@
                                     <tr>
                                         <th> </th>
                                         @foreach($availableColumns as $column)
-                                                <th wire:click="sortBy( {{ $column }})"> 
-                                                    {{ $column }} @include('admin.partial.livewire.sort-icon', ['field' => $column]) 
-                                                </th>
+                                                <th> {{ $column }} </th>
                                         @endforeach
                                     </tr>
                                 </thead>
