@@ -195,8 +195,6 @@
             buttonWidth:'400px'
         });
 
-        var valuesToSelect = ['Name', 'Email']; // Example values to select
-        $('#framework').multiselect('select', valuesToSelect); // Select specified values
         
         $('#selectAll').click(function() 
         {
