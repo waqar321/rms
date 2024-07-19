@@ -112,7 +112,6 @@ trait UsersComponent
     }
     public function updated($value)
     {   
-            
         $this->emit('select2');
         
         // return true; //stop real time validation at a time
@@ -153,7 +152,11 @@ trait UsersComponent
                 strpos($value, 'selectedRows') !== false
             )
             {
-                // dd('row selected');
+                // if($value == 'paginateLimit')
+                // {
+                //     $this->CurrentPaginatedUsers->take($this->paginateLimit);
+                // }
+
                 $this->Collapse = "collapse";
             }
             else
@@ -225,8 +228,8 @@ trait UsersComponent
                                     // ->orderBy('id', 'ASC')
                                     // ->paginate($this->paginateLimit);
                                     ->get();
-
-        $this->CurrentPaginatedUsers =  $users;      
+        
+        $this->CurrentPaginatedUsers =  $users->take($this->paginateLimit);      
         $data['userListing'] = $this->readyToLoad ? $this->PaginateData($users) : [];
         return $data;  
 

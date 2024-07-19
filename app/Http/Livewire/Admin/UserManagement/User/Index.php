@@ -23,7 +23,8 @@ class Index extends Component
                             'errorsDetected' => 'updateSelect2',
                             'deleteUserManage' => 'HandleDeleteUserManage',
                             'selectedColumns' => 'export',
-                            'selectAll' => 'selectAllmethod'
+                            'selectAll' => 'selectAllmethod',
+                            'CheckIfRowSelected' => 'HanldeCheckIfRowSelected'
                         ];
 
     protected $queryString = [
@@ -125,7 +126,8 @@ class Index extends Component
     {
         if($select)
         {
-            foreach ($this->CurrentPaginatedUsers->take($this->paginateLimit) as $user) 
+            // foreach ($this->CurrentPaginatedUsers->take($this->paginateLimit) as $user) 
+            foreach ($this->CurrentPaginatedUsers as $user) 
             {
                 $this->selectedRows[$user->id] = true;
             }
@@ -135,7 +137,10 @@ class Index extends Component
             $this->selectedRows = collect();
         }   
     }
-    // selectImportType
+    public function HanldeCheckIfRowSelected()
+    {
+        $this->dispatchBrowserEvent('exportFile', ['value' => $this->selectedRows->isEmpty()]);
+    }
     public function selectAll()
     {
         foreach ($this->users as $user) {

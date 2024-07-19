@@ -71,8 +71,12 @@
                 <div class="x_content">
                     <div class="col-lg-4" id="ColumnsDropDown" wire:ignore>     
                         
+                        <!-- <button type="button" id="selectAll">Select All</button>
+                        <button type="button" id="deselectAll">Deselect All</button> -->
+
                         <select id="framework1" name="framework1[]" multiple class="form-control" style="display:none;">
                                 @foreach($availableColumns as $column)
+                                   
                                     @if($column != 'Status' && $column != 'Action')
                                         <option value="{{ $column }}">{{ ucfirst($column) }}</option>
                                     @endif 
@@ -177,6 +181,10 @@
 
 
 <script>
+   
+   var AllselectedColumns;
+   var Export_types;
+   
    $(document).ready(function()
    {
     
@@ -187,41 +195,92 @@
             buttonWidth:'400px'
         });
 
+        var valuesToSelect = ['Name', 'Email']; // Example values to select
+        $('#framework').multiselect('select', valuesToSelect); // Select specified values
+        
+        $('#selectAll').click(function() 
+        {
+            // alert('select all');
+            // var dataArray = ["Employee Code", "Name", "Email", "City", "Roles", "Designation", "Date", "Status", "Action"];
+            // $("#framework").val(dataArray);
+            // $('#framework').multiselect('selectAll', false); // Select all options
+            // $('#framework').multiselect('updateButtonText'); // Update button text
+        });
+
+        // Deselect All
+        $('#deselectAll').click(function() 
+        {
+            
+            // alert('deselectAll all');
+            // $('#framework').multiselect('deselectAll', false); // Deselect all options
+            // $('#framework').multiselect('updateButtonText'); // Update button text
+        });
+
         // $(document).on('click', '.SearchButton', function(event) 
         // {
-        //     event.preventDefault();
+            //     event.preventDefault();
 
-        //     $('#framework').css('display', 'none');
-        //     var clonedSelect = $('#framework1').clone();
-        //     clonedSelect.css('display', 'block');
-        //     clonedSelect.multiselect({
-        //         nonSelectedText: 'Select Framework',
-        //         enableFiltering: true,
-        //         enableCaseInsensitiveFiltering: true,
-        //         buttonWidth:'400px'
-        //     });
-        //     $('#ColumnsDropDown').append(clonedSelect);
-            //     $('select[framework]').multiselect( 'reset' );
+            //     $('#framework').css('display', 'none');
+            //     var clonedSelect = $('#framework1').clone();
+            //     clonedSelect.css('display', 'block');
+            //     clonedSelect.multiselect({
+            //         nonSelectedText: 'Select Framework',
+            //         enableFiltering: true,
+            //         enableCaseInsensitiveFiltering: true,
+            //         buttonWidth:'400px'
+            //     });
+            //     $('#ColumnsDropDown').append(clonedSelect);
+                //     $('select[framework]').multiselect( 'reset' );
 
-            //    // Clear selected options
-            //     $('#framework option:selected').prop('selected', false);
-                
-            //     $('#framework').val('').multiselect('refresh');
-            //     $('#framework').multiselect('deselectAll', false);    
-            //     $('#framework').multiselect('updateButtonText');
-            // console.log('print message');
+                //    // Clear selected options
+                //     $('#framework option:selected').prop('selected', false);
+                    
+                //     $('#framework').val('').multiselect('refresh');
+                //     $('#framework').multiselect('deselectAll', false);    
+                //     $('#framework').multiselect('updateButtonText');
+                // console.log('print message');
 
         // });
-
 
         $('.ExportButtonLivewire').on('click', function() 
         {       
             var selectedColumns = $('#framework').val();
-            Livewire.emit('selectedColumns', selectedColumns.join(', '), $(this).data('export-type'));
+            
+            if(selectedColumns != null)
+            {
+                AllselectedColumns = selectedColumns.join(', ');
+                Export_types = $(this).data('export-type');
+                Livewire.emit('CheckIfRowSelected');
+                // Livewire.emit('selectedColumns', selectedColumns.join(', '), $(this).data('export-type'));
+            }
+            else
+            {
+                Swal.fire(
+                        'Error!',
+                        'please select columns before exports: ' + $(this).data('export-type'),
+                        'error'
+                );
+            }
         });
         $('.selectingvalue').on('click', function() 
         {       
             Livewire.emit('selectAll', $(this).data('export-type'));
+        });
+        window.addEventListener('exportFile', event => 
+        {                
+            if(event.detail.value)
+            {
+                Swal.fire(
+                        'Error!',
+                        'please select rows before exports: ' + Export_types,
+                        'error'
+                ); 
+                return false;
+            }
+            else
+            {
+                Livewire.emit('selectedColumns', AllselectedColumns, Export_types);
+            }
         });
 
         

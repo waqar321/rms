@@ -355,7 +355,7 @@
 
         //Function to show loading message
         function showLoading() {
-            Swal.fire({
+            .fire({
                 title: 'Loading...',
                 allowOutsideClick: false,
                 showConfirmButton: false,
