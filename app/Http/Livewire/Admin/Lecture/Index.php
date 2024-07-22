@@ -151,7 +151,7 @@ class Index extends Component
         }
         
         $this->updateFiles();
-        dd('done testing');
+        // dd('done testing');
         // dd($this->ecom_lecture);
 
         // if(auth()->user()->role->id == 31)

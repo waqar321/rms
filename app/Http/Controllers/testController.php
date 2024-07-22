@@ -13,7 +13,7 @@ class testController extends Controller
          // Make a GET request to your local API endpoint
          $client = new Client();
 
-         dd('done testing');
+        //  dd('done testing');
          try {
              // Make a GET request to the API endpoint
              $response = $client->get('http://127.0.0.1:8000/api/testingApi');
