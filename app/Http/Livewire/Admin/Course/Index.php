@@ -19,7 +19,6 @@ class Index extends Component
 
     public function mount(ecom_course $ecom_course)
     {  
-        
         $this->setMountData($ecom_course);
     }
     public function render()
@@ -33,6 +32,7 @@ class Index extends Component
         {
             $this->validate();            
         }
+        
         $this->updateFiles();
         
         $isInstructor = auth()->user()->roles->where('title', 'instructor')->count();  //if logged in user is admin

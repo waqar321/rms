@@ -32,7 +32,7 @@ trait CourseComponent
         
         // $ecom_course = ecom_course::first();
         // dd($ecom_course->alignment->delete());
-    //    $ecom_course_assign = ecom_course_assign::where('course_id', $ecom_course)->delete();
+        // $ecom_course_assign = ecom_course_assign::where('course_id', $ecom_course)->delete();
 
 
         // $ecom_course = ecom_course::first();
