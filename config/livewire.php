@@ -103,7 +103,8 @@ return [
         // 'rules' => ['required', 'file', 'max:512000', 'mimetypes:video/mp4,video/webm,video/quicktime'],  // 500MB limit
         'rules' => ['required', 'file', 'max:512000'],  // 500MB limit
         'directory' => null,   // Example: 'tmp'                      Default  'livewire-tmp'
-        'middleware' => null,  // Example: 'throttle:5,1'             Default: 'throttle:60,1'
+        // 'middleware' => null,  // Example: 'throttle:5,1'             Default: 'throttle:60,1'
+        'middleware' =>  ['web', 'auth'],  // Example: 'throttle:5,1'             Default: 'throttle:60,1'
         'preview_mimes' => [   // Supported file types for temporary pre-signed file URLs.
             'png', 'gif', 'bmp', 'svg', 'wav', 'mp4',
             'mov', 'avi', 'wmv', 'mp3', 'm4a',
