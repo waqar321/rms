@@ -15,7 +15,9 @@ return [
     |
     */
 
-    // 'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    //-------------commented below code by waqar-------------------
+        // 'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    //-------------and added by waqar-------------------
     'paths' => ['api/*', 'sanctum/csrf-cookie', 'livewire/*', 'livewire/message/*', 'livewire/upload-file'],
 
     'allowed_methods' => ['*'],
