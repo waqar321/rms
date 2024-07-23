@@ -56,7 +56,7 @@ return [
 
     // 'asset_url' => null, 
     // 'asset_url' => 'http://lms.leopardscourier.com/LMS/public/',
-    'asset_url' => env('APP_URL', 'https://lms.leopardscourier.com/'),
+    // 'asset_url' => env('APP_URL', 'https://lms.leopardscourier.com/'),
 
     /*
     |--------------------------------------------------------------------------
