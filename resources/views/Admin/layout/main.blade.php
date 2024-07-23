@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-
+    
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 <head>
         
     @include('Admin.layout.head')

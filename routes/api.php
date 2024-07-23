@@ -102,7 +102,7 @@ Route::delete('/lectures/{id}', [LectureApiController::class, 'destroy']);
 
 //================= test ==================
 
-    Route::get('/testingApi', [DataListController::class, 'TestingApiData'])->name('get.search.cities');
+    // Route::get('/testingApi', [DataListController::class, 'TestingApiData'])->name('get.search.cities');
 
 //================= Category ==================
 
