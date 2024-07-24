@@ -65,7 +65,7 @@
                                                 </td> -->
                                                 <td>{{ $lecture->course->name ?? ''}}</td>
                                                 <td>{{ $lecture->description ?? '' }}</td>
-                                                <td>{{ $lecture->Teacher->first_name ?? ' - '}}</td>
+                                                <td>{{ $lecture->Teacher->full_name }}</td>
                                                 <td>{{ $lecture->duration }} Mins</td>
                                                 <td>{{ $lecture->tags }}</td>
                                                 <td>
