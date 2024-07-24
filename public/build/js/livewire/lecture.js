@@ -373,6 +373,8 @@ function UpdateHiddenStatusOfAssessmentDivs()
 }
 function UpdateShowOrHideAsessments(StatusValue, Button)
 {
+    $('#passing_ratio_id').css('display', StatusValue ? 'none' : 'block');
+
     ValidateAssessmentForm = StatusValue;
     Button.css('display', 'none');
     console.log(ValidateAssessmentForm);

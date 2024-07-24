@@ -198,7 +198,7 @@
                                     <input type="text" wire:model.debounce.500ms="document_url" class="form-control" id="document_url" name="document_url" placeholder="Enter document URL">
                                 </div>
                             </div>
-                            <div class="col-md-6 col-lg-6">
+                            <div class="col-md-6 col-lg-6" id="passing_ratio_id" style="display:none;">
                                 <div class="form-group">
                                     <label for="passing_ratio">Passing % </label>
                                     <input type="text" wire:model.debounce.500ms="ecom_lecture.passing_ratio" class="form-control" id="passing_ratio" name="passing_ratio" placeholder="Enter Course Passing % On the basis of Questions">
@@ -229,242 +229,242 @@
                                 </div>
 
                             <!-- ==================================Assessment========================================== -->
-                            @if(count($assessmentData) > 0)
-                                    @foreach($assessmentData as $assessmentLevel => $assessment)    
-                                        
-                                    @php  
-                                        $AssessmentDiv = $assessmentLevel == 0 ? 'AssessmentDiv' : 'AssessmentDiv'.$assessmentLevel;  
-                                        $AssessmentDiv = $assessmentLevel == 0 ? 'AssessmentDiv' : 'AssessmentDiv'.$assessmentLevel;  
-                                        $count++;
-                                        $AssessmentDivcount = 'Assessment '.$count;
-                                    @endphp  
+                                @if(count($assessmentData) > 0)
+                                        @foreach($assessmentData as $assessmentLevel => $assessment)    
+                                            
+                                        @php  
+                                            $AssessmentDiv = $assessmentLevel == 0 ? 'AssessmentDiv' : 'AssessmentDiv'.$assessmentLevel;  
+                                            $AssessmentDiv = $assessmentLevel == 0 ? 'AssessmentDiv' : 'AssessmentDiv'.$assessmentLevel;  
+                                            $count++;
+                                            $AssessmentDivcount = 'Assessment '.$count;
+                                        @endphp  
 
-                                    <div id="{{ $AssessmentDiv }}" class="col-md-12" style="border: 16px solid #ccc; padding: 15px; margin: 10px;">
-                                        <label class="Title" style="justify-content: center;"> <b><i> <u> {{ $AssessmentDivcount }} </u> </i></b></label>
-                                        @if(isset($assessment['questions']))
-                                            @php 
-                                                $countQuestions=0   
-                                            @endphp  
-
-                                            @php  
-                                                $Questioncount=0
-                                            @endphp
-
-
-                                            @foreach($assessment['questions'] as $question)
+                                        <div id="{{ $AssessmentDiv }}" class="col-md-12" style="border: 16px solid #ccc; padding: 15px; margin: 10px;">
+                                            <label class="Title" style="justify-content: center;"> <b><i> <u> {{ $AssessmentDivcount }} </u> </i></b></label>
+                                            @if(isset($assessment['questions']))
+                                                @php 
+                                                    $countQuestions=0   
+                                                @endphp  
 
                                                 @php  
-                                                    if($assessmentLevel == 0)
-                                                    {
-                                                        $questionDiv = 'questionDiv';
-                                                    }
-                                                    else if($assessmentLevel == 1)
-                                                    {   
-                                                        $questionDiv = 'questionDivFirst';
-                                                    }
-                                                    else if($assessmentLevel == 2)
-                                                    {
-                                                        $questionDiv = 'questionDivSecond';
-                                                    }
-                                                    else if($assessmentLevel == 3)
-                                                    {
-                                                        $questionDiv = 'questionDivThird';
-                                                    }
-
-                                                    $questionDiv = $countQuestions == 0 ? $questionDiv : $questionDiv.$countQuestions;  
-
-
-                                                    $Questioncount++;
-                                                    $QuestionDivcount = 'Question '.$Questioncount;
-
+                                                    $Questioncount=0
                                                 @endphp
-                                        
-                                                
-                                                <div id="{{ $questionDiv }}" class="col-md-12 ChildOfParent" style="padding: 15px;" data-parent_id="{{ $AssessmentDiv }}">
-                                                    <div class="col-md-12" style="border: 1px solid #ccc; "> 
-                                                        <label class="ChildTitle" style="margin-top: 10px; justify-content: center;"> <b> {{ $QuestionDivcount }} </b></label>
-                                                        <div class="col-md-12 col-lg-12 form-group">
-                                                            <div class="form-group">
-                                                                <label for="document_url" class="text-center col-lg-12" style="padding-top:10px;">Question</label>
-                                                                <input type="text" value="{{ isset($question['question']) ? $question['question'] : '' }}" class="form-control" id="question" name="question" placeholder="Enter Question">
+
+
+                                                @foreach($assessment['questions'] as $question)
+
+                                                    @php  
+                                                        if($assessmentLevel == 0)
+                                                        {
+                                                            $questionDiv = 'questionDiv';
+                                                        }
+                                                        else if($assessmentLevel == 1)
+                                                        {   
+                                                            $questionDiv = 'questionDivFirst';
+                                                        }
+                                                        else if($assessmentLevel == 2)
+                                                        {
+                                                            $questionDiv = 'questionDivSecond';
+                                                        }
+                                                        else if($assessmentLevel == 3)
+                                                        {
+                                                            $questionDiv = 'questionDivThird';
+                                                        }
+
+                                                        $questionDiv = $countQuestions == 0 ? $questionDiv : $questionDiv.$countQuestions;  
+
+
+                                                        $Questioncount++;
+                                                        $QuestionDivcount = 'Question '.$Questioncount;
+
+                                                    @endphp
+                                            
+                                                    
+                                                    <div id="{{ $questionDiv }}" class="col-md-12 ChildOfParent" style="padding: 15px;" data-parent_id="{{ $AssessmentDiv }}">
+                                                        <div class="col-md-12" style="border: 1px solid #ccc; "> 
+                                                            <label class="ChildTitle" style="margin-top: 10px; justify-content: center;"> <b> {{ $QuestionDivcount }} </b></label>
+                                                            <div class="col-md-12 col-lg-12 form-group">
+                                                                <div class="form-group">
+                                                                    <label for="document_url" class="text-center col-lg-12" style="padding-top:10px;">Question</label>
+                                                                    <input type="text" value="{{ isset($question['question']) ? $question['question'] : '' }}" class="form-control" id="question" name="question" placeholder="Enter Question">
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        @if(isset($question['answer']))
+                                                            @if(isset($question['answer']))
 
-                                                            @php 
-                                                                $answers = json_decode($question['answer']);
-                                                                $AnswerCount=0;
-                                                            @endphp 
+                                                                @php 
+                                                                    $answers = json_decode($question['answer']);
+                                                                    $AnswerCount=0;
+                                                                @endphp 
 
-                                                           @if(!empty($answers)) 
-                                                                @foreach($answers as $key => $answer)
-                                                                    @if($key != 'correctAnswer')
-                                                                        <div class="col-md-6 col-lg-6 form-group">
-                                                                            <div class="form-group">
-                                                                                <label for="{{ $key }}">{{ $key }}</label>
-                                                            
-                                                                                @php 
-                                                                                    $RadioID = ($AnswerCount == 0) ? 'RadioAnswer'.$questionDiv : 'RadioAnswer'.$AnswerCount.$questionDiv;
-                                                                                @endphp  
-                                                            
-                                                                                
-                                                                                @if($key == $answers->correctAnswer)
-                                                                                    <input type="radio" checked value="{{ $key }}" id="{{ $RadioID }}" name="{{ $questionDiv }}RadioAnswer"> <span class="checkmark"></span> 
-                                                                                @else 
-                                                                                    <input type="radio" value="{{ $key }}" id="{{ $RadioID }}" name="{{ $questionDiv }}RadioAnswer"> <span class="checkmark"></span> 
-                                                                                @endif 
-                                                                                <input type="text"  value="{{ $answer }}" class="form-control" id="{{ $key }}" name="Answer1" placeholder="Enter Answer">
-                                                                            </div>
-                                                                        </div>    
+                                                            @if(!empty($answers)) 
+                                                                    @foreach($answers as $key => $answer)
+                                                                        @if($key != 'correctAnswer')
+                                                                            <div class="col-md-6 col-lg-6 form-group">
+                                                                                <div class="form-group">
+                                                                                    <label for="{{ $key }}">{{ $key }}</label>
+                                                                
+                                                                                    @php 
+                                                                                        $RadioID = ($AnswerCount == 0) ? 'RadioAnswer'.$questionDiv : 'RadioAnswer'.$AnswerCount.$questionDiv;
+                                                                                    @endphp  
+                                                                
+                                                                                    
+                                                                                    @if($key == $answers->correctAnswer)
+                                                                                        <input type="radio" checked value="{{ $key }}" id="{{ $RadioID }}" name="{{ $questionDiv }}RadioAnswer"> <span class="checkmark"></span> 
+                                                                                    @else 
+                                                                                        <input type="radio" value="{{ $key }}" id="{{ $RadioID }}" name="{{ $questionDiv }}RadioAnswer"> <span class="checkmark"></span> 
+                                                                                    @endif 
+                                                                                    <input type="text"  value="{{ $answer }}" class="form-control" id="{{ $key }}" name="Answer1" placeholder="Enter Answer">
+                                                                                </div>
+                                                                            </div>    
 
-                                                                        @php $AnswerCount++; @endphp
-                                                                    @endif
-                                                                @endforeach 
+                                                                            @php $AnswerCount++; @endphp
+                                                                        @endif
+                                                                    @endforeach 
+                                                                @endif
                                                             @endif
-                                                        @endif
 
-                                                        @if($countQuestions != 0)
-                                                            <div class="form-group col-md-12">
-                                                                        <button class="delete-row-button new-row-1711435788501 deleteButtonEditForm deleteQuestion float-right"
-                                                                        data-parent_id="{{ $questionDiv }}"
-                                                                        data-grand-parent_id="{{ $AssessmentDiv }}"
-                                                                        data-current-question-quantity = "{{ count($assessment['questions']) }} "
-                                                                        > 
-                                                                            Delete Question Section {{ count($assessment['questions']) }} </button>
-                                                            </div>   
-                                                        @else
-                                                            <div class="form-group col-md-12">
-                                                                        <button class="delete-row-button new-row-1711435788501 deleteButtonForm deleteQuestion float-right"
-                                                                        data-parent_id="{{ $questionDiv }}"
-                                                                        data-grand-parent_id="{{ $AssessmentDiv }}"
-                                                                        data-current-question-quantity = "{{ count($assessment['questions']) }} "
-                                                                        > 
-                                                                            Delete Question Section  </button>
-                                                            </div>
-                                                        @endif 
-                                
-                                                    </div>
-                                                </div> 
-                                                @php  $countQuestions++ @endphp 
-                                            @endforeach 
-                                        @endif 
+                                                            @if($countQuestions != 0)
+                                                                <div class="form-group col-md-12">
+                                                                            <button class="delete-row-button new-row-1711435788501 deleteButtonEditForm deleteQuestion float-right"
+                                                                            data-parent_id="{{ $questionDiv }}"
+                                                                            data-grand-parent_id="{{ $AssessmentDiv }}"
+                                                                            data-current-question-quantity = "{{ count($assessment['questions']) }} "
+                                                                            > 
+                                                                                Delete Question Section {{ count($assessment['questions']) }} </button>
+                                                                </div>   
+                                                            @else
+                                                                <div class="form-group col-md-12">
+                                                                            <button class="delete-row-button new-row-1711435788501 deleteButtonForm deleteQuestion float-right"
+                                                                            data-parent_id="{{ $questionDiv }}"
+                                                                            data-grand-parent_id="{{ $AssessmentDiv }}"
+                                                                            data-current-question-quantity = "{{ count($assessment['questions']) }} "
+                                                                            > 
+                                                                                Delete Question Section  </button>
+                                                                </div>
+                                                            @endif 
                                     
+                                                        </div>
+                                                    </div> 
+                                                    @php  $countQuestions++ @endphp 
+                                                @endforeach 
+                                            @endif 
+                                        
 
+                                            <div class="col-md-12 form-group">
+                                                <button type="button" 
+                                                
+                                                        class="AddMoreQuestion btn btn-warning clone-table-button ci-btn-secondary float-right" 
+                                                        style="padding: 10px 10px; margin: 10px" 
+                                                        data-current-question-quantity = "{{ count($assessment['questions']) }} "
+                                                        data-target="kyc_from_1">
+                                                        Add More Question {{ count($assessment['questions']) }} 
+                                                </button>
+                                            </div> 
+                
+                                            <div class="col-md-6 col-lg-6">
+                                                <div class="form-group">
+                                                    <label for="document_url">Duration occurance </label>
+                                                    <div class="input-group">
+                                                        <input type="number" class="form-control occurrence_duration" value="{{ $assessment['assessment_time'] }}" id="occurrence_duration" name="occurrence_duration" placeholder="Enter duration">
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">Seconds</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            @if($AssessmentDiv == 'AssessmentDiv')
+                                                <div class="form-group col-md-6">
+                                                    <button class="delete-row-button new-row-1711435788501 deleteButtonForm deleteAssessment deleteButtonForm1 float-right" data-parent_id="{{ $AssessmentDiv }}"> 
+                                                                Delete Assessment Section </button>
+                                                </div>
+                                            @else
+                                                <div class="form-group col-md-6">
+                                                    <button class="delete-row-button new-row-1711435788501 deleteButtonEditForm deleteAssessment deleteButtonForm1 float-right" data-parent_id="{{ $AssessmentDiv }}"> 
+                                                        Delete Assessment Section </button>
+                                                </div> 
+                                            @endif 
+
+
+                                        </div> 
+
+                                        <!-- ==================================Assessment========================================== -->
+                                        @endforeach
+                                @else 
+
+
+                                    <div id="AssessmentDiv" class="col-md-12" wire:ignore  style="display:none; border: 16px solid #ccc; padding: 15px; margin: 10px;">
+                                        <label class="Title" style="justify-content: center;"> <b><i> <u> Assessment 1 </u> </i></b></label>
+
+                                        <div id="questionDiv" class="col-md-12 ChildOfParent" style="padding: 15px;" data-parent_id="AssessmentDiv">
+                                            <div class="col-md-12" style="border: 1px solid #ccc; "> 
+                                                <label class="ChildTitle" style="margin-top: 10px; justify-content: center;"> <b>Question 1</b></label>
+                                                <div class="col-md-12 col-lg-12 form-group">
+                                                    <div class="form-group">
+                                                        <label for="document_url" class="text-center col-lg-12" style="padding-top:10px;">Question </label>
+                                                        <input type="text"  class="form-control" id="question" name="question" placeholder="Enter Question">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-lg-6 form-group">
+                                                    <div class="form-group">
+                                                        <label for="Answer1">Answer 1 </label>
+                                                        <input type="radio" value="Answer1" id="RadioAnswerquestionDiv" name="questionDivRadioAnswer"> <span class="checkmark"></span> 
+                                                        <input type="text"  class="form-control" id="Answer1" name="Answer1" placeholder="Enter Answer">
+                                                    </div>
+                                                </div>     
+                                                <div class="col-md-6 col-lg-6 form-group ">
+                                                    <div class="form-group">
+                                                        <label for="Answer2">Answer 2 </label>
+                                                        <input type="radio" value="Answer2" id="RadioAnswer1questionDiv" name="questionDivRadioAnswer"> <span class="checkmark"></span> 
+                                                        <input type="text"  class="form-control" id="Answer2" name="Answer2" placeholder="Enter Answer">
+                                                    </div>
+                                                </div>     
+                                                <div class="col-md-6 col-lg-6 form-group ">
+                                                    <div class="form-group">
+                                                        <label for="Answer3">Answer 3 </label>
+                                                        <input type="radio" value="Answer3" id="RadioAnswer2questionDiv" name="questionDivRadioAnswer"> <span class="checkmark"></span> 
+                                                        <input type="text"  class="form-control" id="Answer3" name="Answer3" placeholder="Enter Answer">
+                                                    </div>
+                                                </div>     
+                                                <div class="col-md-6 col-lg-6 form-group lastquestion">
+                                                    <div class="form-group">
+                                                        <label for="Answer4">Answer 4 </label>
+                                                        <input type="radio" value="Answer4" id="RadioAnswer3questionDiv" name="questionDivRadioAnswer"> <span class="checkmark"></span> 
+                                                        <input type="text"  class="form-control" id="Answer4" name="Answer4" placeholder="Enter Answer">
+                                                    </div>
+                                                </div>   
+                                                <div class="form-group col-md-12">
+                                                            <button class="delete-row-button new-row-1711435788501 deleteButtonForm deleteQuestion float-right"> 
+                                                                Delete Question Section </button>
+                                                </div>   
+                                            </div>
+                                        </div> 
                                         <div class="col-md-12 form-group">
-                                            <button type="button" 
+                                            <button type="button" wire:ignore
                                             
                                                     class="AddMoreQuestion btn btn-warning clone-table-button ci-btn-secondary float-right" 
                                                     style="padding: 10px 10px; margin: 10px" 
-                                                    data-current-question-quantity = "{{ count($assessment['questions']) }} "
-                                                    data-target="kyc_from_1">
-                                                    Add More Question {{ count($assessment['questions']) }} 
-                                            </button>
+                                                    data-target="kyc_from_1">Add More Question </button>
                                         </div> 
             
                                         <div class="col-md-6 col-lg-6">
                                             <div class="form-group">
                                                 <label for="document_url">Duration occurance </label>
                                                 <div class="input-group">
-                                                    <input type="number" class="form-control occurrence_duration" value="{{ $assessment['assessment_time'] }}" id="occurrence_duration" name="occurrence_duration" placeholder="Enter duration">
+                                                    <input type="number" class="form-control occurrence_duration" id="occurrence_duration" name="occurrence_duration" placeholder="Enter duration" required>
                                                     <div class="input-group-append">
                                                         <span class="input-group-text">Seconds</span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
-                                        @if($AssessmentDiv == 'AssessmentDiv')
-                                            <div class="form-group col-md-6">
-                                                <button class="delete-row-button new-row-1711435788501 deleteButtonForm deleteAssessment deleteButtonForm1 float-right" data-parent_id="{{ $AssessmentDiv }}"> 
-                                                            Delete Assessment Section </button>
-                                            </div>
-                                        @else
-                                            <div class="form-group col-md-6">
-                                                <button class="delete-row-button new-row-1711435788501 deleteButtonEditForm deleteAssessment deleteButtonForm1 float-right" data-parent_id="{{ $AssessmentDiv }}"> 
-                                                    Delete Assessment Section </button>
-                                            </div> 
-                                        @endif 
-
-
+                                        <div class="form-group col-md-6">
+                                                    <button class="delete-row-button new-row-1711435788501 deleteButtonForm deleteAssessment deleteButtonForm1 float-right"> 
+                                                        Delete Assessment Section </button>
+                                        </div> 
                                     </div> 
 
-                                    <!-- ==================================Assessment========================================== -->
-                                    @endforeach
-                            @else 
-
-
-                                <div id="AssessmentDiv" class="col-md-12" wire:ignore  style="display:none; border: 16px solid #ccc; padding: 15px; margin: 10px;">
-                                    <label class="Title" style="justify-content: center;"> <b><i> <u> Assessment 1 </u> </i></b></label>
-
-                                    <div id="questionDiv" class="col-md-12 ChildOfParent" style="padding: 15px;" data-parent_id="AssessmentDiv">
-                                        <div class="col-md-12" style="border: 1px solid #ccc; "> 
-                                            <label class="ChildTitle" style="margin-top: 10px; justify-content: center;"> <b>Question 1</b></label>
-                                            <div class="col-md-12 col-lg-12 form-group">
-                                                <div class="form-group">
-                                                    <label for="document_url" class="text-center col-lg-12" style="padding-top:10px;">Question </label>
-                                                    <input type="text"  class="form-control" id="question" name="question" placeholder="Enter Question">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-lg-6 form-group">
-                                                <div class="form-group">
-                                                    <label for="Answer1">Answer 1 </label>
-                                                    <input type="radio" value="Answer1" id="RadioAnswerquestionDiv" name="questionDivRadioAnswer"> <span class="checkmark"></span> 
-                                                    <input type="text"  class="form-control" id="Answer1" name="Answer1" placeholder="Enter Answer">
-                                                </div>
-                                            </div>     
-                                            <div class="col-md-6 col-lg-6 form-group ">
-                                                <div class="form-group">
-                                                    <label for="Answer2">Answer 2 </label>
-                                                    <input type="radio" value="Answer2" id="RadioAnswer1questionDiv" name="questionDivRadioAnswer"> <span class="checkmark"></span> 
-                                                    <input type="text"  class="form-control" id="Answer2" name="Answer2" placeholder="Enter Answer">
-                                                </div>
-                                            </div>     
-                                            <div class="col-md-6 col-lg-6 form-group ">
-                                                <div class="form-group">
-                                                    <label for="Answer3">Answer 3 </label>
-                                                    <input type="radio" value="Answer3" id="RadioAnswer2questionDiv" name="questionDivRadioAnswer"> <span class="checkmark"></span> 
-                                                    <input type="text"  class="form-control" id="Answer3" name="Answer3" placeholder="Enter Answer">
-                                                </div>
-                                            </div>     
-                                            <div class="col-md-6 col-lg-6 form-group lastquestion">
-                                                <div class="form-group">
-                                                    <label for="Answer4">Answer 4 </label>
-                                                    <input type="radio" value="Answer4" id="RadioAnswer3questionDiv" name="questionDivRadioAnswer"> <span class="checkmark"></span> 
-                                                    <input type="text"  class="form-control" id="Answer4" name="Answer4" placeholder="Enter Answer">
-                                                </div>
-                                            </div>   
-                                            <div class="form-group col-md-12">
-                                                        <button class="delete-row-button new-row-1711435788501 deleteButtonForm deleteQuestion float-right"> 
-                                                            Delete Question Section </button>
-                                            </div>   
-                                        </div>
-                                    </div> 
-                                    <div class="col-md-12 form-group">
-                                        <button type="button" wire:ignore
-                                        
-                                                class="AddMoreQuestion btn btn-warning clone-table-button ci-btn-secondary float-right" 
-                                                style="padding: 10px 10px; margin: 10px" 
-                                                data-target="kyc_from_1">Add More Question </button>
-                                    </div> 
-        
-                                    <div class="col-md-6 col-lg-6">
-                                        <div class="form-group">
-                                            <label for="document_url">Duration occurance </label>
-                                            <div class="input-group">
-                                                <input type="number" class="form-control occurrence_duration" id="occurrence_duration" name="occurrence_duration" placeholder="Enter duration" required>
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text">Seconds</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                                <button class="delete-row-button new-row-1711435788501 deleteButtonForm deleteAssessment deleteButtonForm1 float-right"> 
-                                                    Delete Assessment Section </button>
-                                    </div> 
-                                </div> 
-
-                            @endif 
+                                @endif 
                             <!-- ==================================Assessment========================================== -->
 
                             <div class="form-group col-md-12">
@@ -601,10 +601,12 @@
         $(document).on('click', '#AssessmentButton, #noAssessmentButton', function(event) 
         {
             event.preventDefault();
+
             UpdateShowOrHideAsessments(this.id === 'noAssessmentButton', $(this));
         });
         $(document).on('click', '.AddAssessment', function(event)
         {                
+            
             if(AssessmentLevel == 4)
             {
                 Swal.fire({

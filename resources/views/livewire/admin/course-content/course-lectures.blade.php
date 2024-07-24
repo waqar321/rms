@@ -139,7 +139,7 @@
                                                                 @endif 
 
                                                             @else
-                                                                <span style="position: absolute; top: 10px; right: 10px; background-color: red; color: white; padding: 5px 10px; border-radius: 5px; z-index: 1;">
+                                                                <span style="position: absolute; top: 10px; right: 10px; background-color: 0005ff; color: white; padding: 5px 10px; border-radius: 5px; z-index: 1;">
                                                                     Pending
                                                                 </span>
                                                             @endif
