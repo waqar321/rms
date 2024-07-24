@@ -78,10 +78,7 @@
 
                                         <h1 style="padding-top: 25px;">Description </h1>
                                         <p>
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                            Nisi, impedit autem at voluptatum officiis reprehenderit,
-                                            esse, quia culpa nesciunt excepturi quam incidunt molestiae?
-                                            Provident, vero  facere!
+                                            {{ $ecom_lecture->description }}
                                         </p>
                                 </div>
                                 <div class="col-lg-6">
