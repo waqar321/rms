@@ -96,7 +96,7 @@
 
                             <!-- ========================= Instructor ======================================= -->
 
-                                @can('create_lecture')
+                                @can('select_instructor')
                                     <div class="col-md-6 col-lg-6">
                                         <div class="form-group">
                                             <label>Instructor <span class="danger">*</span></label>
