@@ -508,8 +508,9 @@ class DataListController extends Controller
         // $item= 'waq';
         $selectEmployee = ecom_admin_user::where(function ($query) use($request)
                                             {
-                                                $query->where('first_name', 'like', "%{$request->term}%")
-                                                    ->orWhere('last_name', 'like', "%{$request->term}%");
+                                                // $query->where('first_name', 'like', "%{$request->term}%")
+                                                //     ->orWhere('last_name', 'like', "%{$request->term}%");
+                                                $query->where('full_name', 'like', "%{$request->term}%");
                                             })
                                             ->employees()
                                             ->where('is_deleted', 0)
@@ -525,7 +526,8 @@ class DataListController extends Controller
             {
                 $employees[] = array(
                     'id' => $val->id,
-                    'label' => uppercaseCamelCaseWithSpaces($val->first_name).' '.uppercaseCamelCaseWithSpaces($val->last_name).' ( '.$val->employee_id.' )',
+                    // 'label' => uppercaseCamelCaseWithSpaces($val->first_name).' '.uppercaseCamelCaseWithSpaces($val->last_name).' ( '.$val->employee_id.' )',
+                    'label' => uppercaseCamelCaseWithSpaces($val->full_name).' ( '.$val->employee_id.' )',
                 );
             }
         }
