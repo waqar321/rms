@@ -114,7 +114,7 @@
                                                     @endif
 
                                                     @foreach($instructors as $instructor)
-                                                        <option value="{{ $instructor->id }}">{{ $instructor->first_name }}</option>
+                                                        <option value="{{ $instructor->id }}">{{ $instructor->full_name }}</option>
                                                     @endforeach 
                                             </select>
                                         </div>
