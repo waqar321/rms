@@ -296,29 +296,31 @@
                                                                 $AnswerCount=0;
                                                             @endphp 
 
-                                                            @foreach($answers as $key => $answer)
-                                                                @if($key != 'correctAnswer')
-                                                                    <div class="col-md-6 col-lg-6 form-group">
-                                                                        <div class="form-group">
-                                                                            <label for="{{ $key }}">{{ $key }}</label>
-                                                        
-                                                                            @php 
-                                                                                $RadioID = ($AnswerCount == 0) ? 'RadioAnswer'.$questionDiv : 'RadioAnswer'.$AnswerCount.$questionDiv;
-                                                                            @endphp  
-                                                        
-                                                                            
-                                                                            @if($key == $answers->correctAnswer)
-                                                                                <input type="radio" checked value="{{ $key }}" id="{{ $RadioID }}" name="{{ $questionDiv }}RadioAnswer"> <span class="checkmark"></span> 
-                                                                            @else 
-                                                                                <input type="radio" value="{{ $key }}" id="{{ $RadioID }}" name="{{ $questionDiv }}RadioAnswer"> <span class="checkmark"></span> 
-                                                                            @endif 
-                                                                            <input type="text"  value="{{ $answer }}" class="form-control" id="{{ $key }}" name="Answer1" placeholder="Enter Answer">
-                                                                        </div>
-                                                                    </div>    
+                                                           @if(!empty($answers)) 
+                                                                @foreach($answers as $key => $answer)
+                                                                    @if($key != 'correctAnswer')
+                                                                        <div class="col-md-6 col-lg-6 form-group">
+                                                                            <div class="form-group">
+                                                                                <label for="{{ $key }}">{{ $key }}</label>
+                                                            
+                                                                                @php 
+                                                                                    $RadioID = ($AnswerCount == 0) ? 'RadioAnswer'.$questionDiv : 'RadioAnswer'.$AnswerCount.$questionDiv;
+                                                                                @endphp  
+                                                            
+                                                                                
+                                                                                @if($key == $answers->correctAnswer)
+                                                                                    <input type="radio" checked value="{{ $key }}" id="{{ $RadioID }}" name="{{ $questionDiv }}RadioAnswer"> <span class="checkmark"></span> 
+                                                                                @else 
+                                                                                    <input type="radio" value="{{ $key }}" id="{{ $RadioID }}" name="{{ $questionDiv }}RadioAnswer"> <span class="checkmark"></span> 
+                                                                                @endif 
+                                                                                <input type="text"  value="{{ $answer }}" class="form-control" id="{{ $key }}" name="Answer1" placeholder="Enter Answer">
+                                                                            </div>
+                                                                        </div>    
 
-                                                                    @php $AnswerCount++; @endphp
-                                                                @endif
-                                                            @endforeach 
+                                                                        @php $AnswerCount++; @endphp
+                                                                    @endif
+                                                                @endforeach 
+                                                            @endif
                                                         @endif
 
                                                         @if($countQuestions != 0)
