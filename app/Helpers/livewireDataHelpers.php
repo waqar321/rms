@@ -46,25 +46,29 @@ function deleteFile($path)
 }
 function storeFile($path, $file)
 {
-    // $filename = $file->store($path, 'public');  // Store the file in the specified path
-    // $filenameOnly = basename($filename);        // Extract the filename without the path
-    // return $path . '/' . $filenameOnly;         // Set the storage type and file path in your model
+    // Store the file in the specified path
+    $filename = $file->store($path, 'public');
+    // Extract the filename without the path
+    $filenameOnly = basename($filename);
+    // Set the storage type and file path in your model
+    return $path . '/' . $filenameOnly;
 
-    // $file = $request->file('file_name');
-    $imagePath = null;
-    if ($file) 
-    // if (!empty($file)) .
-    {
-        // dd($file);
+    // upload on portal----------------
+    // // $file = $request->file('file_name');
+    // $imagePath = null;
+    // if ($file) 
+    // // if (!empty($file)) .
+    // {
+    //     // dd($file);
 
-        $imageResponse = ImageUploadOnLeopardsWebFtp($file);
-        dd($imageResponse);
+    //     $imageResponse = ImageUploadOnLeopardsWebFtp($file);
+    //     // dd($imageResponse);
 
-        $response = json_decode($imageResponse);
-        if ($response->success == true) {
-            $imagePath = $response->file_path;
-        }
-    }
+    //     $response = json_decode($imageResponse);
+    //     if ($response->success == true) {
+    //         $imagePath = $response->file_path;
+    //     }
+    // }
     
 }
 function ImageUploadOnLeopardsWebFtp($file)

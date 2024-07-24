@@ -32,12 +32,12 @@ class Index extends Component
         {
             $this->validate();            
         }
-        
         $this->updateFiles();
         
         $isInstructor = auth()->user()->roles->where('title', 'instructor')->count();  //if logged in user is admin
         
         $this->ecom_course->instructor_id = $isInstructor ? auth()->user()->id : $this->ecom_course->instructor_id; 
+
 
         $this->ecom_course->save();
         $name = $this->ecom_course->name;
@@ -101,6 +101,8 @@ class Index extends Component
             ]); 
             $this->ecom_course->url_document = $this->document_url;
         }    
+
+
     }
    
 }
