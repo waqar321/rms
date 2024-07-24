@@ -11,8 +11,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class CoursesRegistered extends Model
 {
 
-    // use HasFactory, SoftDeletes, CommonRelations;
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, CommonRelations;
+    // use HasFactory, SoftDeletes;
 
     protected $table = 'course_registered';
     
@@ -21,9 +21,9 @@ class CoursesRegistered extends Model
         'user_id',
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(ecom_admin_user::class);
-    }
+    // public function user()
+    // {
+    //     return $this->belongsTo(ecom_admin_user::class);
+    // }
     
 }
