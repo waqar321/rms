@@ -16,6 +16,7 @@ use Yajra\DataTables\DataTables;
 use DateTime;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\Admin\CourseRequest;
+use Illuminate\Support\Facades\Log;
 
 class CourseController extends Controller
 {
