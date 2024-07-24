@@ -17,6 +17,7 @@ use DateTime;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\Admin\CourseRequest;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class CourseController extends Controller
 {
