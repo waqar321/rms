@@ -525,7 +525,7 @@ class DataListController extends Controller
             {
                 $employees[] = array(
                     'id' => $val->id,
-                    'label' => uppercaseCamelCaseWithSpaces($val->first_name).uppercaseCamelCaseWithSpaces($val->last_name).' ( '.$val->employee_id.' )',
+                    'label' => uppercaseCamelCaseWithSpaces($val->first_name).' '.uppercaseCamelCaseWithSpaces($val->last_name).' ( '.$val->employee_id.' )',
                 );
             }
         }
