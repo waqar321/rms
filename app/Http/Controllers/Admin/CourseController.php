@@ -74,7 +74,26 @@ class CourseController extends Controller
                 $CoursesRegistered->course_id = $ecom_course->id; 
                 $CoursesRegistered->user_id = auth()->user()->id;
                 // dd($CoursesRegistered);
+                // $CoursesRegistered->save();
+
+                // Debugging information
+                Log::info('Attempting to save new course registration', [
+                    'course_id' => $ecom_course->id,
+                    'user_id' => auth()->user()->id,
+                ]);
+
+                // Check if user exists
+                $userExists = DB::table('ecom_admin_user')->where('id', auth()->user()->id)->exists();
+                if (!$userExists) {
+                    Log::error('User ID does not exist in ecom_admin_user', [
+                        'user_id' => auth()->user()->id,
+                    ]);
+                    throw new Exception('User ID does not exist in ecom_admin_user');
+                }
+                
                 $CoursesRegistered->save();
+
+                
             }
 
             return redirect()->route('MyCourse');
