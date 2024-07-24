@@ -66,6 +66,8 @@ class CourseController extends Controller
             
             $already = CoursesRegistered::where('course_id', $ecom_course->id)->where('user_id', auth()->user()->id)->count();
             
+            dd($already);
+
             if($already == 0 )
             {
                 $CoursesRegistered = new CoursesRegistered();
