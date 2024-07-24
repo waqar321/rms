@@ -72,7 +72,8 @@
                           
                                    <option value="" disabled selected style="color: #131212 !important">Select Instructor </option>      
                                     @forelse($instructors as $instructor)    
-                                        <option value="{{ $instructor->id }}">{{ $instructor->first_name }} {{ $instructor->last_name }}  </option>
+                                        
+                                        <option value="{{ $instructor->id }}">{{ $instructor->full_name }}  </option>
                                     @empty 
 
                                     @endforelse 

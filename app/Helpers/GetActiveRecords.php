@@ -117,15 +117,8 @@ function GetAllInstructors()
 {
     return ecom_admin_user::where('is_active', '1')
                             ->where('is_deleted', '0')
-                            ->instructors()
+                            ->Instructors()
                             ->get();
-
-    // return  ecom_admin_user::where('is_active', '1')
-    //                         ->where('is_deleted', '0')
-    //                         ->whereHas('role', function ($query) {
-    //                             $query->where('role_name', 'Instructor');
-    //                         })
-    //                         ->get();
 }
 function GetAllInstructorsCount()
 {

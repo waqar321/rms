@@ -63,6 +63,9 @@ class Index extends Component
     }
     public function render()
     {   
+        
+       
+
         $this->Collapse = $this->hasErrors() ? "uncollapse" : $this->Collapse;
         return view('livewire.admin.course-assign.index', $this->RenderData());
     }
