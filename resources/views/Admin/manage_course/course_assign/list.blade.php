@@ -84,7 +84,7 @@
                                             </td>
 
                                             <td>
-                                                <a data-screen-permission-id="38" href="{{ url_secure_api('content-management/assign_course?id=') . base64_encode($assign_course->id) }}" class="btn btn-primary">Edit</a>
+                                                <!-- <a data-screen-permission-id="38" href="{{ url_secure_api('content-management/assign_course?id=') . base64_encode($assign_course->id) }}" class="btn btn-primary">Edit</a> -->
                                                 <button data-screen-permission-id="39" onclick="confirmDelete('{{ $assign_course->id }}')" class="btn btn-danger">Delete</button>
                                                 
                                                 @if ($assign_course->upload_csv)
