@@ -215,15 +215,13 @@ class LectureApiController extends Controller
                 200
             );
 
-
-
             if((getUserLectureAssessment($lecture) == 'oneAndPass') || (getUserLectureAssessment($lecture) > $lecture->passing_ratio))
             {
-                $LectureUserRecords->update(['status' => 1]);                    
+                $LectureUserRecords->status = 1;                    
             }
             else
             {
-                $LectureUserRecords->update(['status' => 0]);
+                $LectureUserRecords->status = 0;
             }
 
             $LectureUserRecords->save();
