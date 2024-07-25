@@ -478,19 +478,22 @@
                     console.log("Assessment Level: " + assessmentLevel);
                     console.log("Assessment Time: " + assessmentTime);
                     
-                    assessment.questions.forEach(function(question) {
-                        var questionText = question.question;
-                        var answer1 = JSON.parse(question.answer).Answer1;
-                        var answer2 = JSON.parse(question.answer).Answer2;
-                        var answer3 = JSON.parse(question.answer).Answer3;
-                        var answer4 = JSON.parse(question.answer).Answer4;
-                        
-                        console.log("Question: " + questionText);
-                        console.log("Answer 1: " + answer1);
-                        console.log("Answer 2: " + answer2);
-                        console.log("Answer 3: " + answer3);
-                        console.log("Answer 4: " + answer4);
-                    });
+                    if (assessment && assessment.questions) 
+                    {
+                        assessment.questions.forEach(function(question) {
+                            var questionText = question.question;
+                            var answer1 = JSON.parse(question.answer).Answer1;
+                            var answer2 = JSON.parse(question.answer).Answer2;
+                            var answer3 = JSON.parse(question.answer).Answer3;
+                            var answer4 = JSON.parse(question.answer).Answer4;
+                            
+                            console.log("Question: " + questionText);
+                            console.log("Answer 1: " + answer1);
+                            console.log("Answer 2: " + answer2);
+                            console.log("Answer 3: " + answer3);
+                            console.log("Answer 4: " + answer4);
+                        });
+                    }
                 });
             }
             
