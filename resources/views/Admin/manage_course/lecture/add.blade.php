@@ -545,13 +545,13 @@
                 // console.log(passing_ratio_id.val() == '')
 
                 if(passing_ratio_id.val() == '')
-                {
-                    
+                {                    
                     Swal.fire({
                         icon: 'error', 
                         title: 'Oops...',
                         text: 'Please enter passing % for this lecture',
                     });
+                    console.log('value is null')
                     return false;
                 }
             }

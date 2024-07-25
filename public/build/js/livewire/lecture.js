@@ -126,8 +126,6 @@ function GetFinalData()
     
     var K=0;
    
-
-
     $('[id^="AssessmentDiv"]').each(function(i) 
     {
         K++;
