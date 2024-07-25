@@ -207,13 +207,13 @@ class LectureApiController extends Controller
             $LectureUserRecords->lecture_id = $request->lecture_id;
             $LectureUserRecords->user_id = auth()->id();
 
-            return response()->json([
-                    'status' => 200, 
-                    'requestData' => (getUserLectureAssessment($lecture) == 'oneAndPass') || (getUserLectureAssessment($lecture) > $lecture->passing_ratio), 
-                    'message' => 'user lecture status update successfully'
-                ], 
-                200
-            );
+            // return response()->json([
+            //         'status' => 200, 
+            //         'requestData' => (getUserLectureAssessment($lecture) == 'oneAndPass') || (getUserLectureAssessment($lecture) > $lecture->passing_ratio), 
+            //         'message' => 'user lecture status update successfully'
+            //     ], 
+            //     200
+            // );
 
             if((getUserLectureAssessment($lecture) == 'oneAndPass') || (getUserLectureAssessment($lecture) > $lecture->passing_ratio))
             {
