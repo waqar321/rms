@@ -190,51 +190,52 @@ class LectureApiController extends Controller
         $lecture = ecom_lecture::where('id', $request->lecture_id)->first();
         $LectureUserRecords = LectureUserRecords::where('lecture_id', $request->lecture_id)->where('user_id', auth()->id())->first();
 
-        // return response()->json([
-        //         'status' => 200, 
-        //         'requestData' => getUserLectureAssessment($lecture), 
-        //         'message' => 'user lecture status update successfully'
-        //     ], 
-        //     200
-        // );
-
-            if($LectureUserRecords && (!$LectureUserRecords->status == 1)) 
+        if($LectureUserRecords && (!$LectureUserRecords->status == 1)) 
+        {
+            if((getUserLectureAssessment($lecture) == 'oneAndPass') || (getUserLectureAssessment($lecture) > $lecture->passing_ratio))
             {
-                if((getUserLectureAssessment($lecture) == 'oneAndPass') || (getUserLectureAssessment($lecture) > $lecture->passing_ratio))
-                {
-                    $LectureUserRecords->update(['status' => 1]);                    
-                }
-                else
-                {
-                    $LectureUserRecords->update(['status' => 0]);
-                }
+                $LectureUserRecords->update(['status' => 1]);                    
             }
             else
-            {                                
-                $LectureUserRecords = new LectureUserRecords();
-                $LectureUserRecords->lecture_id = $request->lecture_id;
-                $LectureUserRecords->user_id = auth()->id();
-
-
-                if((getUserLectureAssessment($lecture) == 'oneAndPass') || (getUserLectureAssessment($lecture) > $lecture->passing_ratio))
-                {
-                    $LectureUserRecords->update(['status' => 1]);                    
-                }
-                else
-                {
-                    $LectureUserRecords->update(['status' => 0]);
-                }
-
-                $LectureUserRecords->save();
+            {
+                $LectureUserRecords->update(['status' => 0]);
             }
-
+        }
+        else
+        {                                
+            $LectureUserRecords = new LectureUserRecords();
+            $LectureUserRecords->lecture_id = $request->lecture_id;
+            $LectureUserRecords->user_id = auth()->id();
 
             return response()->json([
-                        'status' => 200, 
-                        'requestData' => $request->all(), 
-                        'message' => 'user lecture status update successfully'
-                    ], 
-                    200
-                );
+                    'status' => 200, 
+                    'requestData' => (getUserLectureAssessment($lecture) == 'oneAndPass') || (getUserLectureAssessment($lecture) > $lecture->passing_ratio), 
+                    'message' => 'user lecture status update successfully'
+                ], 
+                200
+            );
+
+
+
+            if((getUserLectureAssessment($lecture) == 'oneAndPass') || (getUserLectureAssessment($lecture) > $lecture->passing_ratio))
+            {
+                $LectureUserRecords->update(['status' => 1]);                    
+            }
+            else
+            {
+                $LectureUserRecords->update(['status' => 0]);
+            }
+
+            $LectureUserRecords->save();
+        }
+
+
+        return response()->json([
+                    'status' => 200, 
+                    'requestData' => $request->all(), 
+                    'message' => 'user lecture status update successfully'
+                ], 
+                200
+            );
     }
 }
