@@ -538,11 +538,12 @@
 
             if($('#AssessmentButton').css('display') == 'none')
             {        
-                var passing_ratio_id = $('#passing_ratio_id');
+                var passing_ratio_id = $('#passing_ratio');
 
                 console.log(typeof passing_ratio_id.val())
+                console.log(passing_ratio_id.val())
                 console.log(passing_ratio_id.val() == '')
-                
+
                 if(passing_ratio_id.val() == '')
                 {
                     
