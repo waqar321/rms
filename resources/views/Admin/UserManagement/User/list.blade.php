@@ -53,7 +53,7 @@
                     <div class="col-md-3 col-lg-3">
                         <input type="search" wire:model="searchByEmployeeCity" class="form-control" placeholder="Search By Employee City...">
                     </div>
-                    <div  class="col-md-1 col-lg-1">
+                    <div  class="col-md-2 col-lg-2">
                         <button type="button" wire:click="resetInput(true)" class="btn btn-danger SearchButton" style="width: 130px;">
                             Clear Filter
                             <i class="fa fa-search"></i>

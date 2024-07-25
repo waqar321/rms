@@ -8,7 +8,7 @@
                         <div class="col-md-4 col-lg-4">
                             <input type="search" wire:model="zone_name" class="form-control" placeholder="Search Zone Name...">
                         </div>
-                        <div  class="col-md-1 col-lg-1">
+                          <div  class="col-md-2 col-lg-2">
                             <button type="button" wire:click="resetInput(true)" class="btn btn-danger SearchButton">
                                 Clear
                                 <i class="fa fa-search"></i>

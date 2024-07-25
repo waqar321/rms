@@ -194,11 +194,11 @@ trait LectureComponent
         }
         if(isset($ecom_lecture->local_document))
         {
-
             deleteFile($ecom_lecture->local_document);
         }
-        $ecom_lecture->delete();    
 
+        $ecom_lecture->delete();    
+        $this->courses = GetAllCourses();
         $this->dispatchBrowserEvent('deleted_scene', ['name' => $ecom_lecture->name]);
     }
     public function updateStatus(ecom_lecture $ecom_lecture, $toggle)

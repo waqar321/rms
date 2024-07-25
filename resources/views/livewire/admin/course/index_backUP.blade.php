@@ -235,7 +235,7 @@
                                     <div class="col-md-7 col-lg-7">
                                         <input type="search" wire:model="searchByName" class="form-control" placeholder="Search By Name...">
                                     </div>
-                                    <div  class="col-md-1 col-lg-1">
+                                    <div  class="col-md-2 col-lg-2">
                                         <button type="button" wire:click="resetInput(true)" class="btn btn-danger">
                                             Clear
                                          <i class="fa fa-search"></i>

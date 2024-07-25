@@ -20,10 +20,32 @@
         }
 
 
+        .card-deck .card {
+            /* Ensure cards in the same row have the same height */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card-body {
+            flex: 1 1 auto;
+        }
+        .card-text
+        {
+            padding-bottom: 24px;
+        }
+        .WatchButtonCss
+        {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translate(-50%);
+            align-self: end;
+            width: 130px;
+        }
         .status-passed {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: -10px;
+            right: 5px;
             background-color: green;
             color: white;
             padding: 5px 10px;
@@ -33,8 +55,8 @@
 
         .status-failed {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: -10px;
+            right: 5px;
             background-color: red;
             color: white;
             padding: 5px 10px;
@@ -44,8 +66,8 @@
 
         .status-pending {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: -10px;
+            right: 5px;
             background-color: #0005ff;
             color: white;
             padding: 5px 10px;
@@ -78,7 +100,7 @@
                                         <div class="col-md-4 col-lg-4">
                                             <input type="search" wire:model="title" class="form-control" placeholder="Search By Name...">
                                         </div>
-                                        <div  class="col-md-1 col-lg-1">
+                                        <div  class="col-md-2 col-lg-2">
                                             <button type="button" wire:click="resetInput(true)" class="btn btn-danger SearchButton">
                                                 Clear
                                                 <i class="fa fa-search"></i>
@@ -104,100 +126,119 @@
 
                                     <div class="container-fluid">
                                         <div class="row">
-                                            
-                                            <div class="col-lg-9"> 
-                                                <!-- ------------------- 1 ------------------------ -->
-                                                @forelse($courseLectures as $key => $courseLecture)
 
-                                                    @if(CheckAlignment($courseLecture->course, 'course'))
-                                                                                    
-                        
-                                                        <div class="col-lg-3" style="padding-top: 10px;">
-                                                            <div class="card text-center">
+                                        <!-- <div class="col-lg-9">
+                                            <div class="card-deck">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h5 class="card-title">Card 1</h5>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <p class="card-text">This is a longer description to demonstrate equal card height in a card deck layout. This is a longer description to demonstrate equal card height in a card deck layout. This is a longer description to demonstrate equal card height in a card deck layout.</p>
+                                                            </div>
+                                                            <div class="card-footer">
+                                                                <small class="text-muted">Last updated 3 mins ago</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h5 class="card-title">Card 2</h5>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <p class="card-text">Short description.</p>
+                                                            </div>
+                                                            <div class="card-footer">
+                                                                <small class="text-muted">Last updated 5 mins ago</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h5 class="card-title">Card 3</h5>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <p class="card-text">Another description to demonstrate equal card height.</p>
+                                                            </div>
+                                                            <div class="card-footer">
+                                                                <small class="text-muted">Last updated 10 mins ago</small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                        </div> -->
+
+                                            <div class="col-lg-9"> 
+                                                <div class="card-deck">
+
+                                                    <!-- ------------------- 1 ------------------------ -->
+                                                    @forelse($courseLectures as $key => $courseLecture)
+
+                                                        @if(CheckAlignment($courseLecture->course, 'course'))
+                                                              
+                                                            <div class="card">
                                                                 <div class="card-header">
                                                                         @if(isset($courseLecture->title))
                                                                             {{ $courseLecture->course->name }} 
                                                                         @endif 
                                                                 </div> 
-                                                                
-                                                                    <div class="card-body">
-                                                                        <h5 class="card-title">{{ $courseLecture->title ?? 'not found '}} </h5>
-                                                                        <p class="card-text" style="padding: 15px;">{{ $courseLecture->description ?? 'not found '}}</p>
+                                                            
+                                                                <div class="card-body text-center">
+                                                                    <h5 class="card-title">{{ $courseLecture->title ?? 'not found '}} </h5>
+                                                                    <p class="card-text">{{ $courseLecture->description ?? 'not found '}}</p>
 
-                                                                            @if($courseLecture->local_video != null)
-                                                                                <!-- <a href="{{ asset('storage/'.$courseLecture->local_video) }}" class="btn btn-primary"> -->
-                                                                                <a href="{{ url_secure('content-management/courseList/lectureView?id=') . base64_encode($courseLecture->id) }}" class="btn btn-primary">       
-                                                                                    Watch Video
-                                                                                </a>
-                                                                            @elseif($courseLecture->url_video != null )
-                                                                                <!-- <a href="{{ asset('storage/'.$courseLecture->url_video) }}" class="btn btn-primary"> -->
-                                                                                <a href="{{ url_secure('content-management/courseList/lectureView?id=') . base64_encode($courseLecture->id) }}" class="btn btn-primary">       
-                                                                                    Watch Video
-                                                                                </a>
-                                                                            @else   
-                                                                                @if($courseLecture->course_image)
-                                                                                    <img src="{{ asset('/storage/'.$courseLecture->course_image) }}" style="width: 70px; height: 45px;" class="me-4" alt="Img">
-                                                                                @endif
-                                                                            @endif 
-
-                                                                                <!-- <a href="#" class="btn btn-primary"> -->
-                                                                                        <!-- <video width="200px" 
-                                                                                                height="200px" 
-                                                                                                controls="controls">
-                                                                                            <source 
-                                                                                                    src=
-                                                                                    "https://media.geeksforgeeks.org/wp-content/uploads/20231020155223/
-                                                                                    Full-Stack-Development-_-LIVE-Classes-_-GeeksforGeeks.mp4" 
-                                                                                                    type="video/mp4" />
-                                                                                        </video> -->
-                                                                                <!-- </a> -->
-                                                                    </div>
-                                                                </a>
-
+                                                                        @if($courseLecture->local_video != null)
+                                                                            <!-- <a href="{{ asset('storage/'.$courseLecture->local_video) }}" class="btn btn-primary"> -->
+                                                                            <a href="{{ url_secure('content-management/courseList/lectureView?id=') . base64_encode($courseLecture->id) }}" class="btn btn-primary WatchButtonCss ">       
+                                                                                Watch Video
+                                                                            </a>
+                                                                        @elseif($courseLecture->url_video != null )
+                                                                            <!-- <a href="{{ asset('storage/'.$courseLecture->url_video) }}" class="btn btn-primary WatchButtonCss"> -->
+                                                                            <a href="{{ url_secure('content-management/courseList/lectureView?id=') . base64_encode($courseLecture->id) }}" class="btn btn-primary WatchButtonCss">       
+                                                                                Watch Video
+                                                                            </a>
+                                                                        @else   
+                                                                            @if($courseLecture->course_image)
+                                                                                <img src="{{ asset('/storage/'.$courseLecture->course_image) }}" style="width: 70px; height: 45px;" class="me-4" alt="Img">
+                                                                            @endif
+                                                                        @endif 
+                                                                </div>
+                                                        
                                                                 <div class="card-footer text-muted">
                                                                     <td>{{ getTimeDifference($courseLecture->created_at) }}</td>
                                                                 </div>
-                                                                
-                                                            </div>
 
-                                                            
-                                                            
-                                                            @if($courseLecture->QuestionLevels->isNotEmpty())                                                            
-                                                                @if($courseLecture->LectureUserStatus)
-                                                                    @if($courseLecture->LectureUserStatus->status)
-                                                                        <span class="status-passed">
-                                                                            Passed
-                                                                        </span>
+                                                                @if($courseLecture->QuestionLevels->isNotEmpty())                                                            
+                                                                    @if($courseLecture->LectureUserStatus)
+                                                                        @if($courseLecture->LectureUserStatus->status)
+                                                                            <span class="status-passed">
+                                                                                Passed
+                                                                            </span>
+                                                                        @else 
+                                                                        <span class="status-failed">
+                                                                                Failed
+                                                                            </span>
+                                                                        @endif 
                                                                     @else 
-                                                                    <span class="status-failed">
-                                                                            Failed
+                                                                        <span class="status-pending">
+                                                                            Pending
                                                                         </span>
-                                                                    @endif 
-    
+                                                                    @endif
                                                                 @else 
-                                                                    <span class="status-pending">
-                                                                        Pending
-                                                                    </span>
+                                                                    <!-- <span class="status-pending">
+                                                                        For You 
+                                                                    </span> -->
                                                                 @endif
-                                                            @else 
-                                                                <!-- <span class="status-pending">
-                                                                    For You 
-                                                                </span> -->
-                                                            @endif
+                                                            </div>                                                      
+                                                        @endif 
+                                                    @empty 
+                                                        <div class="col-lg-12 text-center" style="argin-top: 100px;">
+                                                            <div class="text-center">
+                                                                <a class="dropdown-item">
+                                                                    <strong>No Lectures Uplaoded Yet !!!</strong>
+                                                                    <i class="fa fa-angle-right"></i>
+                                                                </a>
+                                                            </div>
                                                         </div>
-
-                                                    @endif 
-                                                @empty 
-                                                    <div class="col-lg-12 text-center" style="argin-top: 100px;">
-                                                        <div class="text-center">
-                                                            <a class="dropdown-item">
-                                                                <strong>No Lectures Uplaoded Yet !!!</strong>
-                                                                <i class="fa fa-angle-right"></i>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                @endforelse 
-
+                                                    @endforelse 
+                                                </div>
                                             </div>
                                             <div class="col-lg-3" style="height: 292px;">
                                                 <div>
