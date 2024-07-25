@@ -201,7 +201,11 @@
                             <div class="col-md-6 col-lg-6" id="passing_ratio_id">
                                 <div class="form-group">
                                     <label for="passing_ratio">Passing % </label>
-                                    <input type="text" wire:model.debounce.500ms="ecom_lecture.passing_ratio" class="form-control" id="passing_ratio" name="passing_ratio" placeholder="Enter Course Passing % On the basis of Questions">
+                                    <input type="number" min="30" max="100" step="1" wire:model.debounce.500ms="ecom_lecture.passing_ratio" class="form-control" id="passing_ratio" name="passing_ratio" placeholder="Enter Course Passing % On the basis of Questions">
+                                    <small id="passing_ratio_help" class="form-text text-muted">
+                                        Enter a percentage between 30 and 100.
+                                    </small>
+                                
                                 </div>
                             </div>
 
@@ -539,19 +543,24 @@
             if($('#AssessmentButton').css('display') == 'none')
             {        
                 var passing_ratio_id = $('#passing_ratio');
-
-                // console.log(typeof passing_ratio_id.val())
-                // console.log(passing_ratio_id.val())
-                // console.log(passing_ratio_id.val() == '')
+                var RatioError='';
 
                 if(passing_ratio_id.val() == '')
-                {                    
+                {             
+                    RatioError = 'Please enter passing % for this lecture';        
+                }
+                else if(passing_ratio_id.val() > 100 || passing_ratio_id.val() < 30) 
+                {
+                    RatioError = 'Passing Ratio Must Be Between 30 and 100';             
+                }
+
+                if(RatioError !== '')
+                {
                     Swal.fire({
                         icon: 'error', 
                         title: 'Oops...',
-                        text: 'Please enter passing % for this lecture',
+                        text: RatioError,
                     });
-                    console.log('value is null')
                     return false;
                 }
             }
