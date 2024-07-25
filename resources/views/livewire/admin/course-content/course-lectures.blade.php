@@ -224,10 +224,6 @@
                                                                             Pending
                                                                         </span>
                                                                     @endif
-                                                                @else 
-                                                                    <!-- <span class="status-pending">
-                                                                        For You 
-                                                                    </span> -->
                                                                 @endif
                                                             </div>                                                      
                                                         @endif 

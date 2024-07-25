@@ -158,6 +158,7 @@ class LectureApiController extends Controller
                                                         ->where('question_level', $Question['question'])
                                                         ->where('user_id', auth()->id())
                                                         ->first();
+                                                        
                                                                 // ->get(['assessment_level', 'question_level', 'status']);
                                                                 // ->toarray();
             if($assessmentStatus) 
@@ -166,7 +167,6 @@ class LectureApiController extends Controller
             }
             else
             {
-    
                 $LectureAssessmentStatus = new LectureAssessmentStatus();
                 $LectureAssessmentStatus->lecture_id = $Question['lecture_id'];
                 $LectureAssessmentStatus->assessment_level = $Question['assessmentlevel'];
@@ -187,19 +187,22 @@ class LectureApiController extends Controller
     public function UpdateUserLectureResult(Request $request)
     {
         
-        $courseLecture = ecom_lecture::where('id', $request->lecture_id)->first();
+        $lecture = ecom_lecture::where('id', $request->lecture_id)->first();
         $LectureUserRecords = LectureUserRecords::where('lecture_id', $request->lecture_id)->where('user_id', auth()->id())->first();
 
         if($LectureUserRecords) 
         {
-            if(getUserLectureAssessment($courseLecture) !== false && getUserLectureAssessment($courseLecture) > 50)
+            if(!$LectureUserRecords->status == 1)
             {
-                $LectureUserRecords->update(['status' => 1]);
-            }
-            else
-            {
-                $LectureUserRecords->update(['status' => 0]);
-            }
+                if(getUserLectureAssessment($lecture) !== false && getUserLectureAssessment($lecture) > $lecture->passing_ratio)
+                {
+                    $LectureUserRecords->update(['status' => 1]);
+                }
+                else
+                {
+                    $LectureUserRecords->update(['status' => 0]);
+                }
+            } 
         }
         else
         {                
@@ -207,7 +210,7 @@ class LectureApiController extends Controller
             $LectureUserRecords->lecture_id = $request->lecture_id;
             $LectureUserRecords->user_id = auth()->id();
 
-            if(getUserLectureAssessment($courseLecture) !== false && getUserLectureAssessment($courseLecture) > 50)
+            if(getUserLectureAssessment($lecture) !== false && getUserLectureAssessment($lecture) > 50)
             {
                 $LectureUserRecords->status = 1;
             }

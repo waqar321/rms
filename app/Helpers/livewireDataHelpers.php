@@ -825,78 +825,105 @@ function CheckAlignment($model, $tablename)
 
 }
 
-function GetPercentageOfAssessment($assessment, $passing_ratio)
-{
-    $totalQuestions = $assessment->count();
-    // Calculate the number of correct answers
-    $correctAnswers = $assessment->where('status', 1)->count();
-    
-    // Calculate the percentage of correct answers
-    $percentage = ($totalQuestions > 0) ? ($correctAnswers / $totalQuestions) * 100 : 0;
-    
-    // Define the passing rate
-    // $passingRate = 50;
-    $passingRate = $passing_ratio;
-    
-    // Check if the percentage meets or exceeds the passing rate
-    $isPassed = $percentage >= $passingRate;
-    
-    // Output the results
-    // echo "assessment: "."<br>";
-    // echo "Total Questions: $totalQuestions\n"."<br>";
-    // echo "Correct Answers: $correctAnswers\n"."<br>";
-    // echo "Percentage: $percentage%\n"."<br>";
-    // echo $isPassed ? "Passed" : "Failed <br>";
-
-}
 function getUserLectureAssessment($lecture)
 {
-    $assessments = collect([
-        $lecture->AssessmentStatus->where('user_id', auth()->id())->where('assessment_level', 1)->map(function ($item) {
+
+    // get each lecture's assessment's question's statuses 
+    $assessments_with_questions = collect([
+        $lecture->AssessmentStatus->where('user_id', auth()->id())->where('assessment_level', 1)->map(function ($item) 
+        {
             return ['question_level' => $item->question_level, 'status' => $item->status];
         }),
-        $lecture->AssessmentStatus->where('user_id', auth()->id())->where('assessment_level', 2)->map(function ($item) {
+        $lecture->AssessmentStatus->where('user_id', auth()->id())->where('assessment_level', 2)->map(function ($item) 
+        {
             return ['question_level' => $item->question_level, 'status' => $item->status];
         }),
-        $lecture->AssessmentStatus->where('user_id', auth()->id())->where('assessment_level', 3)->map(function ($item) {
+        $lecture->AssessmentStatus->where('user_id', auth()->id())->where('assessment_level', 3)->map(function ($item) 
+        {
             return ['question_level' => $item->question_level, 'status' => $item->status];
         }),
-        $lecture->AssessmentStatus->where('user_id', auth()->id())->where('assessment_level', 4)->map(function ($item) {
+        $lecture->AssessmentStatus->where('user_id', auth()->id())->where('assessment_level', 4)->map(function ($item) 
+        {
             return ['question_level' => $item->question_level, 'status' => $item->status];
         })
     ]);
 
     $totalQuestions = 0;
     $totalCorrectAnswers = 0;
+    $totalPassedAssessments = 0;
+    $totalFailedAssessments = 0;
 
-    foreach ($assessments as $assessment) 
+    foreach ($assessments_with_questions as $assessmentQuestions) 
     {
-        if ($assessment->isNotEmpty()) 
+        if ($assessmentQuestions->isNotEmpty()) 
         {
-            list($percentage, $isPassed) = GetPercentageOfAssessment($assessment, $lecture->passing_ratio);
-            $totalQuestions += $assessment->count();
-            $totalCorrectAnswers += $assessment->where('status', 1)->count();
-            echo "<br><br><br>";
+            
+            // list($percentage, $isPassed) = GetPercentageOfAssessment($assessmentQuestions, $lecture->passing_ratio);
+            // dd($assessmentQuestions, 'Passing rate: '. $lecture->passing_ratio, GetPercentageOfAssessment($assessmentQuestions, $lecture->passing_ratio));
+
+            //---------------- assessment passed or not according to lecture percentage--------------------
+            $isPassed = GetPercentageOfAssessment($assessmentQuestions, $lecture->passing_ratio);
+            
+            if($isPassed)
+            {
+                $totalPassedAssessments++;
+            }
+            else
+            {
+                $totalFailedAssessments++;
+            }
+
+            // $totalQuestions += $assessmentQuestions->count();
+            // $totalCorrectAnswers += $assessmentQuestions->where('status', 1)->count();
+            // echo "<br><br><br>";
             
         }
     }
 
-    if ($totalQuestions > 0) 
+    if ($totalPassedAssessments > 0) 
     {
-        $overallPercentage = ($totalCorrectAnswers / $totalQuestions) * 100;
+        // 
+        // 
+
+        // $overallPercentage = ($totalCorrectAnswers / $totalQuestions) * 100;
+        $overallPercentage = ($totalPassedAssessments / $totalFailedAssessments) * 100;
         // $overallPassed = $overallPercentage >= 50;
-        $overallPassed = $overallPercentage >= $lecture->passing_ratio;
+        $AssessmentPassingRatio = $overallPercentage >= $lecture->passing_ratio;
         
         // echo "Overall Assessment:<br>";
         // echo "Total Questions: $totalQuestions<br>";
         // echo "Correct Answers: $totalCorrectAnswers<br>";
         // echo "Overall Percentage: $overallPercentage%<br>";
         // echo $overallPassed ? "Overall Passed<br>" : "Overall Failed<br>";
-        return $overallPercentage;
+        return $AssessmentPassingRatio;
     }
     else
     {
         // echo "No assessments found.<br>";
         return false;
     }
+}
+
+function GetPercentageOfAssessment($assessmentQuestions, $passingRate)
+{
+    $totalQuestions = $assessmentQuestions->count();
+
+    // Calculate the number of correct answers
+    $correctAnswers = $assessmentQuestions->where('status', 1)->count();
+    
+    // Calculate the percentage of correct answers
+    $percentage = ($totalQuestions > 0) ? ($correctAnswers / $totalQuestions) * 100 : 0;
+    // echo $percentage."<br>";
+    
+    // Check if the percentage meets or exceeds the passing rate
+    $isPassed = $percentage >= $passingRate; // $passingRate = 50;
+    
+    return $isPassed;
+    // Output the results
+    // echo "assessmentQuestions: "."<br>";
+    // echo "Total Questions: $totalQuestions\n"."<br>";
+    // echo "Correct Answers: $correctAnswers\n"."<br>";
+    // echo "Percentage: $percentage%\n"."<br>";
+    // echo $isPassed ? "Passed" : "Failed <br>";
+
 }
