@@ -536,6 +536,8 @@
         {
             event.preventDefault();
 
+            alert($('#AssessmentButton').css('display') == 'none');
+            return false;
             
             // var passing_ratio_id = $('#passing_ratio_id');
 
