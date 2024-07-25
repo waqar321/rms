@@ -859,6 +859,7 @@ function getUserLectureAssessment($lecture)
             $totalQuestions = $assessmentQuestions->count();
             $correctAnswers = $assessmentQuestions->where('status', 1)->count(); // Calculate the number of correct answers
             $percentage = ($totalQuestions > 0) ? ($correctAnswers / $totalQuestions) * 100 : 0; // Calculate the percentage of correct answers
+            return $percentage;
             $isPassed = $percentage >= $lecture->passing_ratio; // $passingRate = 50;              // Check if the percentage meets or exceeds the passing rate
             
             if($isPassed)
