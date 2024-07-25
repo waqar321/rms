@@ -198,9 +198,7 @@ class LectureApiController extends Controller
         //     200
         // );
 
-        if(!$LectureUserRecords->status == 1)
-        {
-            if($LectureUserRecords) 
+            if($LectureUserRecords && (!$LectureUserRecords->status == 1)) 
             {
                 // if(((getUserLectureAssessment($lecture) !== false) && (getUserLectureAssessment($lecture) == 'oneAndPass')) || getUserLectureAssessment($lecture) > $lecture->passing_ratio) 
                 if(getUserLectureAssessment($lecture) !== false) 
@@ -217,27 +215,26 @@ class LectureApiController extends Controller
                 $LectureUserRecords = new LectureUserRecords();
                 $LectureUserRecords->lecture_id = $request->lecture_id;
                 $LectureUserRecords->user_id = auth()->id();
-
-                if(getUserLectureAssessment($lecture) !== false && getUserLectureAssessment($lecture) > 50)
+                
+                if(getUserLectureAssessment($lecture) !== false) 
                 {
-                    $LectureUserRecords->status = 1;
+                    $LectureUserRecords->update(['status' => 0]);
                 }
-                else
+                elseif((getUserLectureAssessment($lecture) == 'oneAndPass') || (getUserLectureAssessment($lecture) > $lecture->passing_ratio))
                 {
-                    $LectureUserRecords->status = 0;
+                    $LectureUserRecords->update(['status' => 1]);                    
                 }
 
                 $LectureUserRecords->save();
             }
-        }
 
 
-        return response()->json([
-                    'status' => 200, 
-                    'requestData' => $request->all(), 
-                    'message' => 'user lecture status update successfully'
-                ], 
-                200
-            );
+            return response()->json([
+                        'status' => 200, 
+                        'requestData' => $request->all(), 
+                        'message' => 'user lecture status update successfully'
+                    ], 
+                    200
+                );
     }
 }
