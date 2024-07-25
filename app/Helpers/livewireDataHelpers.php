@@ -871,7 +871,7 @@ function getUserLectureAssessment($lecture)
             }            
         }
     }
-    return $totalPassedAssessments;
+    return $totalFailedAssessments;
     if ($totalFailedAssessments > 0) 
     {
         $overallPercentage = ($totalPassedAssessments / $totalFailedAssessments) * 100;
