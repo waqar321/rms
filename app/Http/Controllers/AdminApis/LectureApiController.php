@@ -216,7 +216,7 @@ class LectureApiController extends Controller
 
             $totalPassedAssessments = 0;
             $totalFailedAssessments = 0;
-            
+
                 // get each lecture's assessment's question's statuses 
                 $assessments_with_questions = collect([
                     $lecture->AssessmentStatus->where('user_id', auth()->id())->where('assessment_level', 1)->map(function ($item) 
@@ -250,11 +250,11 @@ class LectureApiController extends Controller
                         
                         if($isPassed)
                         {
-                            $totalPassedAssessments++;
+                            $this->totalPassedAssessments++;
                         }
                         else
                         {
-                            $totalFailedAssessments++;
+                            $this->totalFailedAssessments++;
                         }
             
                         // $totalQuestions += $assessmentQuestions->count();
