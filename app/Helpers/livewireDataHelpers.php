@@ -880,7 +880,7 @@ function getUserLectureAssessment($lecture)
     }
     else
     {
-        if($totalPassedAssessments > 1 )
+        if($totalPassedAssessments => 1 )
         {
             return 'oneAndPass';
         }
