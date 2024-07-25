@@ -125,7 +125,18 @@ function GetFinalData()
     Validation = false;
     
     var K=0;
+   
+    if($('#AssessmentButton').css('display') === 'none')
+    {        
+        Validation= true;
     
+        Swal.fire({
+            icon: 'error', 
+            title: 'Oops...',
+            text: 'Please enter passing % for this lecture',
+        });
+        return true;
+    }
 
     $('[id^="AssessmentDiv"]').each(function(i) 
     {
@@ -203,6 +214,7 @@ function GetFinalData()
         });
         
         var occurrenceDuration = Parent.find('#occurrence_duration').val();
+
         if (occurrenceDuration) 
         {
             LectureAssessmentData[i + 1]['occurrence_duration'] = occurrenceDuration;
@@ -356,7 +368,8 @@ function CheckIfAnyFieldEmpty(times)
 }
 function UpdateHiddenStatusOfAssessmentDivs()
 {       
-    
+   
+
     var OnloadOccurrence_duration = $('#AssessmentDiv').find('#occurrence_duration').val();
     if (!isNaN(parseInt(OnloadOccurrence_duration, 10))) 
     {
@@ -373,7 +386,7 @@ function UpdateHiddenStatusOfAssessmentDivs()
 }
 function UpdateShowOrHideAsessments(StatusValue, Button)
 {
-    $('#passing_ratio_id').css('display', StatusValue ? 'none' : 'block');
+    // $('#passing_ratio_id').css('display', StatusValue ? 'none' : 'block');
 
     ValidateAssessmentForm = StatusValue;
     Button.css('display', 'none');

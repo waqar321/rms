@@ -198,7 +198,7 @@
                                     <input type="text" wire:model.debounce.500ms="document_url" class="form-control" id="document_url" name="document_url" placeholder="Enter document URL">
                                 </div>
                             </div>
-                            <div class="col-md-6 col-lg-6" id="passing_ratio_id" style="display:none;">
+                            <div class="col-md-6 col-lg-6" id="passing_ratio_id">
                                 <div class="form-group">
                                     <label for="passing_ratio">Passing % </label>
                                     <input type="text" wire:model.debounce.500ms="ecom_lecture.passing_ratio" class="form-control" id="passing_ratio" name="passing_ratio" placeholder="Enter Course Passing % On the basis of Questions">
@@ -525,6 +525,9 @@
 
         $(document).ready(function ()
         {
+            // $('#passing_ratio_id').css('display', 'none');
+            // return false;
+
             // if assessment has data, show it on load, and also show the button Show Assessment Forms
             UpdateHiddenStatusOfAssessmentDivs();      
         });
@@ -532,6 +535,27 @@
         $(document).on('click', '#FormSubmission', function(event) 
         {
             event.preventDefault();
+
+
+            
+            // var passing_ratio_id = $('#passing_ratio_id');
+
+            // if(passing_ratio_id.css('display') === 'block')
+            // {
+            //     if(passing_ratio_id.val() == '')
+            //     {            
+            //         Validation= true;
+                
+            //         Swal.fire({
+            //             icon: 'error', 
+            //             title: 'Oops...',
+            //             text: 'Please enter passing % for this lecture',
+            //         });
+            //         return true;
+            //     }
+            // }
+
+            // return false;
 
             if(!ValidateAssessmentForm)
             {
@@ -542,11 +566,15 @@
                 {
                     if(GetFinalData() !== false)
                     {
+                        // alert($('#passing_ratio_id').css('display'));
+                        // return false;
+
                         Livewire.emit('lectureSubmitted', JSON.stringify(GetFinalData()));
                     }
                     else
                     {
                         console.error('validation failed');
+                        return false;
                     }
                 }
                 else
@@ -556,9 +584,16 @@
             }
             else
             {      
+
                 // alert('submit without assessment');
                 // return false;
-            
+                // if($('#passing_ratio_id').css('display') != 'none')
+                // {
+                    
+                // }
+                // alert($('#passing_ratio_id').css('display'));
+                // return false;
+
                 Livewire.emit('lectureSubmitted');
             }
             // alert(ValidateAssessmentForm);
