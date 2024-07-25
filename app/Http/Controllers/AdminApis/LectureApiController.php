@@ -266,26 +266,27 @@ class LectureApiController extends Controller
                     }
                 }
 
-                // if (($totalPassedAssessments + $totalFailedAssessments) > 0) 
-                // {
-                //     // 
-                //     // 
+
+                if (($totalPassedAssessments + $totalFailedAssessments) > 0) 
+                {
+                    // 
+                    // 
             
-                //     $overallPercentage = ($totalPassedAssessments / $totalFailedAssessments) * 100;
-                //     $AssessmentPassingRatio = $overallPercentage >= $lecture->passing_ratio;
+                    $overallPercentage = ($totalPassedAssessments / $totalFailedAssessments) * 100;
+                    $AssessmentPassingRatio = $overallPercentage >= $lecture->passing_ratio;
                     
-                //     // echo "Overall Assessment:<br>";
-                //     // echo "Total Questions: $totalQuestions<br>";
-                //     // echo "Correct Answers: $totalCorrectAnswers<br>";
-                //     // echo "Overall Percentage: $overallPercentage%<br>";
-                //     // echo $overallPassed ? "Overall Passed<br>" : "Overall Failed<br>";
-                //     return $AssessmentPassingRatio;
-                // }
-                // else
-                // {
-                //     // echo "No assessments found.<br>";
-                //     return false;
-                // }
+                    // echo "Overall Assessment:<br>";
+                    // echo "Total Questions: $totalQuestions<br>";
+                    // echo "Correct Answers: $totalCorrectAnswers<br>";
+                    // echo "Overall Percentage: $overallPercentage%<br>";
+                    // echo $overallPassed ? "Overall Passed<br>" : "Overall Failed<br>";
+                    return $AssessmentPassingRatio;
+                }
+                else
+                {
+                    // echo "No assessments found.<br>";
+                    return false;
+                }
 
                 return response()->json([
                     'status' => 200, 
