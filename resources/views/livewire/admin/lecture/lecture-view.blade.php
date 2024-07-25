@@ -65,6 +65,7 @@
                             @php  
                                 $level_ids = $this->ecom_lecture->QuestionLevels->pluck('assessment_level')->unique();
                             @endphp 
+                            
                         </div>
                         <div class="x_content">          
                             <div class="row" style="padding-left: 30px; padding-top: 20px; font-weight: bold;">

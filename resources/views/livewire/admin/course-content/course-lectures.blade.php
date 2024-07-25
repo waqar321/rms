@@ -19,6 +19,41 @@
             color: inherit;
         }
 
+
+        .status-passed {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: green;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            z-index: 1;
+        }
+
+        .status-failed {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: red;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            z-index: 1;
+        }
+
+        .status-pending {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #0005ff;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            z-index: 1;
+        }
+
+
     </style>
 
 @endpush 
@@ -127,21 +162,27 @@
 
                                                             
                                                             
-                                                            @if($courseLecture->LectureUserStatus)
-                                                                @if($courseLecture->LectureUserStatus->status)
-                                                                    <span style="position: absolute; top: 10px; right: 10px; background-color: green; color: white; padding: 5px 10px; border-radius: 5px; z-index: 1;">
-                                                                        Passed
-                                                                    </span>
+                                                            @if($courseLecture->QuestionLevels->isNotEmpty())                                                            
+                                                                @if($courseLecture->LectureUserStatus)
+                                                                    @if($courseLecture->LectureUserStatus->status)
+                                                                        <span class="status-passed">
+                                                                            Passed
+                                                                        </span>
+                                                                    @else 
+                                                                    <span class="status-failed">
+                                                                            Failed
+                                                                        </span>
+                                                                    @endif 
+    
                                                                 @else 
-                                                                    <span style="position: absolute; top: 10px; right: 10px; background-color: red; color: white; padding: 5px 10px; border-radius: 5px; z-index: 1;">
-                                                                        Failed
+                                                                    <span class="status-pending">
+                                                                        Pending
                                                                     </span>
-                                                                @endif 
-
-                                                            @else
-                                                                <span style="position: absolute; top: 10px; right: 10px; background-color: 0005ff; color: white; padding: 5px 10px; border-radius: 5px; z-index: 1;">
-                                                                    Pending
-                                                                </span>
+                                                                @endif
+                                                            @else 
+                                                                <!-- <span class="status-pending">
+                                                                    For You 
+                                                                </span> -->
                                                             @endif
                                                         </div>
 
