@@ -213,6 +213,10 @@ class LectureApiController extends Controller
             $LectureUserRecords->user_id = auth()->id();
 
             //------------------------- testing -------------------------
+
+            $totalPassedAssessments = 0;
+            $totalFailedAssessments = 0;
+            
                 // get each lecture's assessment's question's statuses 
                 $assessments_with_questions = collect([
                     $lecture->AssessmentStatus->where('user_id', auth()->id())->where('assessment_level', 1)->map(function ($item) 
