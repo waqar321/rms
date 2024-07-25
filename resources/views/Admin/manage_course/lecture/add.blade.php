@@ -536,7 +536,6 @@
         {
             event.preventDefault();
 
-
             
             // var passing_ratio_id = $('#passing_ratio_id');
 

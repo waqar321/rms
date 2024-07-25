@@ -126,10 +126,8 @@ function GetFinalData()
     
     var K=0;
    
-    if($('#AssessmentButton').css('display') === 'none')
+    if($('#AssessmentButton').css('display') == 'none')
     {        
-        
-    
         Swal.fire({
             icon: 'error', 
             title: 'Oops...',
