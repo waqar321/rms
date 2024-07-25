@@ -200,14 +200,13 @@ class LectureApiController extends Controller
 
             if($LectureUserRecords && (!$LectureUserRecords->status == 1)) 
             {
-                // if(((getUserLectureAssessment($lecture) !== false) && (getUserLectureAssessment($lecture) == 'oneAndPass')) || getUserLectureAssessment($lecture) > $lecture->passing_ratio) 
-                if(getUserLectureAssessment($lecture) !== false) 
-                {
-                    $LectureUserRecords->update(['status' => 0]);
-                }
-                elseif((getUserLectureAssessment($lecture) == 'oneAndPass') || (getUserLectureAssessment($lecture) > $lecture->passing_ratio))
+                if((getUserLectureAssessment($lecture) == 'oneAndPass') || (getUserLectureAssessment($lecture) > $lecture->passing_ratio))
                 {
                     $LectureUserRecords->update(['status' => 1]);                    
+                }
+                else
+                {
+                    $LectureUserRecords->update(['status' => 0]);
                 }
             }
             else
@@ -215,14 +214,15 @@ class LectureApiController extends Controller
                 $LectureUserRecords = new LectureUserRecords();
                 $LectureUserRecords->lecture_id = $request->lecture_id;
                 $LectureUserRecords->user_id = auth()->id();
-                
-                if(getUserLectureAssessment($lecture) !== false) 
-                {
-                    $LectureUserRecords->update(['status' => 0]);
-                }
-                elseif((getUserLectureAssessment($lecture) == 'oneAndPass') || (getUserLectureAssessment($lecture) > $lecture->passing_ratio))
+
+
+                if((getUserLectureAssessment($lecture) == 'oneAndPass') || (getUserLectureAssessment($lecture) > $lecture->passing_ratio))
                 {
                     $LectureUserRecords->update(['status' => 1]);                    
+                }
+                else
+                {
+                    $LectureUserRecords->update(['status' => 0]);
                 }
 
                 $LectureUserRecords->save();
