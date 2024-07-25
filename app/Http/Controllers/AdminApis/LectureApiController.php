@@ -212,14 +212,37 @@ class LectureApiController extends Controller
             $LectureUserRecords->lecture_id = $request->lecture_id;
             $LectureUserRecords->user_id = auth()->id();
 
-            return response()->json([
+            //------------------------- testing -------------------------
+                // get each lecture's assessment's question's statuses 
+                $assessments_with_questions = collect([
+                    $lecture->AssessmentStatus->where('user_id', auth()->id())->where('assessment_level', 1)->map(function ($item) 
+                    {
+                        return ['question_level' => $item->question_level, 'status' => $item->status];
+                    }),
+                    $lecture->AssessmentStatus->where('user_id', auth()->id())->where('assessment_level', 2)->map(function ($item) 
+                    {
+                        return ['question_level' => $item->question_level, 'status' => $item->status];
+                    }),
+                    $lecture->AssessmentStatus->where('user_id', auth()->id())->where('assessment_level', 3)->map(function ($item) 
+                    {
+                        return ['question_level' => $item->question_level, 'status' => $item->status];
+                    }),
+                    $lecture->AssessmentStatus->where('user_id', auth()->id())->where('assessment_level', 4)->map(function ($item) 
+                    {
+                        return ['question_level' => $item->question_level, 'status' => $item->status];
+                    })
+                ]);
+
+                return response()->json([
                     'status' => 200, 
-                    'requestData' => $LectureUserRecords, 
+                    'requestData' => $assessments_with_questions, 
                     'message' => 'user lecture status update successfully'
                 ], 
                 200
             );
+            //------------------------- testing -------------------------
 
+            
             if(getUserLectureAssessment($lecture) !== false && getUserLectureAssessment($lecture) > 50)
             {
                 $LectureUserRecords->status = 1;
@@ -231,6 +254,7 @@ class LectureApiController extends Controller
 
             $LectureUserRecords->save();
         }
+
 
         return response()->json([
                     'status' => 200, 
