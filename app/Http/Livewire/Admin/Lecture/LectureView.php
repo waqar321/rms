@@ -43,14 +43,14 @@ class LectureView extends Component
         // dd('AsimTesting');
         // $courseLecture = ecom_lecture::where('id', 18)->first();
 
-        if(getUserLectureAssessment($ecom_lecture) !== false && getUserLectureAssessment($ecom_lecture) > 50)
-        {
-            dd('pass');
-        }
-        else
-        {
-            dd('fail');
-        }
+        // if(getUserLectureAssessment($ecom_lecture) !== false && getUserLectureAssessment($ecom_lecture) > 50)
+        // {
+        //     dd('pass');
+        // }
+        // else
+        // {
+        //     dd('fail');
+        // }
 
         // dd('done');
         // $awd = LectureQuestion::where('id', 279)->first();
