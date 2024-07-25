@@ -158,7 +158,7 @@ class LectureApiController extends Controller
                                                         ->where('question_level', $Question['question'])
                                                         ->where('user_id', auth()->id())
                                                         ->first();
-                                                        
+
                                                                 // ->get(['assessment_level', 'question_level', 'status']);
                                                                 // ->toarray();
             if($assessmentStatus) 
@@ -206,9 +206,19 @@ class LectureApiController extends Controller
         }
         else
         {                
+
+            
             $LectureUserRecords = new LectureUserRecords();
             $LectureUserRecords->lecture_id = $request->lecture_id;
             $LectureUserRecords->user_id = auth()->id();
+
+            return response()->json([
+                    'status' => 200, 
+                    'requestData' => $LectureUserRecords, 
+                    'message' => 'user lecture status update successfully'
+                ], 
+                200
+            );
 
             if(getUserLectureAssessment($lecture) !== false && getUserLectureAssessment($lecture) > 50)
             {
