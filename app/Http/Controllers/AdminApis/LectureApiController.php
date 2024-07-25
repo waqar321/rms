@@ -214,8 +214,7 @@ class LectureApiController extends Controller
 
             //------------------------- testing -------------------------
 
-            $totalPassedAssessments = 0;
-            $totalFailedAssessments = 0;
+
 
                 // get each lecture's assessment's question's statuses 
                 $assessments_with_questions = collect([
@@ -237,6 +236,9 @@ class LectureApiController extends Controller
                     })
                 ]);
 
+                $totalPassedAssessments = 0;
+                $totalFailedAssessments = 0;
+
                 foreach ($assessments_with_questions as $assessmentQuestions) 
                 {
                     if ($assessmentQuestions->isNotEmpty()) 
@@ -250,11 +252,11 @@ class LectureApiController extends Controller
                         
                         if($isPassed)
                         {
-                            $this->totalPassedAssessments++;
+                            $totalPassedAssessments++;
                         }
                         else
                         {
-                            $this->totalFailedAssessments++;
+                            $totalFailedAssessments++;
                         }
             
                         // $totalQuestions += $assessmentQuestions->count();
