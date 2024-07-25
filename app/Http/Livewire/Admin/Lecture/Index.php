@@ -159,6 +159,8 @@ class Index extends Component
             // $this->ecom_lecture->instructor_id = auth()->user()->role->id == 31 ? auth()->user()->id : $this->ecom_lecture->instructor_id; 
         }
         
+        // dd(json_decode($FormData) !== null);
+
         $this->ecom_lecture->save();
 
         if (json_decode($FormData) !== null) 
@@ -166,21 +168,26 @@ class Index extends Component
             if($this->update)
             {
                 $lectureAssessmentLevels = LectureAssessmentLevel::where('lecture_id', $this->ecom_lecture->id)->get();
-                if($lectureAssessmentLevels)
+                if($lectureAssessmentLevels && $lectureAssessmentLevels->isNotEmpty())
                 {
                     DB::transaction(function() use ($lectureAssessmentLevels) 
                     {
                         foreach($lectureAssessmentLevels as $assessmentLevel)
                         {
-                            foreach($assessmentLevel->questions as $question)
+                            if ($assessmentLevel->questions) 
                             {
-                                $question->questionLevel->delete();
+                                foreach($assessmentLevel->questions as $question)
+                                {
+                                    if ($question->questionLevel) 
+                                    {
+                                        $question->questionLevel->delete();
+                                    }
+                                }
+                                $assessmentLevel->delete();
                             }
-                            $assessmentLevel->delete();
                         }
                     });              
                 }
-
             }
             $this->insertAssessmentDetails(json_decode($FormData, true), $this->ecom_lecture->id);
         }
