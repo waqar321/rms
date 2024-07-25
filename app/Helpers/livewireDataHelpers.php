@@ -851,13 +851,13 @@ function getUserLectureAssessment($lecture)
     $totalPassedAssessments = 0;
     $totalFailedAssessments = 0;
 
-    foreach ($assessments_with_questions as $assessmentQuestions) 
+    foreach ($assessments_with_questions as $assessmentQuestionWithStatus) 
     {
-        if ($assessmentQuestions->isNotEmpty()) 
+        if ($assessmentQuestionWithStatus->isNotEmpty()) 
         {
             //---------------- assessment passed or not according to lecture percentage--------------------
-            $totalQuestions = $assessmentQuestions->count();
-            $correctAnswers = $assessmentQuestions->where('status', 1)->count(); // Calculate the number of correct answers
+            $totalQuestions = $assessmentQuestionWithStatus->count();
+            $correctAnswers = $assessmentQuestionWithStatus->where('status', 1)->count(); // Calculate the number of correct answers
             $percentage = ($totalQuestions > 0) ? ($correctAnswers / $totalQuestions) * 100 : 0; // Calculate the percentage of correct answers
             $isPassed = $percentage >= $lecture->passing_ratio; // $passingRate = 50;              // Check if the percentage meets or exceeds the passing rate
             
@@ -871,7 +871,7 @@ function getUserLectureAssessment($lecture)
             }            
         }
     }
-    return $totalFailedAssessments;
+
     if ($totalFailedAssessments > 0) 
     {
         $overallPercentage = ($totalPassedAssessments / $totalFailedAssessments) * 100;
@@ -880,6 +880,10 @@ function getUserLectureAssessment($lecture)
     }
     else
     {
+        if($totalPassedAssessments > 1 )
+        {
+            return 'oneAndPass';
+        }
         // echo "No assessments found.<br>";
         return false;
     }

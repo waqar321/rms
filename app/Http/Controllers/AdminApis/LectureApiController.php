@@ -202,13 +202,14 @@ class LectureApiController extends Controller
         {
             if($LectureUserRecords) 
             {
-                if(getUserLectureAssessment($lecture) !== false && getUserLectureAssessment($lecture) > $lecture->passing_ratio)
-                {
-                    $LectureUserRecords->update(['status' => 1]);
-                }
-                else
+                // if(((getUserLectureAssessment($lecture) !== false) && (getUserLectureAssessment($lecture) == 'oneAndPass')) || getUserLectureAssessment($lecture) > $lecture->passing_ratio) 
+                if(getUserLectureAssessment($lecture) !== false) 
                 {
                     $LectureUserRecords->update(['status' => 0]);
+                }
+                elseif((getUserLectureAssessment($lecture) == 'oneAndPass') || (getUserLectureAssessment($lecture) > $lecture->passing_ratio))
+                {
+                    $LectureUserRecords->update(['status' => 1]);                    
                 }
             }
             else
