@@ -880,14 +880,12 @@ function getUserLectureAssessment($lecture)
         }
     }
 
-    if ($totalPassedAssessments > 0) 
+    if (($totalPassedAssessments + $totalFailedAssessments) > 0) 
     {
         // 
         // 
 
-        // $overallPercentage = ($totalCorrectAnswers / $totalQuestions) * 100;
         $overallPercentage = ($totalPassedAssessments / $totalFailedAssessments) * 100;
-        // $overallPassed = $overallPercentage >= 50;
         $AssessmentPassingRatio = $overallPercentage >= $lecture->passing_ratio;
         
         // echo "Overall Assessment:<br>";
