@@ -128,14 +128,15 @@ function GetFinalData()
    
     if($('#AssessmentButton').css('display') === 'none')
     {        
-        Validation= true;
+        
     
         Swal.fire({
             icon: 'error', 
             title: 'Oops...',
             text: 'Please enter passing % for this lecture',
         });
-        return true;
+        Validation= true;
+        return;
     }
 
     $('[id^="AssessmentDiv"]').each(function(i) 
