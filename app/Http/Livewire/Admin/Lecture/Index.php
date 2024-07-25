@@ -200,7 +200,7 @@ class Index extends Component
         $this->Collapse = "collapse";
         $this->dispatchBrowserEvent('created_module', ['name'=> $name]);
 
-        if(request()->has('id'))
+        if($this->update)
         {
             return redirect()->to('content-management/LectureUpload');
         }
