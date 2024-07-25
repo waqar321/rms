@@ -552,10 +552,9 @@
                         title: 'Oops...',
                         text: 'Please enter passing % for this lecture',
                     });
+                    return false;
                 }
-                return false;
             }
-            return false;
 
             // var passing_ratio_id = $('#passing_ratio_id');
 
