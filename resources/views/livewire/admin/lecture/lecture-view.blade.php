@@ -189,48 +189,46 @@
                     $('#questionlevel').last().after(hiddenField);
 
                     var QuestionLevel=0;
-                                    
-                    if (assessment && assessment.questions) 
+             
+                    assessment.questions.forEach(function(question) 
                     {
-                        assessment.questions.forEach(function(question) 
+                        let ParentAssessmentLevel = AssessmentLevel;   // 0
+                        let DivQuestionLevel = QuestionLevel;          // 0 
+                        ParentAssessmentLevel++;                       // 1
+                        DivQuestionLevel++;                            // 1
+
+                        var clonedDiv = $('#questionlevel').clone();
+                        clonedDiv.attr('id', 'questionlevel' + QuestionLevel)
+                                 .attr('data-grand_parent_id', ParentAssessmentLevel)
+                                 .attr('data-parent_id', DivQuestionLevel)
+                                 .attr('data-correctAnswer', JSON.parse(question.answer).correctAnswer);
+
+                        clonedDiv.find('#question').text(question.question);
+
+                        clonedDiv.find('input[name="radio1"]').attr('name', 'Radio' + QuestionLevel);
+                        clonedDiv.find('input[name="radio2"]').attr('name', 'Radio' + QuestionLevel);
+                        clonedDiv.find('input[name="radio3"]').attr('name', 'Radio' + QuestionLevel);
+                        clonedDiv.find('input[name="radio4"]').attr('name', 'Radio' + QuestionLevel);
+
+                        clonedDiv.find('#answer1').text(JSON.parse(question.answer).Answer1);
+                        clonedDiv.find('#answer2').text(JSON.parse(question.answer).Answer2);
+                        clonedDiv.find('#answer3').text(JSON.parse(question.answer).Answer3);
+                        clonedDiv.find('#answer4').text(JSON.parse(question.answer).Answer4);
+                        
+                        clonedDiv.css('display', 'block');
+                        clonedDiv.css('margin-bottom', '10px');
+
+                        if(QuestionLevel == 0)
                         {
-                            let ParentAssessmentLevel = AssessmentLevel;   // 0
-                            let DivQuestionLevel = QuestionLevel;          // 0 
-                            ParentAssessmentLevel++;                       // 1
-                            DivQuestionLevel++;                            // 1
-
-                            var clonedDiv = $('#questionlevel').clone();
-                            clonedDiv.attr('id', 'questionlevel' + QuestionLevel)
-                                    .attr('data-grand_parent_id', ParentAssessmentLevel)
-                                    .attr('data-parent_id', DivQuestionLevel)
-                                    .attr('data-correctAnswer', JSON.parse(question.answer).correctAnswer);
-
-                            clonedDiv.find('#question').text(question.question);
-
-                            clonedDiv.find('input[name="radio1"]').attr('name', 'Radio' + QuestionLevel);
-                            clonedDiv.find('input[name="radio2"]').attr('name', 'Radio' + QuestionLevel);
-                            clonedDiv.find('input[name="radio3"]').attr('name', 'Radio' + QuestionLevel);
-                            clonedDiv.find('input[name="radio4"]').attr('name', 'Radio' + QuestionLevel);
-
-                            clonedDiv.find('#answer1').text(JSON.parse(question.answer).Answer1);
-                            clonedDiv.find('#answer2').text(JSON.parse(question.answer).Answer2);
-                            clonedDiv.find('#answer3').text(JSON.parse(question.answer).Answer3);
-                            clonedDiv.find('#answer4').text(JSON.parse(question.answer).Answer4);
-                            
-                            clonedDiv.css('display', 'block');
-                            clonedDiv.css('margin-bottom', '10px');
-
-                            if(QuestionLevel == 0)
-                            {
-                                $('#questionlevel').last().after(clonedDiv);
-                            }
-                            else
-                            {
-                                $('#questionlevel' + (QuestionLevel-1)).last().after(clonedDiv);  // AssessmentDiv1
-                            }
-                            QuestionLevel++;
-                        });
-                    }
+                            $('#questionlevel').last().after(clonedDiv);
+                        }
+                        else
+                        {
+                            $('#questionlevel' + (QuestionLevel-1)).last().after(clonedDiv);  // AssessmentDiv1
+                        }
+                        QuestionLevel++;
+                    });
+                    
                     // RemoveCurrentAsessmentQuestions();
                     quizModal.modal('show');
                     // count = count+1;
@@ -253,7 +251,8 @@
                     let LectureAssessmentDetails = [];
                     let ValidationObject = ValidateAnsweredSelection();
                     LectureAssessmentDetails = ValidationObject.LectureAssessmentDetails
-                    
+
+
                     if(ValidationObject.Validation)
                     {
                         return false;
@@ -464,6 +463,7 @@
                         LectureAssessmentDetails.push(assessmentDetail);
                     }
                 });
+
                 // Return both Validation and LectureAssessmentDetails in an object
                 return {
                     Validation: Validation,
@@ -477,25 +477,22 @@
                     var assessmentLevel = assessment.assessment_level;
                     var assessmentTime = assessment.assessment_time;
                     
-                    // console.log("Assessment Level: " + assessmentLevel);
-                    // console.log("Assessment Time: " + assessmentTime);
+                    console.log("Assessment Level: " + assessmentLevel);
+                    console.log("Assessment Time: " + assessmentTime);
                     
-                    if (assessment && assessment.questions) 
-                    {
-                        assessment.questions.forEach(function(question) {
-                            var questionText = question.question;
-                            var answer1 = JSON.parse(question.answer).Answer1;
-                            var answer2 = JSON.parse(question.answer).Answer2;
-                            var answer3 = JSON.parse(question.answer).Answer3;
-                            var answer4 = JSON.parse(question.answer).Answer4;
-                            
-                            console.log("Question: " + questionText);
-                            console.log("Answer 1: " + answer1);
-                            console.log("Answer 2: " + answer2);
-                            console.log("Answer 3: " + answer3);
-                            console.log("Answer 4: " + answer4);
-                        });
-                    }
+                    assessment.questions.forEach(function(question) {
+                        var questionText = question.question;
+                        var answer1 = JSON.parse(question.answer).Answer1;
+                        var answer2 = JSON.parse(question.answer).Answer2;
+                        var answer3 = JSON.parse(question.answer).Answer3;
+                        var answer4 = JSON.parse(question.answer).Answer4;
+                        
+                        console.log("Question: " + questionText);
+                        console.log("Answer 1: " + answer1);
+                        console.log("Answer 2: " + answer2);
+                        console.log("Answer 3: " + answer3);
+                        console.log("Answer 4: " + answer4);
+                    });
                 });
             }
             

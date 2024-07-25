@@ -884,7 +884,6 @@ function getUserLectureAssessment($lecture)
         {
             return 'oneAndPass';
         }
-        // echo "No assessments found.<br>";
         return false;
     }
 }

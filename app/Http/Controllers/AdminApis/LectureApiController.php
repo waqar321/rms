@@ -227,7 +227,6 @@ class LectureApiController extends Controller
             $LectureUserRecords->save();
         }
 
-
         return response()->json([
                     'status' => 200, 
                     'requestData' => $request->all(), 
