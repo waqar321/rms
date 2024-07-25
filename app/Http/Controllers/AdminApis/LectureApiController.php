@@ -190,9 +190,18 @@ class LectureApiController extends Controller
         $lecture = ecom_lecture::where('id', $request->lecture_id)->first();
         $LectureUserRecords = LectureUserRecords::where('lecture_id', $request->lecture_id)->where('user_id', auth()->id())->first();
 
-        if($LectureUserRecords) 
+
+        return response()->json([
+                'status' => 200, 
+                'requestData' => getUserLectureAssessment($lecture), 
+                'message' => 'user lecture status update successfully'
+            ], 
+            200
+        );
+
+        if(!$LectureUserRecords->status == 1)
         {
-            if(!$LectureUserRecords->status == 1)
+            if($LectureUserRecords) 
             {
                 if(getUserLectureAssessment($lecture) !== false && getUserLectureAssessment($lecture) > $lecture->passing_ratio)
                 {
@@ -202,111 +211,27 @@ class LectureApiController extends Controller
                 {
                     $LectureUserRecords->update(['status' => 0]);
                 }
-            } 
-        }
-        else
-        {                
+            }
+            else
+            {                
 
-            
-            $LectureUserRecords = new LectureUserRecords();
-            $LectureUserRecords->lecture_id = $request->lecture_id;
-            $LectureUserRecords->user_id = auth()->id();
+                
+                $LectureUserRecords = new LectureUserRecords();
+                $LectureUserRecords->lecture_id = $request->lecture_id;
+                $LectureUserRecords->user_id = auth()->id();
 
-            //------------------------- testing -------------------------
-
-
-
-                // get each lecture's assessment's question's statuses 
-                $assessments_with_questions = collect([
-                    $lecture->AssessmentStatus->where('user_id', auth()->id())->where('assessment_level', 1)->map(function ($item) 
-                    {
-                        return ['question_level' => $item->question_level, 'status' => $item->status];
-                    }),
-                    $lecture->AssessmentStatus->where('user_id', auth()->id())->where('assessment_level', 2)->map(function ($item) 
-                    {
-                        return ['question_level' => $item->question_level, 'status' => $item->status];
-                    }),
-                    $lecture->AssessmentStatus->where('user_id', auth()->id())->where('assessment_level', 3)->map(function ($item) 
-                    {
-                        return ['question_level' => $item->question_level, 'status' => $item->status];
-                    }),
-                    $lecture->AssessmentStatus->where('user_id', auth()->id())->where('assessment_level', 4)->map(function ($item) 
-                    {
-                        return ['question_level' => $item->question_level, 'status' => $item->status];
-                    })
-                ]);
-
-                $totalPassedAssessments = 0;
-                $totalFailedAssessments = 0;
-
-                foreach ($assessments_with_questions as $assessmentQuestions) 
+                
+                if(getUserLectureAssessment($lecture) !== false && getUserLectureAssessment($lecture) > 50)
                 {
-                    if ($assessmentQuestions->isNotEmpty()) 
-                    {
-                        
-                        // list($percentage, $isPassed) = GetPercentageOfAssessment($assessmentQuestions, $lecture->passing_ratio);
-                        // dd($assessmentQuestions, 'Passing rate: '. $lecture->passing_ratio, GetPercentageOfAssessment($assessmentQuestions, $lecture->passing_ratio));
-            
-                        //---------------- assessment passed or not according to lecture percentage--------------------
-                        $isPassed = GetPercentageOfAssessment($assessmentQuestions, $lecture->passing_ratio);
-                        
-                        if($isPassed)
-                        {
-                            $totalPassedAssessments++;
-                        }
-                        else
-                        {
-                            $totalFailedAssessments++;
-                        }
-            
-                        // $totalQuestions += $assessmentQuestions->count();
-                        // $totalCorrectAnswers += $assessmentQuestions->where('status', 1)->count();
-                        // echo "<br><br><br>";
-                        
-                    }
-                }
-
-
-                if ($totalFailedAssessments > 0) 
-                {
-           
-                    $overallPercentage = ($totalPassedAssessments / $totalFailedAssessments) * 100;
-                    $AssessmentPassingRatio = $overallPercentage >= $lecture->passing_ratio;
-                    
-                    // echo "Overall Assessment:<br>";
-                    // echo "Total Questions: $totalQuestions<br>";
-                    // echo "Correct Answers: $totalCorrectAnswers<br>";
-                    // echo "Overall Percentage: $overallPercentage%<br>";
-                    // echo $overallPassed ? "Overall Passed<br>" : "Overall Failed<br>";
-                    // return $AssessmentPassingRatio;
+                    $LectureUserRecords->status = 1;
                 }
                 else
                 {
-                    $AssessmentPassingRatio = 'fail';
-                    // echo "No assessments found.<br>";
-                    // return false;
+                    $LectureUserRecords->status = 0;
                 }
 
-                return response()->json([
-                    'status' => 200, 
-                    'requestData' => $AssessmentPassingRatio, 
-                    'message' => 'user lecture status update successfully'
-                ], 
-                200
-            );
-            //------------------------- testing -------------------------
-
-            
-            if(getUserLectureAssessment($lecture) !== false && getUserLectureAssessment($lecture) > 50)
-            {
-                $LectureUserRecords->status = 1;
+                $LectureUserRecords->save();
             }
-            else
-            {
-                $LectureUserRecords->status = 0;
-            }
-
-            $LectureUserRecords->save();
         }
 
 

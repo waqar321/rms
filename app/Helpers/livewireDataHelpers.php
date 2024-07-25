@@ -848,8 +848,6 @@ function getUserLectureAssessment($lecture)
         })
     ]);
 
-    $totalQuestions = 0;
-    $totalCorrectAnswers = 0;
     $totalPassedAssessments = 0;
     $totalFailedAssessments = 0;
 
@@ -857,12 +855,11 @@ function getUserLectureAssessment($lecture)
     {
         if ($assessmentQuestions->isNotEmpty()) 
         {
-            
-            // list($percentage, $isPassed) = GetPercentageOfAssessment($assessmentQuestions, $lecture->passing_ratio);
-            // dd($assessmentQuestions, 'Passing rate: '. $lecture->passing_ratio, GetPercentageOfAssessment($assessmentQuestions, $lecture->passing_ratio));
-
             //---------------- assessment passed or not according to lecture percentage--------------------
-            $isPassed = GetPercentageOfAssessment($assessmentQuestions, $lecture->passing_ratio);
+            $totalQuestions = $assessmentQuestions->count();
+            $correctAnswers = $assessmentQuestions->where('status', 1)->count(); // Calculate the number of correct answers
+            $percentage = ($totalQuestions > 0) ? ($correctAnswers / $totalQuestions) * 100 : 0; // Calculate the percentage of correct answers
+            $isPassed = $percentage >= $lecture->passing_ratio; // $passingRate = 50;              // Check if the percentage meets or exceeds the passing rate
             
             if($isPassed)
             {
@@ -871,28 +868,14 @@ function getUserLectureAssessment($lecture)
             else
             {
                 $totalFailedAssessments++;
-            }
-
-            // $totalQuestions += $assessmentQuestions->count();
-            // $totalCorrectAnswers += $assessmentQuestions->where('status', 1)->count();
-            // echo "<br><br><br>";
-            
+            }            
         }
     }
 
-    if (($totalPassedAssessments + $totalFailedAssessments) > 0) 
+    if ($totalFailedAssessments > 0) 
     {
-        // 
-        // 
-
         $overallPercentage = ($totalPassedAssessments / $totalFailedAssessments) * 100;
         $AssessmentPassingRatio = $overallPercentage >= $lecture->passing_ratio;
-        
-        // echo "Overall Assessment:<br>";
-        // echo "Total Questions: $totalQuestions<br>";
-        // echo "Correct Answers: $totalCorrectAnswers<br>";
-        // echo "Overall Percentage: $overallPercentage%<br>";
-        // echo $overallPassed ? "Overall Passed<br>" : "Overall Failed<br>";
         return $AssessmentPassingRatio;
     }
     else
@@ -905,23 +888,9 @@ function getUserLectureAssessment($lecture)
 function GetPercentageOfAssessment($assessmentQuestions, $passingRate)
 {
     $totalQuestions = $assessmentQuestions->count();
-
-    // Calculate the number of correct answers
-    $correctAnswers = $assessmentQuestions->where('status', 1)->count();
-    
-    // Calculate the percentage of correct answers
-    $percentage = ($totalQuestions > 0) ? ($correctAnswers / $totalQuestions) * 100 : 0;
-    // echo $percentage."<br>";
-    
-    // Check if the percentage meets or exceeds the passing rate
-    $isPassed = $percentage >= $passingRate; // $passingRate = 50;
+    $correctAnswers = $assessmentQuestions->where('status', 1)->count(); // Calculate the number of correct answers
+    $percentage = ($totalQuestions > 0) ? ($correctAnswers / $totalQuestions) * 100 : 0; // Calculate the percentage of correct answers
+    $isPassed = $percentage >= $passingRate; // $passingRate = 50;              // Check if the percentage meets or exceeds the passing rate
     
     return $isPassed;
-    // Output the results
-    // echo "assessmentQuestions: "."<br>";
-    // echo "Total Questions: $totalQuestions\n"."<br>";
-    // echo "Correct Answers: $correctAnswers\n"."<br>";
-    // echo "Percentage: $percentage%\n"."<br>";
-    // echo $isPassed ? "Passed" : "Failed <br>";
-
 }
