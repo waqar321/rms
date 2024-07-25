@@ -12,7 +12,7 @@
         }
         .card-header
         {
-            padding-right: 75px !important;
+            padding-right: 75px;
         }
 
     </style>

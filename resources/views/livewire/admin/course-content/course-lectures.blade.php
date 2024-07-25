@@ -18,7 +18,10 @@
             text-decoration: none;
             color: inherit;
         }
-
+        .h-padding
+        {
+            padding-right: 75px;
+        }
 
         .card-deck .card {
             /* Ensure cards in the same row have the same height */
@@ -174,7 +177,7 @@
                                                         @if(CheckAlignment($courseLecture->course, 'course'))
                                                               
                                                             <div class="card">
-                                                                <div class="card-header">
+                                                                <div class="card-header h-padding">
                                                                         @if(isset($courseLecture->title))
                                                                             {{ $courseLecture->course->name }} 
                                                                         @endif 
