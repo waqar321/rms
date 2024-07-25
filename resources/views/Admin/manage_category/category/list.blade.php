@@ -10,6 +10,10 @@
             unicode-bidi: isolate !important;
             padding-top: 20px;
         }
+        .card-header
+        {
+            padding-right: 75px !important;
+        }
 
     </style>
 @endpush 
