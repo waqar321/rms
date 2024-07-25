@@ -536,9 +536,22 @@
         {
             event.preventDefault();
 
-            alert($('#AssessmentButton').css('display') == 'none');
+            if($('#AssessmentButton').css('display') == 'none')
+            {        
+                var passing_ratio_id = $('#passing_ratio_id');
+                if(passing_ratio_id.val() == '')
+                {
+                    
+                    Swal.fire({
+                        icon: 'error', 
+                        title: 'Oops...',
+                        text: 'Please enter passing % for this lecture',
+                    });
+                }
+                return false;
+            }
             return false;
-            
+
             // var passing_ratio_id = $('#passing_ratio_id');
 
             // if(passing_ratio_id.css('display') === 'block')
