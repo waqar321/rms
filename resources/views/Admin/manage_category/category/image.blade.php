@@ -1,6 +1,5 @@
 @if($photo && ScanTempDirectory())
     @include('Admin.partial.livewire.imageshow', ['path' => $photo->temporaryUrl()])
-    
 @elseif($ecom_category->image)
     @php
         $imageUrl = str_replace('category-management', '', $ecom_category->image_path);                                                    
