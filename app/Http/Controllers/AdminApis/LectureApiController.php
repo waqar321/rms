@@ -267,11 +267,9 @@ class LectureApiController extends Controller
                 }
 
 
-                if (($totalPassedAssessments + $totalFailedAssessments) > 0) 
+                if ($totalFailedAssessments > 0) 
                 {
-                    // 
-                    // 
-            
+           
                     $overallPercentage = ($totalPassedAssessments / $totalFailedAssessments) * 100;
                     $AssessmentPassingRatio = $overallPercentage >= $lecture->passing_ratio;
                     
@@ -280,17 +278,18 @@ class LectureApiController extends Controller
                     // echo "Correct Answers: $totalCorrectAnswers<br>";
                     // echo "Overall Percentage: $overallPercentage%<br>";
                     // echo $overallPassed ? "Overall Passed<br>" : "Overall Failed<br>";
-                    return $AssessmentPassingRatio;
+                    // return $AssessmentPassingRatio;
                 }
                 else
                 {
+                    $AssessmentPassingRatio = 'fail';
                     // echo "No assessments found.<br>";
-                    return false;
+                    // return false;
                 }
 
                 return response()->json([
                     'status' => 200, 
-                    'requestData' => $assessments_with_questions, 
+                    'requestData' => $AssessmentPassingRatio, 
                     'message' => 'user lecture status update successfully'
                 ], 
                 200
