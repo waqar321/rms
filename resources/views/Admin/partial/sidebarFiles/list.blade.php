@@ -76,7 +76,7 @@
                                         <td>{{ $sidebar->permission->title ?? ' Not Set' }}</td>                                            
                                         <td>
                                             @if($sidebar->url != null)
-                                                <span style="font-size: 13px;" class="btn btn-danger NoFoundID">
+                                            <span style="font-size: 13px;padding: 1px 5px 1px 5px;border-radius: 0px;" class="btn btn-danger NoFoundID">
                                             @php
                                                 $urlRoute = '#';
                                                 if ($sidebar->url && url_secure($sidebar->url)) {
