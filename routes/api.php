@@ -34,6 +34,7 @@ use App\Http\Controllers\Admin\DepartmentController;
 // ======================= api controllers =========================
 use App\Http\Controllers\AdminApis\LectureApiController;
 use App\Http\Controllers\AdminApis\AuthenticationController;
+use App\Http\Controllers\AdminApis\CourseApiController;
 
     
 //================= Auth APis ==================
@@ -49,8 +50,9 @@ Route::post('/lectures', [LectureApiController::class, 'store']);
 Route::put('/lectures/{id}', [LectureApiController::class, 'update']);
 Route::delete('/lectures/{id}', [LectureApiController::class, 'destroy']);
 
-//================= lecture Apis ==================
+//================= Course Apis ==================
 
+Route::get('/MyCourses/{employee_code}', [CourseApiController::class, 'index']);
 
 // ======================= api controllers =========================
 

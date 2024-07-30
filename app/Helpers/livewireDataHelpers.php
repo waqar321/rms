@@ -598,16 +598,27 @@ function getTimeDifference($dateTime)
 
 // }
 
-function CheckAlignment($model, $tablename)
+function CheckAlignment($model, $tablename, $employee_id=null)
 {
     $found = false;
-    $currentUser = auth()->user();
-    $UserIDs = auth()->user()->toArray();
+
+    if($employee_id != null)
+    {
+        $currentUser = ecom_admin_user::where('employee_id', $employee_id)->first();
+        $UserIDs = $currentUser->toArray();
+    }
+    else
+    {
+        $currentUser = auth()->user();
+        $UserIDs = auth()->user()->toArray();
+    }
     // --------- user_management
     // if($currentUser->role->id == 1)
     // {
     //     return true;
     // }
+
+    // return $model;
     
     if($tablename == 'course')
     {
@@ -634,7 +645,8 @@ function CheckAlignment($model, $tablename)
     }
 
     //------------ check who is aligned notify
-    if ($AlignedIDs) 
+    // if ($AlignedIDs)
+    if ($AlignedIDs != null) 
     { 
         // if any of the source is aligned, return true
         if($AlignedIDs['zone_code'] != null)
