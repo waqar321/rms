@@ -101,19 +101,20 @@ class ApiController extends Controller
         {
             $employee_code = $request->code;
             $LastDigits = $request->numberDigit;            
-            $result = ecom_admin_user::where('employee_id',$request->user_id);
+            $employee = ecom_admin_user::where('username',$request->code);
 
-            if($result->exists()) 
+            if($employee->exists()) 
             {
-                if ($result->is_active == 1) 
+                $employee = $employee->first();
+
+                if ($employee->is_active == 1) 
                 {
-                    $employee = $result->first();
                     $employee->update(['otp_code' => GenerateOTP()]);
                     
                     $response = [
                         'status' => 1,
-                        'data' => $user,
-                        'message' => 'OTP is Generated Successfully!!!',
+                        'data' => $employee->full_name,
+                        'message' => 'OTP sent to mobile app Successfully!!!',
                     ];
 
                     return response()->json($response, 200);
@@ -124,7 +125,7 @@ class ApiController extends Controller
                         'status' => 0,
                         'message' => 'User Not Activated',
                     ];
-                    
+
                     return response()->json($response, 404);
                 }
             }  

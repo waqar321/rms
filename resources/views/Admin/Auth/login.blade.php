@@ -85,7 +85,7 @@
                                     <!-- <a class="text-right mt-3 forgot-password" href="#" >
                                         Get OTP On Mobile
                                     </a> -->
-                                    <a class="text-right mt-3 forgot-password" href="#" data-toggle="modal" data-target="#exampleModal">
+                                    <a class="text-right mt-3 forgot-password" href="#" data-toggle="modal" data-target="#OptModel">
                                         Get OTP On Mobile
                                     </a>
                                 </label>
@@ -102,18 +102,18 @@
 
 
 <!-- Button trigger modal -->
-<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#OptModel">
   Launch demo modal
 </button> -->
 
 
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalTitle" aria-hidden="true">
+<div class="modal fade" id="OptModel" tabindex="-1" role="dialog" aria-labelledby="OptModelTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Get OTP </h5>
+        <h5 class="modal-title" id="OptModelLongTitle">Get OTP </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -184,49 +184,55 @@
         submitHandler: function (form, event) {
             event.preventDefault();
 
-            var code;
-            var numberDigit;
 
-            if($('#code').val() == '')
-            {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Please Enter Employee Code',
-                    text: 'Please Enter Employee Code',
-                });  
-                return false;
-            }
-            else if($('#numberDigit').val() == '')
-            {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Please Enter Phone Number Last 4 Digit',
-                    text: 'Please Enter Phone Number Last 4 Digit',
-                });  
-                return false;
-            }
-            else
-            {
-                code = $('#code').val();
-                numberDigit = $('#numberDigit').val();
-            }
+            // ------------------ validate eemployee code and phone number ------------------
+                var code;
+                var numberDigit;
 
-            Swal.fire({
-                title: 'Auto close after login!',
-                // timer: 2000,
-                timerProgressBar: true,
-                didOpen: () => {
-                    Swal.showLoading()
-                    const b = Swal.getHtmlContainer().querySelector('b')
-                    timerInterval = setInterval(() => {
-                    }, 300)
-                },
-                willClose: () => {
-                    clearInterval(timerInterval)
+                if($('#code').val() == '')
+                {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Please Enter Employee Code',
+                        text: 'Please Enter Employee Code',
+                    });  
+                    return false;
                 }
-            });
+                else if($('#numberDigit').val() == '')
+                {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Please Enter Phone Number\'s Last 4 Digit',
+                        text: 'Please Enter Phone Number\'s Last 4 Digit',
+                    });  
+                    return false;
+                }
+                else
+                {
+                    code = $('#code').val();
+                    numberDigit = $('#numberDigit').val();
+                }
 
+            // ------------------ loader ------------------
+
+                Swal.fire({
+                    title: 'Auto close after login!',
+                    // timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading()
+                        const b = Swal.getHtmlContainer().querySelector('b')
+                        timerInterval = setInterval(() => {
+                        }, 300)
+                    },
+                    willClose: () => {
+                        clearInterval(timerInterval)
+                    }
+                });
+
+                
             var data = $('#GetpasswordForm').serialize();
+            // ------------------ Send OPT Request ------------------
 
             $.ajax({
                 url: '<?php echo login_url('set_Api'); ?>',
@@ -246,8 +252,15 @@
                         Swal.fire({
                             icon: 'success',
                             title: data.message,
-                            text: 'Please Enter Employee Code',
+                            text: 'Please Use otp as Password To login',
                         });  
+
+                        $('#OptModel').modal('hide');
+
+                        // quizModal.on('hidden.bs.modal', function () 
+                        // {
+                        //     // 
+                        // });
                         
                         // saveToken(data.token);                              //local storage
                         // saveUser(JSON.stringify(data.data));                //local storage
@@ -260,22 +273,21 @@
                     } 
                     else 
                     {
-                        var errors = (data.errors) ? data.errors : {};
-                        if (Object.keys(errors).length > 0) {
+                        // var errors = (data.errors) ? data.errors : {};
+                        // if (Object.keys(errors).length > 0) {
 
-                            var error_key = Object.keys(errors);
-                            for (var i = 0; i < error_key.length; i++) {
-                                var fieldName = error_key[i];
-                                var errorMessage = errors[fieldName];
-                                if ($('#' + fieldName).length) {
-                                    var element = $('#' + fieldName);
-                                    var element_error = `${errorMessage}`;
-                                    element.next('.error-container').html(element_error);
-                                    element.focus();
-                                }
-                            }
-                        }
-
+                        //     var error_key = Object.keys(errors);
+                        //     for (var i = 0; i < error_key.length; i++) {
+                        //         var fieldName = error_key[i];
+                        //         var errorMessage = errors[fieldName];
+                        //         if ($('#' + fieldName).length) {
+                        //             var element = $('#' + fieldName);
+                        //             var element_error = `${errorMessage}`;
+                        //             element.next('.error-container').html(element_error);
+                        //             element.focus();
+                        //         }
+                        //     }
+                        // }
                     }
                 },
                 error: function(xhr, textStatus, errorThrown) {
