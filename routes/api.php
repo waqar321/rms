@@ -50,9 +50,11 @@ Route::post('/lectures', [LectureApiController::class, 'store']);
 Route::put('/lectures/{id}', [LectureApiController::class, 'update']);
 Route::delete('/lectures/{id}', [LectureApiController::class, 'destroy']);
 
+
 //================= Course Apis ==================
 
 Route::get('/MyCourses/{employee_code}', [CourseApiController::class, 'index']);
+Route::get('/Lecturelist/{course_id}', [CourseApiController::class, 'Lecturelist']);
 
 // ======================= api controllers =========================
 
