@@ -81,7 +81,7 @@
 
                             <div class="send-otp">
                                 <i class="fas fa-mobile-alt"></i>
-                                <label for="sendOtp">Send OTP To Mobile To Set Password &nbsp; 
+                                <label for="sendOtp">Send OTP To Hum Leopards App To Set Password &nbsp; 
                                     <!-- <a class="text-right mt-3 forgot-password" href="#" >
                                         Get OTP On Mobile
                                     </a> -->
