@@ -162,7 +162,7 @@ class ApiController extends Controller
 
                 if ($employee->is_active == 1) 
                 {
-                    $employee->update(['otp_code' => GenerateOTP(), 'otp_expires_at' => Carbon::now()->addMinutes(10)]);   // OTP valid for 10 minutes
+                    $employee->update(['otp_code' => GenerateOTP(), 'otp_expires_at' => Carbon::now()->addMinutes(1)]);   // OTP valid for 10 minutes
                     
                     $response = [
                         'status' => 1,
@@ -202,7 +202,7 @@ class ApiController extends Controller
         return response()->json($response, 404);
     }
 
-    public function GetOPT($employee_code)
+    public function GetOTP($employee_code)
     {
         $employee = ecom_admin_user::where('employee_id', $employee_code)->first();
 

@@ -73,7 +73,7 @@ Route::delete('/lectures/{id}', [LectureApiController::class, 'destroy']);
 
     Route::post('/login_api', [ApiController::class, 'login'])->name('login.api');
     Route::post('/set_Api', [ApiController::class, 'SetOTP'])->name('set.otp_api');
-    Route::get('/GetOPT/{employee_code}', [ApiController::class, 'GetOPT']);
+    Route::get('/GetOTP/{employee_code}', [ApiController::class, 'GetOTP']);
 
     Route::post('/forgot/password', [AuthController::class, 'forgotPasswordSubmit'])->name('forgot.password');
     Route::get('/get_cities', [DataListController::class, 'getCityForSearch'])->name('get.search.cities');
