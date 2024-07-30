@@ -1905,7 +1905,7 @@ a:focus {
 }
 
 .nav.side-menu>li>a, .nav.child_menu>li>a {
-    color: black;
+    color: black !important;
     font-weight: 400;
 }
 
@@ -2044,7 +2044,7 @@ a:focus {
 }
 
 .nav.child_menu>li>a {
-    color: #FFFFFF;
+    color: #FFFFFF !important;
     font-size: 12px;
     padding: 9px;
     font-weight: 400;
