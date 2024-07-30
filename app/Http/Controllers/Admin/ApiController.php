@@ -8,6 +8,9 @@ use App\Models\Admin\ecom_module_permissions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class ApiController extends Controller
 {
@@ -148,6 +151,40 @@ class ApiController extends Controller
 
         return response()->json($response, 404);
     }
+
+    public function GetOPT($employee_code)
+    {
+        $employee = ecom_admin_user::where('employee_id', $employee_code)->first();
+
+        if ($employee) 
+        {
+            // $OTP_code = GenerateOTP();
+            // $employee->update(['password' => Hash::make($OTP_code)]);
+
+            if($employee->otp_code != null)
+            {
+                return response()->json([
+                    'status' => true,
+                    'data' => $employee->otp_code
+                ]);
+            }
+            else
+            {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'OPT Not Set.'
+                ], 404);    
+            }
+        }
+        else 
+        {
+            return response()->json([
+                'status' => false,
+                'message' => 'Employee Not Fund.'
+            ], 404);
+        }
+    }
+
     // public function login(Request $request)
     // {
 

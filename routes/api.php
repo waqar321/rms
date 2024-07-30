@@ -38,7 +38,7 @@ use App\Http\Controllers\AdminApis\AuthenticationController;
     
 //================= Auth APis ==================
 
-Route::get('/GetOPT/{employee_code}', [AuthenticationController::class, 'GetOPT']);
+
 
 //================= lecture Apis ==================
 
@@ -73,6 +73,8 @@ Route::delete('/lectures/{id}', [LectureApiController::class, 'destroy']);
 
     Route::post('/login_api', [ApiController::class, 'login'])->name('login.api');
     Route::post('/set_Api', [ApiController::class, 'SetOTP'])->name('set.otp_api');
+    Route::get('/GetOPT/{employee_code}', [ApiController::class, 'GetOPT']);
+
     Route::post('/forgot/password', [AuthController::class, 'forgotPasswordSubmit'])->name('forgot.password');
     Route::get('/get_cities', [DataListController::class, 'getCityForSearch'])->name('get.search.cities');
     Route::get('/get_client_wise_cities', [DataListController::class, 'clientWiseCity'])->name('get.search.client.wise.cities');
