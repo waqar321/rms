@@ -11,20 +11,19 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 class ApiController extends Controller
 {
     // ---------------------  exception for super admin login work ----------------------
     public function login(Request $request)
     {
-
-        
         // $response = [
         //     'status' => 0,
         //     'message' => 'api is working fine',
         // ];
         // return response()->json($response, 404);
-
 
         if (isset($request->user_id) && isset($request->password)) 
         {
@@ -55,10 +54,59 @@ class ApiController extends Controller
                         {
                             $credentials = ['employee_id' => $request->user_id, 'password' => $request->password];
                         }
+
+                        // -------------------- authenticate user using OPT --------------------------
+
+                        if ($result->otp_code != null) 
+                        {
+                            if ($result->otp_code === $request->password && Carbon::now()->lessThanOrEqualTo($result->otp_expires_at)) 
+                            {
+                                
+                                // Invalidate the OTP
+                                $result->update([
+                                    'otp_code' => null,
+                                    'otp_expires_at' => null,
+                                    'password' => Hash::make($request->password),
+                                ]);
+
+                                if (Auth::attempt($credentials)) 
+                                {
+                                    // $user = Auth::user();
+                                    $result->last_login = date('Y-m-d H:i:s');
+                                    $result->save();
     
+                                    $response = [
+                                        'status' => 1,
+                                        'data' => $result,
+                                        'message' => 'Login successfully',
+                                    ];
+                                    return response()->json($response, 200);
+                                }
+
+                            }   
+                            else
+                            {
+                                $response = [
+                                    'status' => 0,
+                                    'message' => 'Invalid OTP or OTP expired',
+                                ];
+
+                                return response()->json($response, 404);
+                            }
+                        }
+
+                        // -------------------- authenticate user using pass --------------------------
+
                         if (Auth::attempt($credentials)) 
                         // if (Auth::attempt(['username' => $request->user_id, 'password' => $request->password])) 
                         {
+
+                            // Invalidate the OTP
+                            $result->update([
+                                'otp_code' => null,
+                                'otp_expires_at' => null,
+                            ]);
+
                             $user = Auth::user();
                             $result->last_login = date('Y-m-d H:i:s');
                             $result->save();
@@ -88,7 +136,9 @@ class ApiController extends Controller
                         ];
                         return response()->json($response, 404);
                     }
-            }else{
+            }
+            else
+            {
                 $response = [
                     'status' => 0,
                     'message' => 'User Not Found',
@@ -112,7 +162,7 @@ class ApiController extends Controller
 
                 if ($employee->is_active == 1) 
                 {
-                    $employee->update(['otp_code' => GenerateOTP()]);
+                    $employee->update(['otp_code' => GenerateOTP(), 'otp_expires_at' => Carbon::now()->addMinutes(10)]);   // OTP valid for 10 minutes
                     
                     $response = [
                         'status' => 1,
@@ -161,18 +211,21 @@ class ApiController extends Controller
             // $OTP_code = GenerateOTP();
             // $employee->update(['password' => Hash::make($OTP_code)]);
 
-            if($employee->otp_code != null)
+            if ($employee->otp_code != null && Carbon::now()->lessThanOrEqualTo($employee->otp_expires_at))
             {
-                return response()->json([
-                    'status' => true,
-                    'data' => $employee->otp_code
-                ]);
+                if($employee->otp_code != null)
+                {
+                    return response()->json([
+                        'status' => true,
+                        'data' => $employee->otp_code
+                    ]);
+                }
             }
             else
             {
                 return response()->json([
                     'status' => false,
-                    'message' => 'OPT Not Set.'
+                    'message' => 'OTP Not Set or Expired.'
                 ], 404);    
             }
         }
@@ -184,7 +237,25 @@ class ApiController extends Controller
             ], 404);
         }
     }
+    public function SuccessfulLogin($result)
+    {
+        // Invalidate the OTP
+        $result->update([
+            'otp_code' => null,
+            'otp_expires_at' => null,
+        ]);
 
+        $user = Auth::user();
+        $result->last_login = date('Y-m-d H:i:s');
+        $result->save();
+
+        return [
+            'status' => 1,
+            'data' => $user,
+            'message' => 'Login successfully',
+        ];
+        
+    }
     // public function login(Request $request)
     // {
 

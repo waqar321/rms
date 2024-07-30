@@ -32,6 +32,7 @@ class ecom_admin_user extends Authenticatable
         'sub_department_id',
         'time_slot_id',
         'otp_code',
+        'otp_expires_at',
         'device_token' 
     ];
     

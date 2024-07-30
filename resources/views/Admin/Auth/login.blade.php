@@ -290,7 +290,8 @@
                         // }
                     }
                 },
-                error: function(xhr, textStatus, errorThrown) {
+                error: function(xhr, textStatus, errorThrown) 
+                {
                     // Handle AJAX errors here
                     Swal.fire(
                         'Error!',
