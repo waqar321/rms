@@ -167,7 +167,7 @@ class ApiController extends Controller
                     $response = [
                         'status' => 1,
                         'data' => $employee->full_name,
-                        'message' => 'OTP sent to mobile app Successfully!!!',
+                        'message' => 'OTP sent to Hum Leopards App Successfully!!!',
                     ];
 
                     return response()->json($response, 200);
@@ -217,7 +217,8 @@ class ApiController extends Controller
                 {
                     return response()->json([
                         'status' => true,
-                        'data' => $employee->otp_code
+                        'data' => $employee->otp_code,
+                        'expire_at' => $employee->otp_expires_at
                     ]);
                 }
             }
