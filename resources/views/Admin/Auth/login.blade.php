@@ -16,11 +16,7 @@
     <!-- Style -->
     <link rel="stylesheet" href="{{ url_secure('login/css/style.css')}}">
     <link href="<?php echo url_secure('vendors/sweet_alert/sweetalert2.min.css') ?>"  rel="stylesheet"/>
-<<<<<<< HEAD
     <title>LMS-Login</title>
-=======
-    <title>Login Page</title>
->>>>>>> 6c81dfa2c24f64b1865ed0a65f55da7c5fe6f1d2
     <style>
         .forgot-password {
             text-decoration: none!important;
