@@ -16,7 +16,7 @@
     <!-- Style -->
     <link rel="stylesheet" href="{{ url_secure('login/css/style.css')}}">
     <link href="<?php echo url_secure('vendors/sweet_alert/sweetalert2.min.css') ?>"  rel="stylesheet"/>
-    <title>Admin-Login</title>
+    <title>LMS-Login</title>
     <style>
         .forgot-password {
             text-decoration: none!important;
@@ -82,12 +82,12 @@
                             <div class="send-otp">
                                 <i class="fas fa-mobile-alt"></i>
                                 <label for="sendOtp">Send OTP To Mobile To Set Password &nbsp; 
-                                    <a class="text-right mt-3 forgot-password" href="#" >
-                                        Get OTP On Mobile
-                                    </a>
-                                    <!-- <a class="text-right mt-3 forgot-password" href="#" data-toggle="modal" data-target="#exampleModal">
+                                    <!-- <a class="text-right mt-3 forgot-password" href="#" >
                                         Get OTP On Mobile
                                     </a> -->
+                                    <a class="text-right mt-3 forgot-password" href="#" data-toggle="modal" data-target="#exampleModal">
+                                        Get OTP On Mobile
+                                    </a>
                                 </label>
                             </div>
                             
@@ -113,7 +113,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Get Password </h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Get OTP </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -130,13 +130,13 @@
                                 <label class="text_label" style="text-transform: capitalize;">Employee Code :</label>
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" name="code" id="code" placeholder="Employee Code" pattern="[0-9]{1,10}" title="Employee Code is Required">
+                                <input type="number" name="code" id="code" placeholder="Employee Code" pattern="[0-9]{1,10}" title="Employee Code is Required">
                             </div>
                             <div class="col-lg-6">
                                 <label class="text_label" style="text-transform: capitalize;">Last 4 Digits Reg. Mobile No.:</label>
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" name="numberDigit" id="numberDigit" placeholder="Mobile Last 4 Digit" pattern="[0-9]{1,10}" title="Please Enter Last 4 Digit Number ">
+                                <input type="number" name="numberDigit" id="numberDigit" placeholder="Mobile Last 4 Digit" pattern="[0-9]{1,10}" title="Please Enter Last 4 Digit Number ">
                             </div>
                         </div>
 
@@ -148,9 +148,6 @@
                     </div> -->
 
                 <!-- ------------------------------------------------------------------------------------------------- -->
-
-
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -177,8 +174,6 @@
 <script src="<?php echo url_secure('vendors/validate/jquery.validate.min.js') ?>" type="text/javascript"></script>
 <script src="<?php echo url_secure('build/js/ScantumToken.js?id=4') ?>"></script>
 <script>
-
-
 
 
     $("#GetpasswordForm").validate({
@@ -234,7 +229,7 @@
             var data = $('#GetpasswordForm').serialize();
 
             $.ajax({
-                url: '<?php echo login_url('login_api'); ?>',
+                url: '<?php echo login_url('set_Api'); ?>',
                 method: 'POST',
                 data:data,
                 dataType: 'json',       // Set the expected data type to JSON
@@ -248,14 +243,20 @@
                         
                     if (data && data.status == 1)
                     {     
-                        saveToken(data.token);                              //local storage
-                        saveUser(JSON.stringify(data.data));                //local storage
-                        savePermissions(JSON.stringify(data.permissions));  //local storage              
-                        console.log('<?php //echo url_secure('dashboard') ?>');
+                        Swal.fire({
+                            icon: 'success',
+                            title: data.message,
+                            text: 'Please Enter Employee Code',
+                        });  
+                        
+                        // saveToken(data.token);                              //local storage
+                        // saveUser(JSON.stringify(data.data));                //local storage
+                        // savePermissions(JSON.stringify(data.permissions));  //local storage              
+                        // console.log('<?php //echo url_secure('dashboard') ?>');
                         // console.log('{!! route('dashboard') !!}');
                         // console.log({!! url('dashboard') !!});
                         // return false;
-                        window.location.href = '{!! route('dashboard') !!}';
+                        // window.location.href = '{!! route('dashboard') !!}';
                     } 
                     else 
                     {

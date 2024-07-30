@@ -25,8 +25,6 @@ class ApiController extends Controller
 
         if (isset($request->user_id) && isset($request->password)) 
         {
-
-
             $user_id = $request->user_id;
             $password = $request->password;
             
@@ -97,7 +95,58 @@ class ApiController extends Controller
         }
     }
 
+    public function SetOTP(Request $request)
+    {
+        if (isset($request->code) && isset($request->numberDigit)) 
+        {
+            $employee_code = $request->code;
+            $LastDigits = $request->numberDigit;            
+            $result = ecom_admin_user::where('employee_id',$request->user_id);
 
+            if($result->exists()) 
+            {
+                if ($result->is_active == 1) 
+                {
+                    $employee = $result->first();
+                    $employee->update(['otp_code' => GenerateOTP()]);
+                    
+                    $response = [
+                        'status' => 1,
+                        'data' => $user,
+                        'message' => 'OTP is Generated Successfully!!!',
+                    ];
+
+                    return response()->json($response, 200);
+                }
+                else
+                {
+                    $response = [
+                        'status' => 0,
+                        'message' => 'User Not Activated',
+                    ];
+                    
+                    return response()->json($response, 404);
+                }
+            }  
+            else
+            {
+                $response = [
+                    'status' => 0,
+                    'message' => 'User Not Found',
+                ];
+            }  
+
+            return response()->json($response, 404);
+        }  
+
+                
+        $response = [
+            'status' => true,
+            'message' => $request->all(),
+        ];
+
+        return response()->json($response, 404);
+    }
     // public function login(Request $request)
     // {
 

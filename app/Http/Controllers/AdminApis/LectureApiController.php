@@ -25,7 +25,6 @@ class LectureApiController extends Controller
     {
         return response()->json(ecom_lecture::all(), 200);
     }
-
     public function show($id)
     {
         // Retrieve a single lecture by ID
@@ -37,7 +36,6 @@ class LectureApiController extends Controller
 
         return response()->json($lecture, 200);
     }
-
     public function store(Request $request)
     {
 

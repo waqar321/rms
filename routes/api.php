@@ -33,8 +33,13 @@ use App\Http\Controllers\Admin\DepartmentController;
 
 // ======================= api controllers =========================
 use App\Http\Controllers\AdminApis\LectureApiController;
+use App\Http\Controllers\AdminApis\AuthenticationController;
 
     
+//================= Auth APis ==================
+
+Route::get('/GetOPT/{employee_code}', [AuthenticationController::class, 'GetOPT']);
+
 //================= lecture Apis ==================
 
 Route::get('/lectures', [LectureApiController::class, 'index']);
@@ -67,6 +72,7 @@ Route::delete('/lectures/{id}', [LectureApiController::class, 'destroy']);
     Route::post('/UpdateUserLectureResult', [LectureApiController::class, 'UpdateUserLectureResult'])->name('update.lectureResult');
 
     Route::post('/login_api', [ApiController::class, 'login'])->name('login.api');
+    Route::post('/set_Api', [ApiController::class, 'SetOTP'])->name('set.otp_api');
     Route::post('/forgot/password', [AuthController::class, 'forgotPasswordSubmit'])->name('forgot.password');
     Route::get('/get_cities', [DataListController::class, 'getCityForSearch'])->name('get.search.cities');
     Route::get('/get_client_wise_cities', [DataListController::class, 'clientWiseCity'])->name('get.search.client.wise.cities');
