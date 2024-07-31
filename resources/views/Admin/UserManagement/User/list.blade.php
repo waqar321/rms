@@ -55,7 +55,7 @@
                     </div>
                     <div  class="col-md-2 col-lg-2">
                         <button type="button" wire:click="resetInput(true)" class="btn btn-danger SearchButton" style="width: 130px;">
-                            Clear Filter
+                            Clear Filter {{ $sortByCityNames }}
                             <i class="fa fa-search"></i>
                         </button>
                     </div>                    

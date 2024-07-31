@@ -53,49 +53,46 @@ trait UsersComponent
     public function sortBy($field)
     {
         $this->sortByRealTime = $field;
+        $this->sortByCityNames = false;
+        $this->sortByRoles = false;
+        
+        $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
 
+        if ($field === 'City')
+        {
+            $this->sortByCityNames = true;
+        }
+        if ($field === 'Roles')
+        {
+            // $this->sortBy = '';
+            // $this->sortByRoles = true;
+        }
+                 
         if ($field === 'Employee Code')
         {
             $this->sortBy = 'employee_id';
-            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
         } 
         else if ($field === 'Name')
         {
             $this->sortBy = 'full_name';
-            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
         } 
         else if ($field === 'Email')
         {
             $this->sortBy = 'email';
-            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
-        } 
-        else if ($field === 'City')
-        {
-            $this->sortBy = '';
-            $this->sortByCityNames = true;
-            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
-        } 
-        else if ($field === 'Roles')
-        {
-            // $this->sortBy = '';
-            // $this->sortByRoles = true;
-            // $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
         } 
         else if ($field === 'Designation')
         {
             $this->sortBy = 'designation';
-            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
         } 
         else if ($field === 'Date')
         {
             $this->sortBy = 'created_at';
-            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
         } 
-        else
-        {
-            // $this->sortBy = $field;
-            $this->sortDirection = 'asc';
-        }
+        // else
+        // {
+        //     // $this->sortBy = $field;
+        //     $this->sortDirection = 'asc';
+        // }
 
         // dd($field , $this->sortBy);
         // if ($this->sortBy === $field) 
@@ -242,6 +239,9 @@ trait UsersComponent
     }
     protected function RenderData()
     {
+        // if($this->sortByCityNames// {
+        //     dd('true');
+        // }
         $users = ecom_admin_user::when($this->searchByName !== '', function ($query) 
                                     {
                                         $query->where('full_name', 'like', '%' . $this->searchByName . '%');
@@ -277,23 +277,16 @@ trait UsersComponent
                                                 ->select('ecom_admin_user.*', 'central_ops_city.city_name')
                                                 ->orderBy('central_ops_city.city_name', $this->sortDirection);
                                     })
-                                    ->when($this->sortByCityNames, function ($query) 
+                                    ->when($this->sortByRoles, function ($query) 
                                     {
-                                        $query->leftJoin('central_ops_city', 'ecom_admin_user.city_id', '=', 'central_ops_city.city_id')
-                                                ->select('ecom_admin_user.*', 'central_ops_city.city_name')
-                                                ->orderBy('central_ops_city.city_name', $this->sortDirection);
+                                        $query->orderBy($this->sortBy, $this->sortDirection);
                                     })
-                                    // ->when($this->sortByRoles, function ($query) 
-                                    // {
-                                    //     $query->leftJoin('central_ops_city', 'ecom_admin_user.city_id', '=', 'central_ops_city.city_id')
-                                    //             ->select('ecom_admin_user.*', 'central_ops_city.city_name')
-                                    //             ->orderBy('central_ops_city.city_name', $this->sortDirection);
-                                    // })
                                     ->orderBy($this->sortBy, $this->sortDirection)
                                     // ->orderBy('id', 'ASC')
                                     // ->paginate($this->paginateLimit);
                                     ->get();
-        
+
+        $this->sortByCityNames = false;
         $this->CurrentPaginatedUsers =  $users->take($this->paginateLimit);      
         $data['userListing'] = $this->readyToLoad ? $this->PaginateData($users) : [];
         return $data;  
