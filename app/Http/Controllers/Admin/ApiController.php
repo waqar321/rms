@@ -154,7 +154,7 @@ class ApiController extends Controller
         {
             $employee_code = $request->code;
             $LastDigits = $request->numberDigit;            
-            $employee = ecom_admin_user::where('username',$request->code);
+            $employee = ecom_admin_user::where('employee_id',$employee_code);
 
             if($employee->exists()) 
             {
