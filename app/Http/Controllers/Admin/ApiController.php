@@ -206,13 +206,13 @@ class ApiController extends Controller
     {
         $RequestData = $request->all();
 
-        return response()->json([
-            'status' => true,
-            'data' => $RequestData,
-            'expire_at' => $RequestData
-        ]);
+        // return response()->json([
+        //     'status' => true,
+        //     'data' => $RequestData,
+        //     'expire_at' => $RequestData
+        // ]);
 
-        $employee = ecom_admin_user::where('employee_id', $employee_code)->first();
+        $employee = ecom_admin_user::where('employee_id', $RequestData->employee_code)->first();
 
         if ($employee) 
         {
