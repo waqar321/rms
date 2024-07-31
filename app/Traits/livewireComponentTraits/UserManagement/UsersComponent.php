@@ -52,15 +52,59 @@ trait UsersComponent
 
     public function sortBy($field)
     {
-        if ($this->sortBy === $field) 
+        $this->sortByRealTime = $field;
+
+        if ($field === 'Employee Code')
         {
+            $this->sortBy = 'employee_id';
             $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
-        }
+        } 
+        else if ($field === 'Name')
+        {
+            $this->sortBy = 'full_name';
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } 
+        else if ($field === 'Email')
+        {
+            $this->sortBy = 'email';
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } 
+        else if ($field === 'City')
+        {
+            $this->sortBy = 'city_id';
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } 
+        else if ($field === 'Roles')
+        {
+            $this->sortBy = 'role_id';
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } 
+        else if ($field === 'Designation')
+        {
+            $this->sortBy = 'designation';
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } 
+        else if ($field === 'Date')
+        {
+            $this->sortBy = 'created_at';
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } 
         else
         {
-            $this->sortBy = $field;
+            // $this->sortBy = $field;
             $this->sortDirection = 'asc';
         }
+
+        // dd($field , $this->sortBy);
+        // if ($this->sortBy === $field) 
+        // {
+        //     $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        // }
+        // else
+        // {
+        //     $this->sortBy = $field;
+        //     $this->sortDirection = 'asc';
+        // }
     }
 
     protected $rules = 
@@ -181,6 +225,7 @@ trait UsersComponent
        $this->paginateLimit = 10;
        $this->sortBy = 'employee_id';
        $this->sortDirection = 'asc';
+       $this->sortByRealTime = 'Employee Code';
 
        $this->rolesLists = Role::where('title','!=','Super Admin')->where('title','!=','User')->pluck('title', 'id');;
        $this->cities = collect(); 

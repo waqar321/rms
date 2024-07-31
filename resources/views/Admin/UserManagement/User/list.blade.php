@@ -100,7 +100,6 @@
                         </div>
                     </div>
 
-
                         @include('Admin.partial.livewire.exportButtons')  
 
                             <hr>
@@ -108,13 +107,17 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th> </th>
+                                        <th>  </th>
                                         @foreach($availableColumns as $column)
-                                                <th> {{ $column }} </th>
+                                            <th wire:click="sortBy('{{ $column }}')">
+                                                    {{ $column }} {{ $sortByRealTime == $column }} 
+                                                    @include('Admin.partial.livewire.sort-icon', ['field' => $column])
+                                            </th>
                                         @endforeach
                                     </tr>
                                 </thead>
                                 <tbody>
+
                                     
                                     @if($readyToLoad)
                                         @forelse($userListing as $user)

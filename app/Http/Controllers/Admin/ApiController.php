@@ -202,8 +202,16 @@ class ApiController extends Controller
         return response()->json($response, 404);
     }
 
-    public function GetOTP($employee_code)
+    public function GetOTP(Request $request)
     {
+        $RequestData = $request->all();
+
+        return response()->json([
+            'status' => true,
+            'data' => $RequestData,
+            'expire_at' => $RequestData
+        ]);
+
         $employee = ecom_admin_user::where('employee_id', $employee_code)->first();
 
         if ($employee) 

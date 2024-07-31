@@ -14,7 +14,6 @@ class Index extends Component
     use WithPagination, WithFileUploads, UsersComponent;
     protected $paginationTheme = 'bootstrap';
 
-
     protected $listeners = [
                             'UpdateRoleIds' => 'handleUpdateRoleIds',
                             'UpdateCityID' => 'handleUpdateCityID',

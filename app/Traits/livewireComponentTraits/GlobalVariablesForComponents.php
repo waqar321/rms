@@ -47,6 +47,7 @@ trait GlobalVariablesForComponents
     public $searchByName='';
     //#[Url(as : 'st')]
     public $sortBy = '';
+    public $sortByRealTime = '';
     //#[Url(as : 'st_d')]
     public $sortDirection = '';
     //#[Url(as : 'E_C')]
