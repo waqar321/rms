@@ -53,8 +53,8 @@ Route::delete('/lectures/{id}', [LectureApiController::class, 'destroy']);
 
 //================= Course Apis ==================
 
-Route::get('/MyCourses/{employee_code}', [CourseApiController::class, 'index']);
-Route::get('/Lecturelist/{course_id}', [CourseApiController::class, 'Lecturelist']);
+Route::post('/MyCourses', [CourseApiController::class, 'index']);
+Route::post('/Lecturelist', [CourseApiController::class, 'Lecturelist']);
 
 // ======================= api controllers =========================
 

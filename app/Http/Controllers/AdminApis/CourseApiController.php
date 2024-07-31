@@ -9,9 +9,10 @@ use App\Models\Admin\ecom_lecture;
 
 class CourseApiController extends Controller
 {
-    public function index($employee_code)
+    public function index(Request $request)
     {
-
+        $requestData = $request->all();
+        $employee_code = $requestData['employee_code'];
         // $course = ecom_course::orderBy('id', 'DESC')
         //             ->where('is_active', 1)
         //             ->where('id', 20)
@@ -42,8 +43,11 @@ class CourseApiController extends Controller
         ], 200);  
 
     }
-    public function Lecturelist($course_id)
+    public function Lecturelist(Request $request)
     {
+        $requestData = $request->all();
+        $course_id = $requestData['course_id'];
+
         $course = ecom_course::where('id', $course_id);
                 
         if($course->exists())
