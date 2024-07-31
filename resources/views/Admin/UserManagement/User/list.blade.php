@@ -110,7 +110,7 @@
                                         <th>  </th>
                                         @foreach($availableColumns as $column)
                                             <th wire:click="sortBy('{{ $column }}')">
-                                                    {{ $column }} {{ $sortByRealTime == $column }} 
+                                                    {{ $column }} 
                                                     @include('Admin.partial.livewire.sort-icon', ['field' => $column])
                                             </th>
                                         @endforeach

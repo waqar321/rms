@@ -71,13 +71,15 @@ trait UsersComponent
         } 
         else if ($field === 'City')
         {
-            $this->sortBy = 'city_id';
+            $this->sortBy = '';
+            $this->sortByCityNames = true;
             $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
         } 
         else if ($field === 'Roles')
         {
-            $this->sortBy = 'role_id';
-            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+            // $this->sortBy = '';
+            // $this->sortByRoles = true;
+            // $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
         } 
         else if ($field === 'Designation')
         {
@@ -269,6 +271,24 @@ trait UsersComponent
                                     ->whereHas('roles', function ($query) {
                                         $query->where('title', '!=', 'Super Admin'); // Exclude users with Super Admin role
                                     })
+                                    ->when($this->sortByCityNames, function ($query) 
+                                    {
+                                        $query->leftJoin('central_ops_city', 'ecom_admin_user.city_id', '=', 'central_ops_city.city_id')
+                                                ->select('ecom_admin_user.*', 'central_ops_city.city_name')
+                                                ->orderBy('central_ops_city.city_name', $this->sortDirection);
+                                    })
+                                    ->when($this->sortByCityNames, function ($query) 
+                                    {
+                                        $query->leftJoin('central_ops_city', 'ecom_admin_user.city_id', '=', 'central_ops_city.city_id')
+                                                ->select('ecom_admin_user.*', 'central_ops_city.city_name')
+                                                ->orderBy('central_ops_city.city_name', $this->sortDirection);
+                                    })
+                                    // ->when($this->sortByRoles, function ($query) 
+                                    // {
+                                    //     $query->leftJoin('central_ops_city', 'ecom_admin_user.city_id', '=', 'central_ops_city.city_id')
+                                    //             ->select('ecom_admin_user.*', 'central_ops_city.city_name')
+                                    //             ->orderBy('central_ops_city.city_name', $this->sortDirection);
+                                    // })
                                     ->orderBy($this->sortBy, $this->sortDirection)
                                     // ->orderBy('id', 'ASC')
                                     // ->paginate($this->paginateLimit);

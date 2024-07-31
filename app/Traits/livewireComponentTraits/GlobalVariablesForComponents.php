@@ -58,6 +58,9 @@ trait GlobalVariablesForComponents
     public $searchByEmployeeDesignation = '';
     //#[Url(as : 'E_CY')]
     public $searchByEmployeeCity = '';
+    
+    public $sortByCityNames = '';
+    public $sortByRoles = '';   
 
     public $Collapse = 'collapse'; 
     public $photo;
