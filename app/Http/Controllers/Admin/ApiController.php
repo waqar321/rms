@@ -212,7 +212,7 @@ class ApiController extends Controller
         //     'expire_at' => $RequestData
         // ]);
 
-        $employee = ecom_admin_user::where('employee_id', $RequestData->employee_code)->first();
+        $employee = ecom_admin_user::where('employee_id', $RequestData['employee_code'])->first();
 
         if ($employee) 
         {
