@@ -305,6 +305,15 @@ trait UsersComponent
         $ecom_admin_user->delete();    
         $this->dispatchBrowserEvent('deleted_scene', ['name' => $name]);
     }
+    public function deleteSelected()
+    {
+        if($this->getSelectedRowIDs()->isNotEmpty())
+        {
+            Permission::whereIn('id', $this->getSelectedRowIDs()->toArray())->delete();
+
+            $this->dispatchBrowserEvent('deleted_scene', ['name' => 'Selected Permissions']);
+        }
+    }
     // public function selectAll()
     // {
     //     $this->CurrentPaginatedUsers = $this->PaginateData($this->CurrentPaginatedUsers);
