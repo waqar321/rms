@@ -71,7 +71,13 @@
                                         </td>
                                         <td>{{ $sidebar->id }}</td>
                                         <td>{{ $sidebar->title }}</td>                                            
-                                        <td>{{ $sidebar->order }}</td>                                            
+                                        <td>
+                                            @if(isset($sidebar->ParentMenu->title))
+                                                {{ $sidebar->ParentMenu->title . ' - ' .$sidebar->order }}
+                                            @else 
+                                                    {{ $sidebar->order }}
+                                            @endif 
+                                        </td>                                      
                                         <td>{{ $sidebar->ParentMenu->title ?? ' Parent Sidebar' }}</td>                                            
                                         <td>{{ $sidebar->permission->title ?? ' Not Set' }}</td>                                            
                                         <td>
