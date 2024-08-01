@@ -19,14 +19,13 @@ class SidebarOperation extends Component
                                 'UpdatePermissionId' => 'HandleUpdatePermissionId', 
                                 'UpdateParentId' => 'HandleUpdateParentId', 
                                 'selectedColumns' => 'export',
-                                'deleteSideBarManage' => 'handleSidebarDelete',
+                                'deleteSideBarManage' => 'handleSidebarDelete', 
                             ];
                             
     public function mount($id)
     {
         $this->update = $id != 0 ? true : false;
         $this->setMountData($id);
-
         $this->pageTitle = 'SideBar Manage';
         $this->MainTitle = 'SideBarManage';
         
@@ -67,18 +66,33 @@ class SidebarOperation extends Component
         
         // dd($this->SelectedParentId, $this->SelectedPermissionId);
 
-        if($this->SelectedPermissionId != null )
+        // dd(var_dump($this->SelectedPermissionId));
+
+        if($this->SelectedPermissionId != null)
         {
-            $this->SideBar->update(['permission_id' => $this->SelectedPermissionId]);
-            // $this->SideBar->permission_id = $this->SelectedPermissionId;
+            if($this->update)
+            {   
+                $this->SideBar->update(['permission_id' => $this->SelectedPermissionId]);
+            }
+            else
+            {
+                $this->SideBar->permission_id = $this->SelectedPermissionId;
+            }
         }
+
         if($this->SelectedParentId != null)
         {
-            $this->SideBar->update(['parent_id' => $this->SelectedParentId]);
-            // $this->SideBar->parent_id = $this->SelectedParentId;
+            if($this->update)
+            {   
+                $this->SideBar->update(['parent_id' => $this->SelectedParentId]);
+            }
+            else
+            {
+                $this->SideBar->parent_id = $this->SelectedParentId;
+            }
         }
-        // dd($this->SelectedParentId, $this->SelectedPermissionId);
-        // dd($this->SideBar);
+
+        // dd($this->SideBar , $this->SelectedPermissionId, $this->SelectedPermissionId != null, $this->SelectedParentId, $this->SelectedParentId != null);
 
         $this->SideBar->save();
 
@@ -111,6 +125,7 @@ class SidebarOperation extends Component
     }
     public function HandleUpdateParentId($fieldname, $value)
     {
+        // dd('parent selected');
         $this->SelectedParentId = $value;
         $this->Collapse = "uncollapse";
     }

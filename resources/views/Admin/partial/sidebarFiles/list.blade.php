@@ -77,19 +77,24 @@
                                             @else 
                                                     {{ $sidebar->order }}
                                             @endif 
-                                        </td>                                      
+                                        </td>      
                                         <td>{{ $sidebar->ParentMenu->title ?? ' Parent Sidebar' }}</td>                                            
                                         <td>{{ $sidebar->permission->title ?? ' Not Set' }}</td>                                            
                                         <td>
                                             @if($sidebar->url != null)
-                                            <span style="font-size: 13px;padding: 1px 5px 1px 5px;border-radius: 0px;" class="btn btn-danger NoFoundID">
+                                                <span style="font-size: 13px;padding: 1px 5px 1px 5px;border-radius: 0px;" class="btn btn-danger NoFoundID">
                                             @php
+                                                
                                                 $urlRoute = '#';
-                                                if ($sidebar->url && url_secure($sidebar->url)) {
+                                                if ($sidebar->url && url_secure($sidebar->url)) 
+                                                {
                                                     $urlRoute = url_secure($sidebar->url);
-                                                } else {
+                                                }
+                                                else
+                                                {
                                                     $urlRoute = route($sidebar->url);
                                                 }
+
                                             @endphp
                                                 <a class="text-light" href="{{ $urlRoute }}">
                                                     {{ $sidebar->url }}                                     
@@ -122,8 +127,8 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a data-screen-permission-id="23" href="{{ route('sidebarEdit', base64_encode($sidebar->id)) }}" class="btn btn-primary">Edit</a>
-                                            <button data-screen-permission-id="24" onclick="confirmDelete('{{ $sidebar->id }}')" class="btn btn-danger">Delete</button>
+                                            <a data-screen-permission-id="23" href="{{ route('sidebarEdit', base64_encode($sidebar->id)) }}"><i class="fa fa-edit fa-2x"></i></a>
+                                            <button data-screen-permission-id="24" onclick="confirmDelete('{{ $sidebar->id }}')" style="border:0; background:none;padding:0; margin:0" class="fa fa-trash fa-2x"></button>
                                         </td>
                                     </tr>
                                 @endif 

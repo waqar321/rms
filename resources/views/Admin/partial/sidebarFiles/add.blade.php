@@ -84,17 +84,20 @@
                         @csrf
 
                         <!-- =========================== Parent Menu ========================== -->
+                         
                         <div class="col-md-6 col-sm-6 col-xs-12" >
                             <div class="form-group" >
                                 <label>Parent Sidebar<span class="danger">*</span></label>                            
                                
-                                <select  name="parent_SideBar" id="parent_SideBar" 
+                                <select 
+                                            wire:ignore 
+                                            id="parent_SideBar" 
                                             data-id="parent_SideBar" 
-                                            class="form-control select2 permissions Select2DropDown parent_SideBar">
+                                            class="form-control select2 Select2DropDown parent_SideBar">
 
                                     @foreach ($parent_SideBars as $id => $parent_SideBar)
                                         <option value="{{ $parent_SideBar->id }}" 
-                                            {{ isset($SideBar) && $SideBar->parent_id == $id ? 'selected' : '' }}>
+                                            {{ isset($SideBar) && $SideBar->parent_id == $parent_SideBar->id ? 'selected' : '' }}>
                                             {{ $parent_SideBar->title }} 
                                         </option>
                                     @endforeach
@@ -104,71 +107,77 @@
                             </div>
                         </div>
                                       
-                    <div class="col-md-6 col-lg-6">
-                        <div class="form-group">
-                            <label for="title">Title <span class="danger">*</span></label>
-                            <input type="text" wire:model.debounce.500ms="SideBar.title" id="title" placeholder="Enter the title" class="form-control">
+                        <div class="col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label for="title">Title <span class="danger">*</span></label>
+                                <input type="text" wire:model.debounce.500ms="SideBar.title" id="title" placeholder="Enter the title" class="form-control">
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-6 col-lg-6">
-                        <div class="form-group">
-                            <label for="icon">Icon Name 
-                                    <span> 
-                                        Get Suitable Icon: <a href="https://lab.artlung.com/font-awesome-sample/" target="__blank"class="blink"> Click Me </a>
-                                        Replace using format fa fa-class 
-                                    </span>
-                            </label>
-                            <input type="text" wire:model.debounce.500ms="SideBar.icon" id="icon" placeholder="Enter the icon name" class="form-control">
+                        <div class="col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label for="icon">Icon Name 
+                                        <span> 
+                                            Get Suitable Icon: <a href="https://lab.artlung.com/font-awesome-sample/" target="__blank"class="blink"> Click Me </a>
+                                            Replace using format fa fa-class 
+                                        </span>
+                                </label>
+                                <input type="text" wire:model.debounce.500ms="SideBar.icon" id="icon" placeholder="Enter the icon name" class="form-control">
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-6 col-lg-6">
-                        <div class="form-group">
-                            <label for="url">URL / Route <span class="danger">*</span></label>
-                            <input type="text" wire:model.debounce.500ms="SideBar.url" id="url" placeholder="Enter the URL or route" class="form-control">
+                        <div class="col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label for="url">URL / Route <span class="danger">*</span></label>
+                                <input type="text" wire:model.debounce.500ms="SideBar.url" id="url" placeholder="Enter the URL or route" class="form-control">
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-6 col-lg-6">
-                        <div class="form-group">
-                            <label for="idNames">ID Names <span class="danger">*</span></label>
-                            <input type="text" wire:model.debounce.500ms="IdNames" id="idNames" placeholder="Enter the ID names" class="form-control">
-                            @error('IdNames') <span class="text-danger">{{ $message }}</span> @enderror
+                        <div class="col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label for="idNames">ID Names <span class="danger">*</span></label>
+                                <input type="text" wire:model.debounce.500ms="IdNames" id="idNames" placeholder="Enter the ID names" class="form-control">
+                                @error('IdNames') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-6 col-lg-6">
-                        <div class="form-group">
-                            <label for="classNames">Class Names<span class="danger">*</span></label>
-                            <input type="text" wire:model.debounce.500ms="ClassNames" id="classNames" placeholder="Enter the class names" class="form-control">
-                            @error('IdNames') <span class="text-danger">{{ $message }}</span> @enderror
+                        <div class="col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label for="classNames">Class Names<span class="danger">*</span></label>
+                                <input type="text" wire:model.debounce.500ms="ClassNames" id="classNames" placeholder="Enter the class names" class="form-control">
+                                @error('IdNames') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-6 col-lg-6">
-                        <div class="form-group">
-                            <label for="order">Order <span class="danger">*</span></label>
-                            <input type="number" wire:model.debounce.500ms="SideBar.order" id="order" placeholder="Enter the order" class="form-control">
+                        <div class="col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label for="order">Order <span class="danger">*</span></label>
+                                <input type="number" wire:model.debounce.500ms="SideBar.order" id="order" placeholder="Enter the order" class="form-control">
+                            </div>
                         </div>
-                    </div>
+                        
                         <!-- =========================== Permissions ========================== -->
+
                         <div class="col-md-6 col-sm-6 col-xs-12" >
                             <div class="form-group">
-                                <label for="permissions">Permissions*
+                                <label for="permissions">Select Permission*
                                         <!-- <span class="btn btn-info btn-xs select-all">Select all</span>
                                         <span class="btn btn-info btn-xs deselect-all">Deselect all</span> -->
                                 </label>
-                                <select name="permissions[]" 
-                                        id="permissions" 
+                                <select 
+                                        wire:ignore 
+                                        name="permissions[]" 
+                                        id="selected_permission" 
                                         data-id="permission" 
                                         class="form-control select2 permissions Select2DropDown multiplePermissions">
+
                                     @foreach ($permissionLists as $id => $permissions)
                                         <option value="{{ $id }}"
-                                            {{ in_array($id, old('permissions', [])) || (isset($role) && $role->permissions->contains($id)) ? 'selected' : '' }}>
+                                            {{ isset($SideBar) && $SideBar->permission_id == $id ? 'selected' : '' }}>
                                             {{ $permissions }} 
                                         </option>
-                                    @endforeach
+                                    @endforeach  
+
                                 </select>
                                 <span class="error-container danger w-100"></span>
                             </div>
@@ -192,10 +201,15 @@
 @push('scripts')
 
 <script>
-        $('.HRDepartment').select2({
-            placeholder: 'Please Select Department',
-                allowClear: true
-        });
+
+    
+        // $('.HRDepartment').select2({
+        //     placeholder: 'Please Select Department',
+        //         allowClear: true
+        // });
+
+        // parent_SideBar
+        // selected_permission
 
 </script>
 @endpush 
