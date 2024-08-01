@@ -309,9 +309,9 @@ trait UsersComponent
     {
         if($this->getSelectedRowIDs()->isNotEmpty())
         {
-            Permission::whereIn('id', $this->getSelectedRowIDs()->toArray())->delete();
+            ecom_admin_user::whereIn('id', $this->getSelectedRowIDs()->toArray())->delete();
 
-            $this->dispatchBrowserEvent('deleted_scene', ['name' => 'Selected Permissions']);
+            $this->dispatchBrowserEvent('deleted_scene', ['name' => 'Selected Users']);
         }
     }
     // public function selectAll()
