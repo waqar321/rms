@@ -18,7 +18,8 @@ class SidebarOperation extends Component
                                 'updateStatusOftest' => '', 
                                 'UpdatePermissionId' => 'HandleUpdatePermissionId', 
                                 'UpdateParentId' => 'HandleUpdateParentId', 
-                                'selectedColumns' => 'export'
+                                'selectedColumns' => 'export',
+                                'deleteSideBarManage' => 'handleSidebarDelete',
                             ];
                             
     public function mount($id)
@@ -112,5 +113,11 @@ class SidebarOperation extends Component
     {
         $this->SelectedParentId = $value;
         $this->Collapse = "uncollapse";
+    }
+    public function handleSidebarDelete(SideBar $sidebar)
+    {
+        $name = $sidebar->title;
+        $sidebar->delete();   
+        $this->dispatchBrowserEvent('deleted_scene', ['name' => $name]);
     }
 }
