@@ -28,7 +28,7 @@
                     <input type="search" wire:model="searchByName" class="form-control" placeholder="Search By Category...">
                 </div>
 
-                @include('Admin.partial.livewire.ClearDeleteButtons', ['modelName' => 'ecom_category'])     
+                @include('Admin.partial.livewire.ClearDeleteButtons', ['showDeleteButton' => 'false', 'modelName' => 'ecom_category'])      
 
                 
 

@@ -24,7 +24,7 @@
                     <input type="search" wire:model="searchByName" class="form-control" placeholder="Search By Title...">
                 </div>
                 
-                @include('Admin.partial.livewire.ClearDeleteButtons', ['modelName' => 'Permission'])  
+                @include('Admin.partial.livewire.ClearDeleteButtons', ['showDeleteButton' => 'true', 'modelName' => 'Permission'])  
 
                 <ul class="nav navbar-right panel_toolbox justify-content-end">
                     <li>
