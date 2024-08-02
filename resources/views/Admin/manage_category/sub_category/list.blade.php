@@ -9,8 +9,8 @@
                 <div class="col-md-4 col-lg-4">
                     <input type="search" wire:model="searchByName" class="form-control" placeholder="Search By Sub Category Name...">
                 </div>
-                
-                @include('Admin.partial.livewire.ClearDeleteButtons')  
+
+                @include('Admin.partial.livewire.ClearDeleteButtons', ['modelName' => 'ecom_category'])   
 
                 <ul class="nav navbar-right panel_toolbox justify-content-end">
                     <li>

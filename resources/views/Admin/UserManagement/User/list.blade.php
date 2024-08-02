@@ -54,7 +54,7 @@
                         <input type="search" wire:model="searchByEmployeeCity" class="form-control" placeholder="Search By Employee City...">
                     </div>
 
-                    @include('Admin.partial.livewire.ClearDeleteButtons')  
+                    @include('Admin.partial.livewire.ClearDeleteButtons', ['modelName' => 'ecom_admin_user'])     
                     
                     <ul class="nav navbar-right panel_toolbox justify-content-end">
                         <li>
