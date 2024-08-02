@@ -53,15 +53,9 @@
                     <div class="col-md-3 col-lg-3">
                         <input type="search" wire:model="searchByEmployeeCity" class="form-control" placeholder="Search By Employee City...">
                     </div>
-                    <div  class="col-md-3 col-lg-3">
-                            <button type="button" wire:click="resetInput(true)" class="btn btn-danger SearchButton">
-                                Clear  
-                                <i class="fa fa-search"></i>
-                            </button>
-                            <button type="button" wire:click="deleteSelected()" class="btn btn-danger SearchButton">
-                                Delete Selected
-                                <i class="fa fa-trash"></i>
-                            </button>                    </div>                    
+
+                    @include('Admin.partial.livewire.ClearDeleteButtons')  
+                    
                     <ul class="nav navbar-right panel_toolbox justify-content-end">
                         <li>
                             <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>

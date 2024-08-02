@@ -19,6 +19,18 @@ trait LivewireComponentsCommon
 {
     use CourseAssignCSVComponent, GlobalVariablesForComponents;
     
+    public function deleteSelected($modelName)
+    {
+        if($this->getSelectedRowIDs()->isNotEmpty())
+        {
+            $modelClass = "App\\Models\\Admin\\" . $modelName;
+            app($modelClass)->whereIn('id', $this->getSelectedRowIDs()->toArray())->delete();
+            // ecom_admin_user::whereIn('id', $this->getSelectedRowIDs()->toArray())->delete();
+
+            $this->dispatchBrowserEvent('deleted_scene', ['name' => 'Selected Permissions']);
+        }
+    }
+    
     public function hydrate()
     {
         // if($this->ecom_notification)
