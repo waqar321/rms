@@ -27,30 +27,8 @@
                 <div class="col-md-4 col-lg-4">
                     <input type="search" wire:model="searchByName" class="form-control" placeholder="Search By Category...">
                 </div>
-                <div  class="col-md-2 col-lg-2">
-                    <button type="button" wire:click="resetInput(true)" class="btn btn-danger SearchButton">
-                        Clear  
-                         <i class="fa fa-search"></i>
-                    </button>
-
-                    <!-- <div wire:init="loadTestData">
-                            Testing Item:
-
-                            @if(!is_null($testingLoading))
-                                {{ $testingLoading[0] }}
-                            @else 
-                                 <em> loading... </em>
-                            @endif 
-
-                    </div> -->
-                    <?php  
-
-                        // echo "<pre>";
-                        // print_r($testing); 
-                        // echo "</pre>";
-            
-                    ?> 
-                </div>
+                
+                @include('Admin.partial.livewire.ClearDeleteButtons')  
                 
 
                 <ul class="nav navbar-right panel_toolbox justify-content-end">

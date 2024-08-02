@@ -23,12 +23,8 @@
                 <div class="col-md-4 col-lg-4">
                     <input type="search" wire:model="searchByName" class="form-control" placeholder="Search By Title...">
                 </div>
-                <div  class="col-md-2 col-lg-2">
-                    <button type="button" wire:click="resetInput(true)" class="btn btn-danger SearchButton">
-                        Clear  
-                         <i class="fa fa-search"></i>
-                    </button>
-                </div>
+                
+                @include('Admin.partial.livewire.ClearDeleteButtons')  
                 
 
                 <ul class="nav navbar-right panel_toolbox justify-content-end">
