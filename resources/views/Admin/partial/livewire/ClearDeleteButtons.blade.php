@@ -3,7 +3,7 @@
             Clear  
             <i class="fa fa-search"></i>
         </button>
-        <button type="button" wire:click="deleteSelected()" class="btn btn-danger SearchButton">
+        <button type="button" wire:click="deleteSelected({{ $modelName }})" class="btn btn-danger SearchButton">
             Delete Selected
             <i class="fa fa-trash"></i>
         </button>                    
