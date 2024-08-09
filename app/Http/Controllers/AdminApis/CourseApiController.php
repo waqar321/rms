@@ -34,8 +34,7 @@ class CourseApiController extends Controller
         $courses = $courses->filter(function ($course) use ($employee_code)
         {
             return CheckAlignment($course, 'course', $employee_code);
-        });
-
+        })->values();
 
         return response()->json([
             'status' => true,
