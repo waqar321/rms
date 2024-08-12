@@ -11,6 +11,7 @@ use App\Models\Admin\CoursesRegistered;
 use App\Models\Admin\ecom_course_content;
 use App\Models\Admin\ecom_instructor;
 use App\Models\Admin\ecom_lecture;
+use App\Models\Admin\ecom_admin_user;
 use App\Models\Admin\ecom_course_assign;
 use App\Models\Admin\LectureAssessmentStatus;
 use App\Models\Admin\LectureUserRecords;
