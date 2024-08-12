@@ -25,23 +25,43 @@ class CourseApiController extends Controller
         //     'message' => CheckAlignment($course, 'course', $employee_code)
         // ], 200);  
 
-        // $courses = ecom_course::with(['instructor' => function ($query) {
+        // $courses = ecom_course::with(['Instructor' => function ($query) {
         //                             $query->select('full_name');
         //                         }])
-        $courses = ecom_course::with('instructor:full_name')
-                                ->where('is_active', 1)
+        $courses = ecom_course::with('Instructor')->where('is_active', 1)
                                 // ->paginate(4);
                                 // ->pluck('id');
                                 ->get();
-    
+
         $courses = $courses->filter(function ($course) use ($employee_code)
         {
             return CheckAlignment($course, 'course', $employee_code);
         })->values();
 
+        $formattedCourses = $courses->map(function ($course) {
+            return [
+                'id' => $course->id,
+                'name' => $course->name,
+                'description' => $course->description,
+                'prerequisites' => $course->prerequisites,
+                'course_image' => $course->course_image,
+                'course_material' => $course->course_material,
+                'start_date' => $course->start_date,
+                'end_date' => $course->end_date,
+                'course_format' => $course->course_format,
+                'course_code' => $course->course_code,
+                'tags' => $course->tags,
+                'is_active' => $course->is_active,
+                // Other course fields
+                'instructor' => $course->instructor->full_name,
+                // ... other desired fields
+            ];
+        });
+        
+
         return response()->json([
             'status' => true,
-            'message' => $courses
+            'message' => $formattedCourses
         ], 200);  
 
     }

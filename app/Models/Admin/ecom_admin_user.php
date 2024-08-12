@@ -63,6 +63,7 @@ class ecom_admin_user extends Authenticatable
     public function merchant(){
         return $this->belongsTo(ecom_merchant::class,'merchant_id','id');
     }
+    
 
     // public function permissions()
     // {
@@ -75,6 +76,10 @@ class ecom_admin_user extends Authenticatable
     //     return $this->belongsToMany(ecom_user_roles::class);
     // }
 
+    // public function getFullNameAttribute()
+    // {
+    //     return $this->full_name;
+    // }
     //------------------------- get all roles ---------------------------
     public function roles()
     {
