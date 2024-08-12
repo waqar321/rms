@@ -188,13 +188,13 @@ class LectureApiController extends Controller
         $lecture = ecom_lecture::where('id', $request->lecture_id)->first();
         $LectureUserRecords = LectureUserRecords::where('lecture_id', $request->lecture_id)->where('user_id', auth()->id())->first();
 
-            return response()->json([
-                    'status' => 200, 
-                    'requestData' => $LectureUserRecords, 
-                    'message' => 'user lecture status update successfully'
-                ], 
-                200
-            );
+        return response()->json([
+                'status' => 200, 
+                'requestData' => $request->lecture_id, 
+                'message' => 'user lecture status update successfully'
+            ], 
+            200
+        );
 
         if($LectureUserRecords && (!$LectureUserRecords->status == 1)) 
         {
