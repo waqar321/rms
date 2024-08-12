@@ -47,12 +47,12 @@ class Index extends Component
                 'tags' => $course->tags,
                 'is_active' => $course->is_active,
                 // Other course fields
-                'instructor' => $course->instructor->full_name,
+                'instructor' => $course->Instructor->full_name,
                 // ... other desired fields
             ];
         });
         
-        dd($formattedCourses);
+        dd($courses, $formattedCourses);
         dd($courses);
         // dd($courses12);
         // dd($courses12, $courses12[0]->instructor->full_name);
