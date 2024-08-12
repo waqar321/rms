@@ -25,7 +25,7 @@ class CourseApiController extends Controller
         //     'message' => CheckAlignment($course, 'course', $employee_code)
         // ], 200);  
 
-        $courses = ecom_course::orderBy('id', 'DESC')
+        $courses = ecom_course::with('instructor')->orderBy('id', 'DESC')
                                 ->where('is_active', 1)
                                 // ->paginate(4);
                                 // ->pluck('id');
