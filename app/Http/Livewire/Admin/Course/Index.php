@@ -28,16 +28,20 @@ class Index extends Component
     }
     public function saveCourse()
     {  
+
         if(!$this->update)
         {
             $this->validate();            
         }
         $this->updateFiles();
         
-        $isInstructor = auth()->user()->roles->where('title', 'instructor')->count();  //if logged in user is admin
+        if(auth()->user()->isInstructor())
+        {
+            $this->ecom_course->instructor_id = auth()->user()->id; 
+        }
         
-        $this->ecom_course->instructor_id = $isInstructor ? auth()->user()->id : $this->ecom_course->instructor_id; 
-
+        // dd($this->ecom_course);
+        // $this->ecom_course->instructor_id = $isInstructor ? auth()->user()->id : $this->ecom_course->instructor_id; 
 
         $this->ecom_course->save();
         $name = $this->ecom_course->name;

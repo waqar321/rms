@@ -57,6 +57,32 @@
                                 <!-- @error('description') <span class="text-danger" style="font-size: 11.5px;">{{ $message }}</span> @enderror -->
                             </div>
                         </div>
+                        <!-- ========================= Instructor ======================================= -->
+
+                               @can('select_instructor')
+                                    <div class="col-md-6 col-lg-6">
+                                        <div class="form-group">
+                                            <label>Instructor <span class="danger">*</span></label>
+                                            <select wire:model.debounce.500ms="ecom_course.instructor_id"  name="instructor_id" id="instructor_id" class="form-control" required>
+                                            
+                                                    @if($ecom_course->instructor_id)
+                                                        <option value="{{ $ecom_course->instructor_id ?? '' }}"> {{ $ecom_course->instructor->first_name ?? '- Select an Instructor -' }} </option>                                                    
+                                                        <option disabled>───────────</option>                                                
+                                                    @elseif ($instructors->count() == 0)
+                                                            <option value="">-- choose Instructor first --</option>
+                                                            <option disabled>───────────</option>   
+                                                    @elseif ($instructors->count() != 0)
+                                                            <option value="">-- choose Instructor --</option>
+                                                            <option disabled>───────────</option>   
+                                                    @endif
+
+                                                    @foreach($instructors as $instructor)
+                                                        <option value="{{ $instructor->id }}">{{ $instructor->full_name }}</option>
+                                                    @endforeach 
+                                            </select>
+                                        </div>
+                                    </div>
+                                @endcan 
                         <!-- --------------- course Category --------------------  -->
                         <div class="col-md-6 col-lg-6">
                             <div class="form-group">

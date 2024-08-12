@@ -247,7 +247,9 @@ function ExportValues($column, $Model, $table)
     {
         if($table == 'lecture')                      // for lecture
         {
-            return $Model->Instructor->full_name ?? null; 
+            // return $Model->Instructor->full_name ?? null; 
+            return $Model->Teacher->full_name ?? null; 
+            
         }
     }    
     else if($column == 'Parent Category')     // for sub category

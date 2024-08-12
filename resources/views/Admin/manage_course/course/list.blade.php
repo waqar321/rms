@@ -90,6 +90,7 @@
 
                                     @if($readyToLoad)
                                         @forelse($coursesListing as $course)
+                                            
                                             <tr>
                                                 <td>
                                                     <input type="checkbox" wire:model="selectedRows.{{ $course->id }}">
@@ -103,6 +104,7 @@
                                                     @endif
                                                 </td>
                                                 <td>{{ $course->description }}</td>
+                                                <td>{{ $course->Teacher->full_name ?? ' - '}}</td>
                                                 <td>{{ $course->category->name }}</td>
                                                 <td>{{ $course->subCategory->name }}</td>
                                                 <!-- <td>{{ $course->duration }}</td> -->

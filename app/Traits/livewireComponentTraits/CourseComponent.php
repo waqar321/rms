@@ -39,7 +39,7 @@ trait CourseComponent
         // dd($ecom_course_assign);
         // dd($ecom_course->alignment);
 
-        $this->availableColumns = ['S.No', 'Code', 'Title', 'Image', 'Description', 'Category', 'Sub-Category', 'Level', 'Prerequisites', 'Language', 'Tags', 'Status', 'Date', 'Action'];
+        $this->availableColumns = ['S.No', 'Code', 'Title', 'Image', 'Description', 'Instructor', 'Category', 'Sub-Category', 'Level', 'Prerequisites', 'Language', 'Tags', 'Status', 'Date', 'Action'];
        
         $this->Tablename = 'ecom_course';        
         $this->selectedRows = collect();
@@ -47,7 +47,6 @@ trait CourseComponent
         $this->update = request()->has('id') == true;
         $this->Collapse = $this->update ? 'uncollapse' : 'collapse';
     }
-
     protected $rules = [
         'ecom_course.name' => 'required|min:2',
         'ecom_course.description' => 'required|min:20',
@@ -55,7 +54,7 @@ trait CourseComponent
         'ecom_course.sub_category_id' => 'required',
         // 'ecom_course.department_id' => 'required',
         // 'ecom_course.sub_department_id' => 'required',
-        // 'ecom_course.instructor_id' => 'required',
+        'ecom_course.instructor_id' => '',
         // 'ecom_course.duration' => 'required',
         'ecom_course.level' => 'required',
         // 'ecom_course.prerequisites' => 'required',
@@ -295,20 +294,22 @@ trait CourseComponent
         // $query->where('first_name', 'like', "%{$request->term}%")
         // ->orWhere('last_name', 'like', "%{$request->term}%");
 
-        $isInstructor = auth()->user()->roles->where('title', 'instructor')->count();   //if logged in user is admin
+        $isInstructor = auth()->user()->roles->where('title', 'Instructor')->count();   //if logged in user is admin
         $isSuperAdmin = auth()->user()->roles->where('title', 'Super Admin')->count();  //if logged in user is instructor
         $isAdmin = auth()->user()->roles->where('title', 'Admin')->count();             //if logged in user is instructor
-        
         if($isSuperAdmin || $isAdmin || $isInstructor)
         {
+
             $courses = ecom_course::when($this->searchByName !== '', function ($query) {
                                         $query->where('name', 'like', '%' . $this->searchByName . '%');
                                     }) 
                                     //     $query->where('title', '!=', 'Super Admin')->where('title', '!=', 'instructor'); // Exclude users with Super Admin role
                                     // })
                                     ->orderBy('id', 'DESC')
-                                    ->when(($isSuperAdmin || $isAdmin || $isInstructor), function ($query)  {
-                                        // $query->where('instructor_id', auth()->user()->id);
+                                    // ->when(($isSuperAdmin || $isAdmin || $isInstructor), function ($query)  
+                                    ->when($isInstructor, function ($query)  
+                                    {
+                                        $query->where('instructor_id', auth()->user()->id);
                                     })
                                     // ->whereHas('roles', function ($query) {
                                     // ->where('is_active', 1)
