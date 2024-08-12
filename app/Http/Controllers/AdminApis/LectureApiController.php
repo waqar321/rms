@@ -185,10 +185,31 @@ class LectureApiController extends Controller
     }
     public function LectureMobileViewStatus(Request $request)
     {
-        $request->validate([
-            'lecture_id' => 'required|integer|exists:ecom_lecture,id',
-            'user_id' => 'required|integer|exists:ecom_admin_user,id',
-        ]);
+        $lectureId = $request->input('lecture_id');
+        $userId = $request->input('user_id');
+    
+        // Manual validation
+        $errors = [];
+        if (!$lectureId) {
+            $errors['lecture_id'] = 'Lecture ID is required';
+        } elseif (!is_numeric($lectureId)) {
+            $errors['lecture_id'] = 'Lecture ID must be a number';
+        }
+    
+        if (!$userId) {
+            $errors['user_id'] = 'User ID is required';
+        } elseif (!is_numeric($userId)) {
+            $errors['user_id'] = 'User ID must be a number';
+        }
+    
+        if (count($errors) > 0) {
+            return response()->json([
+                'status' => false,
+                'errors' => $errors,
+            ], 422);
+        }
+
+        
         
         $lecture = ecom_lecture::where('id', $request->lecture_id)->first();
         $LectureMobileUserRecord = LectureMobileUserRecord::where('lecture_id', $request->lecture_id)->where('user_id', auth()->id())->first();
