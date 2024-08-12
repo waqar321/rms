@@ -209,8 +209,7 @@ class LectureApiController extends Controller
         }
 
         // Check if user exists
-        // $userExists = ecom_admin_user::where('id', (int)$userId)->exists();
-        $userExists = ecom_admin_user::where('id', 41487)->exists();
+        $userExists = ecom_admin_user::where('employee_id', $userId)->exists();
         if (!$userExists) 
         {
             return response()->json([
