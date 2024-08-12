@@ -186,10 +186,9 @@ class LectureApiController extends Controller
     public function LectureMobileViewStatus(Request $request)
     {
         $request->validate([
-            'lecture_id' => 'required',
-            'user_id' => 'required',
+            'lecture_id' => 'required|integer|exists:ecom_lecture,id',
+            'user_id' => 'required|integer|exists:ecom_admin_user,id',
         ]);
-
         
         $lecture = ecom_lecture::where('id', $request->lecture_id)->first();
         $LectureMobileUserRecord = LectureMobileUserRecord::where('lecture_id', $request->lecture_id)->where('user_id', auth()->id())->first();
