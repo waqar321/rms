@@ -226,7 +226,7 @@ class LectureApiController extends Controller
                         
                 $formattedlectures = $courseLectures->map(function ($lecture) use ($userId) 
                 {
-                    $status = false;
+                    $status = 0;
                     $user = ecom_admin_user::where('employee_id', $userId)->first();
                     $LectureMobileUserRecord = LectureMobileUserRecord::where('lecture_id', $lecture->id)->where('user_id', $user->id)->first();
 
