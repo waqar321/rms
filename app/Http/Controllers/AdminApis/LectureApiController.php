@@ -218,9 +218,9 @@ class LectureApiController extends Controller
             ], 404);
         }
 
-                
+        $user = ecom_admin_user::where('employee_id', $userId)->first();
         $lecture = ecom_lecture::where('id', $request->lecture_id)->first();
-        $LectureMobileUserRecord = LectureMobileUserRecord::where('lecture_id', $request->lecture_id)->where('user_id', auth()->id())->first();
+        $LectureMobileUserRecord = LectureMobileUserRecord::where('lecture_id', $request->lecture_id)->where('user_id', $user->id)->first();
 
         if($LectureMobileUserRecord != null)
         {
@@ -229,7 +229,7 @@ class LectureApiController extends Controller
         }
         else
         {
-            $user = ecom_admin_user::where('employee_id', $userId)->first();
+
 
             $LectureMobileUserRecord = new LectureMobileUserRecord();
             $LectureMobileUserRecord->lecture_id = $request->lecture_id;
