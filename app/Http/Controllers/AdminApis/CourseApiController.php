@@ -65,38 +65,5 @@ class CourseApiController extends Controller
         ], 200);  
 
     }
-    public function Lecturelist(Request $request)
-    {
-        $requestData = $request->all();
-        $course_id = $requestData['course_id'];
 
-        $course = ecom_course::where('id', $course_id);
-                
-        if($course->exists())
-        {
-            $courseLectures = ecom_lecture::where('course_id', $course_id)->orderBy('id', 'DESC')->where('is_active', 1)->get();
-            
-            if(!$courseLectures->isEmpty())
-            {
-                return response()->json([
-                    'status' => true,
-                    'message' => $courseLectures
-                ], 200); 
-            }
-            else
-            {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'No Lectures Available'
-                ], 200);             
-            }
-        }
-        else
-        {
-            return response()->json([
-                'status' => false,
-                'message' => 'Please Enter Correct Course ID'
-            ], 200);                         
-        }
-    }
 }

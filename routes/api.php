@@ -54,7 +54,7 @@ Route::delete('/lectures/{id}', [LectureApiController::class, 'destroy']);
 //================= Course Apis ==================
 
 Route::post('/MyCourses', [CourseApiController::class, 'index']);
-Route::post('/Lecturelist', [CourseApiController::class, 'Lecturelist']);
+Route::post('/Lecturelist', [LectureApiController::class, 'Lecturelist']);
 Route::post('/LectureViewStatus', [LectureApiController::class, 'LectureMobileViewStatus']);
 // Route::post('/Lecturelist', [CourseApiController::class, 'Lecturelist']);
 
