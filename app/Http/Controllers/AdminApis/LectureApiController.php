@@ -187,7 +187,7 @@ class LectureApiController extends Controller
     public function Lecturelist(Request $request)
     {
         $course_id = $request->input('course_id');
-        $userId = $request->input('user_id');
+        $userId = $request->input('employee_code');
     
         // Check for required fields
         if (!$course_id || !$userId) 
@@ -269,7 +269,7 @@ class LectureApiController extends Controller
     public function LectureMobileViewStatus(Request $request)
     {
         $lectureId = $request->input('lecture_id');
-        $userId = $request->input('user_id');
+        $userId = $request->input('employee_code');
     
         // Check for required fields
         if (!$lectureId || !$userId) 
