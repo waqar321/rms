@@ -190,16 +190,17 @@ class LectureApiController extends Controller
             'user_id' => 'required',
         ]);
 
-            return response()->json([
-                'status' => 200, 
-                        'requestData' => $request->all(), 
-                        'message' => 'user lecture status update successfully'
-                    ], 
-                200
-            );
-
+        
         $lecture = ecom_lecture::where('id', $request->lecture_id)->first();
         $LectureMobileUserRecord = LectureMobileUserRecord::where('lecture_id', $request->lecture_id)->where('user_id', auth()->id())->first();
+
+        return response()->json([
+            'status' => 200, 
+                    'requestData' => $LectureMobileUserRecord, 
+                    'message' => 'user lecture status update successfully'
+                ], 
+            200
+        );
 
         if($LectureMobileUserRecord != null)
         {
