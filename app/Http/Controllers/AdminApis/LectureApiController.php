@@ -199,6 +199,7 @@ class LectureApiController extends Controller
         }
 
         $courseExists = ecom_course::where('id', $course_id)->exists();
+
         if (!$courseExists) 
         {
             return response()->json([
@@ -221,10 +222,9 @@ class LectureApiController extends Controller
         
         if(!$courseLectures->isEmpty())
         {
-
             //----------------------- gett status ----------------------
                         
-                $formattedlectures = $courseLectures->map(function ($lecture) 
+                $formattedlectures = $courseLectures->map(function ($lecture) use ($userId) 
                 {
                     $status = false;
                     $user = ecom_admin_user::where('employee_id', $userId)->first();
