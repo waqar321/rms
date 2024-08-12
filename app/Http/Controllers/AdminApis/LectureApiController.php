@@ -224,13 +224,11 @@ class LectureApiController extends Controller
 
         if($LectureMobileUserRecord != null)
         {
-            $LectureMobileUserRecord->update(['status', 1]);
+            $LectureMobileUserRecord->update(['status' => 1]);
             $message = 'user lecture Updated  successfully';
         }
         else
         {
-
-
             $LectureMobileUserRecord = new LectureMobileUserRecord();
             $LectureMobileUserRecord->lecture_id = $request->lecture_id;
             $LectureMobileUserRecord->user_id = $user->id;
