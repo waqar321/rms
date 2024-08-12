@@ -21,39 +21,39 @@ class Index extends Component
     {  
 
 
-        $employee_code = 41487;
-        $courses = ecom_course::with('Instructor')->where('is_active', 1)
-                                // ->paginate(4);
-                                // ->pluck('id');
-                                ->get();
+        // $employee_code = 41487;
+        // $courses = ecom_course::with('Instructor')->where('is_active', 1)
+        //                         // ->paginate(4);
+        //                         // ->pluck('id');
+        //                         ->get();
 
-        $courses = $courses->filter(function ($course) use ($employee_code)
-        {
-            return CheckAlignment($course, 'course', $employee_code);
-        })->values();
+        // $courses = $courses->filter(function ($course) use ($employee_code)
+        // {
+        //     return CheckAlignment($course, 'course', $employee_code);
+        // })->values();
 
-        $formattedCourses = $courses->map(function ($course) {
-            return [
-                'id' => $course->id,
-                'name' => $course->name,
-                'description' => $course->description,
-                'prerequisites' => $course->prerequisites,
-                'course_image' => $course->course_image,
-                'course_material' => $course->course_material,
-                'start_date' => $course->start_date,
-                'end_date' => $course->end_date,
-                'course_format' => $course->course_format,
-                'course_code' => $course->course_code,
-                'tags' => $course->tags,
-                'is_active' => $course->is_active,
-                // Other course fields
-                'instructor' => $course->Instructor->full_name,
-                // ... other desired fields
-            ];
-        });
+        // $formattedCourses = $courses->map(function ($course) {
+        //     return [
+        //         'id' => $course->id,
+        //         'name' => $course->name,
+        //         'description' => $course->description,
+        //         'prerequisites' => $course->prerequisites,
+        //         'course_image' => $course->course_image,
+        //         'course_material' => $course->course_material,
+        //         'start_date' => $course->start_date,
+        //         'end_date' => $course->end_date,
+        //         'course_format' => $course->course_format,
+        //         'course_code' => $course->course_code,
+        //         'tags' => $course->tags,
+        //         'is_active' => $course->is_active,
+        //         // Other course fields
+        //         'instructor' => $course->Instructor->full_name,
+        //         // ... other desired fields
+        //     ];
+        // });
         
-        dd($courses, $formattedCourses);
-        dd($courses);
+        // dd($courses, $formattedCourses);
+        // dd($courses);
         // dd($courses12);
         // dd($courses12, $courses12[0]->instructor->full_name);
 
