@@ -190,7 +190,8 @@ class LectureApiController extends Controller
         $userId = $request->input('user_id');
     
         // Check for required fields
-        if (!$lectureId || !$userId) {
+        if (!$lectureId || !$userId) 
+        {
             return response()->json([
                 'status' => false,
                 'message' => 'Lecture ID and User ID are required',
@@ -199,19 +200,21 @@ class LectureApiController extends Controller
 
         // Check if lecture exists
         $lectureExists = ecom_lecture::where('id', $lectureId)->exists();
-        if (!$lectureExists) {
+        if (!$lectureExists) 
+        {
             return response()->json([
                 'status' => false,
-                'message' => 'Lecture not found',
+                'message' => 'Lecture not found with id : '.$lectureId,
             ], 404);
         }
 
         // Check if user exists
         $userExists = ecom_admin_user::where('id', $userId)->exists();
-        if (!$userExists) {
+        if (!$userExists) 
+        {
             return response()->json([
                 'status' => false,
-                'message' => 'User not found',
+                'message' => 'User not found with id: '.$userId.' type: '.var_dump($userId),
             ], 404);
         }
 
