@@ -214,7 +214,7 @@ class LectureApiController extends Controller
         {
             return response()->json([
                 'status' => false,
-                'message' => 'User not found with id: '.$userId.' type: '.var_dump($userId),
+                'message' => 'User not found with id: '.$userId.var_dump($userId),
             ], 404);
         }
 
