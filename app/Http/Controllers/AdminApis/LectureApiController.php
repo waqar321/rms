@@ -182,19 +182,23 @@ class LectureApiController extends Controller
                     200
                 );
     }
+    public function LectureViewStatus(Request $request)
+    {
+
+        return response()->json([
+            'status' => 200, 
+            'requestData' => $request->all(), 
+            'message' => 'user lecture status update successfully'
+        ], 
+        200
+    );
+    
+    }
     public function UpdateUserLectureResult(Request $request)
     {
         
         $lecture = ecom_lecture::where('id', $request->lecture_id)->first();
         $LectureUserRecords = LectureUserRecords::where('lecture_id', $request->lecture_id)->where('user_id', auth()->id())->first();
-
-        return response()->json([
-                'status' => 200, 
-                'requestData' => $LectureUserRecords, 
-                'message' => 'user lecture status update successfully'
-            ], 
-            200
-        );
 
         if($LectureUserRecords && (!$LectureUserRecords->status == 1)) 
         {
