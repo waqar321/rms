@@ -53,7 +53,7 @@ class CourseApiController extends Controller
                 'tags' => $course->tags,
                 'is_active' => $course->is_active,
                 // Other course fields
-                'instructor' => $course->Instructor->full_name,
+                'instructor' => $course->Instructor->full_name ?? ' - ',
                 // ... other desired fields
             ];
         });
