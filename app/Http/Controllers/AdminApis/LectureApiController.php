@@ -188,29 +188,33 @@ class LectureApiController extends Controller
         $lectureId = $request->input('lecture_id');
         $userId = $request->input('user_id');
     
-        // Manual validation
-        $errors = [];
-        if (!$lectureId) {
-            $errors['lecture_id'] = 'Lecture ID is required';
-        } elseif (!is_numeric($lectureId)) {
-            $errors['lecture_id'] = 'Lecture ID must be a number';
-        }
-    
-        if (!$userId) {
-            $errors['user_id'] = 'User ID is required';
-        } elseif (!is_numeric($userId)) {
-            $errors['user_id'] = 'User ID must be a number';
-        }
-    
-        if (count($errors) > 0) {
+        // Check for required fields
+        if (!$lectureId || !$userId) {
             return response()->json([
                 'status' => false,
-                'errors' => $errors,
+                'message' => 'Lecture ID and User ID are required',
             ], 422);
         }
 
-        
-        
+        // Check if lecture exists
+        $lectureExists = ecom_lecture::where('id', $lectureId)->exists();
+        if (!$lectureExists) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Lecture not found',
+            ], 404);
+        }
+
+        // Check if user exists
+        $userExists = ecom_admin_user::where('id', $userId)->exists();
+        if (!$userExists) {
+            return response()->json([
+                'status' => false,
+                'message' => 'User not found',
+            ], 404);
+        }
+
+                
         $lecture = ecom_lecture::where('id', $request->lecture_id)->first();
         $LectureMobileUserRecord = LectureMobileUserRecord::where('lecture_id', $request->lecture_id)->where('user_id', auth()->id())->first();
 
