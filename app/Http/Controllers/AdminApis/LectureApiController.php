@@ -194,7 +194,7 @@ class LectureApiController extends Controller
         {
             return response()->json([
                 'status' => false,
-                'message' => 'Course ID and User ID are required',
+                'message' => 'Course ID and Empoyee Code are required',
             ], 422);
         }
 
@@ -214,7 +214,7 @@ class LectureApiController extends Controller
         {
             return response()->json([
                 'status' => false,
-                'message' => 'User not found with id: '.$userId.var_dump($userId),
+                'message' => 'Employee not found with id: '.$userId.var_dump($userId),
             ], 404);
         }
 
@@ -276,7 +276,7 @@ class LectureApiController extends Controller
         {
             return response()->json([
                 'status' => false,
-                'message' => 'Lecture ID and User ID are required',
+                'message' => 'Lecture ID and Empoyee Code are required',
             ], 422);
         }
 
