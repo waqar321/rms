@@ -222,8 +222,6 @@ class LectureApiController extends Controller
         $lecture = ecom_lecture::where('id', $request->lecture_id)->first();
         $LectureMobileUserRecord = LectureMobileUserRecord::where('lecture_id', $request->lecture_id)->where('user_id', auth()->id())->first();
 
-    
-
         if($LectureMobileUserRecord != null)
         {
             $LectureMobileUserRecord->update(['status', true]);
@@ -231,9 +229,11 @@ class LectureApiController extends Controller
         }
         else
         {
+            $user = ecom_admin_user::where('employee_id', $userId)->first();
+
             $LectureMobileUserRecord = new LectureMobileUserRecord();
             $LectureMobileUserRecord->lecture_id = $request->lecture_id;
-            $LectureMobileUserRecord->user_id = $request->user_id;
+            $LectureMobileUserRecord->user_id = $user->id;
             $LectureMobileUserRecord->status = 1;
             $LectureMobileUserRecord->save();
 
