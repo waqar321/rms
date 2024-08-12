@@ -190,7 +190,7 @@ class LectureApiController extends Controller
 
         return response()->json([
                 'status' => 200, 
-                'requestData' => $request->lecture_id, 
+                'requestData' => $LectureUserRecords, 
                 'message' => 'user lecture status update successfully'
             ], 
             200
