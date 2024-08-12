@@ -55,7 +55,7 @@ Route::delete('/lectures/{id}', [LectureApiController::class, 'destroy']);
 
 Route::post('/MyCourses', [CourseApiController::class, 'index']);
 Route::post('/Lecturelist', [CourseApiController::class, 'Lecturelist']);
-Route::post('/LectureViewStatus', [LectureApiController::class, 'LectureViewStatus']);
+Route::post('/LectureViewStatus', [LectureApiController::class, 'LectureMobileViewStatus']);
 // Route::post('/Lecturelist', [CourseApiController::class, 'Lecturelist']);
 
 // ======================= api controllers =========================

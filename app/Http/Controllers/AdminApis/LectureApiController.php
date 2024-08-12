@@ -14,6 +14,7 @@ use App\Models\Admin\ecom_lecture;
 use App\Models\Admin\ecom_course_assign;
 use App\Models\Admin\LectureAssessmentStatus;
 use App\Models\Admin\LectureUserRecords;
+use App\Models\Admin\LectureMobileUserRecord;
 use Yajra\DataTables\DataTables;
 use DateTime;
 use Illuminate\Support\Facades\Redirect;
@@ -182,17 +183,46 @@ class LectureApiController extends Controller
                     200
                 );
     }
-    public function LectureViewStatus(Request $request)
+    public function LectureMobileViewStatus(Request $request)
     {
+        $request->validate([
+            'lecture_id' => 'required',
+            'user_id' => 'required',
+        ]);
+
+            return response()->json([
+                'status' => 200, 
+                        'requestData' => $request->all(), 
+                        'message' => 'user lecture status update successfully'
+                    ], 
+                200
+            );
+
+        $lecture = ecom_lecture::where('id', $request->lecture_id)->first();
+        $LectureMobileUserRecord = LectureMobileUserRecord::where('lecture_id', $request->lecture_id)->where('user_id', auth()->id())->first();
+
+        if($LectureMobileUserRecord != null)
+        {
+            $LectureMobileUserRecord->update(['status', true]);
+        }
+        else
+        {
+            $LectureMobileUserRecord = new LectureMobileUserRecord();
+            $LectureMobileUserRecord->lecture_id = $request->lecture_id;
+            $LectureMobileUserRecord->user_id = $request->user_id;
+            $LectureMobileUserRecord->status = 1;
+            $LectureMobileUserRecord->save();
+        }
+
 
         return response()->json([
-            'status' => 200, 
-            'requestData' => $request->all(), 
-            'message' => 'user lecture status update successfully'
-        ], 
-        200
-    );
-    
+                    'status' => 200, 
+                    'requestData' => $request->all(), 
+                    'message' => 'user lecture status update successfully'
+                ], 
+            200
+        );
+
     }
     public function UpdateUserLectureResult(Request $request)
     {
