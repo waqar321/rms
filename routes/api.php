@@ -56,6 +56,9 @@ Route::delete('/lectures/{id}', [LectureApiController::class, 'destroy']);
 Route::post('/MyCourses', [CourseApiController::class, 'index']);
 Route::post('/Lecturelist', [CourseApiController::class, 'Lecturelist']);
 
+Route::post('/UpdateUserLectureResult', [LectureApiController::class, 'UpdateUserLectureResult'])->name('update.lectureResult');
+// Route::post('/Lecturelist', [CourseApiController::class, 'Lecturelist']);
+
 // ======================= api controllers =========================
 
 
@@ -73,7 +76,7 @@ Route::post('/Lecturelist', [CourseApiController::class, 'Lecturelist']);
 
 // =================== useless at a time ======================
     Route::post('/UpdateLectureAssessmentQuestions', [LectureApiController::class, 'UpdateAssessment'])->name('update.assessment');
-    Route::post('/UpdateUserLectureResult', [LectureApiController::class, 'UpdateUserLectureResult'])->name('update.lectureResult');
+
 
     Route::post('/login_api', [ApiController::class, 'login'])->name('login.api');
     Route::post('/set_Api', [ApiController::class, 'SetOTP'])->name('set.otp_api');
