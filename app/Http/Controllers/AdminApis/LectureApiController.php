@@ -186,37 +186,85 @@ class LectureApiController extends Controller
     }
     public function Lecturelist(Request $request)
     {
-        $requestData = $request->all();
-        $course_id = $requestData['course_id'];
-
-        $course = ecom_course::where('id', $course_id);
-                
-        if($course->exists())
+        $course_id = $request->input('course_id');
+        $userId = $request->input('user_id');
+    
+        // Check for required fields
+        if (!$course_id || !$userId) 
         {
-            $courseLectures = ecom_lecture::where('course_id', $course_id)->orderBy('id', 'DESC')->where('is_active', 1)->get();
-            
-            if(!$courseLectures->isEmpty())
-            {
-                return response()->json([
-                    'status' => true,
-                    'message' => $courseLectures
-                ], 200); 
-            }
-            else
-            {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'No Lectures Available'
-                ], 200);             
-            }
+            return response()->json([
+                'status' => false,
+                'message' => 'Course ID and User ID are required',
+            ], 422);
+        }
+
+        $courseExists = ecom_course::where('id', $course_id)->exists();
+        if (!$courseExists) 
+        {
+            return response()->json([
+                'status' => false,
+                'message' => 'Course not found with id : '.$course_id,
+            ], 404);
+        }
+
+        // Check if user exists
+        $userExists = ecom_admin_user::where('employee_id', $userId)->exists();
+        if (!$userExists) 
+        {
+            return response()->json([
+                'status' => false,
+                'message' => 'User not found with id: '.$userId.var_dump($userId),
+            ], 404);
+        }
+
+        $courseLectures = ecom_lecture::where('course_id', $course_id)->orderBy('id', 'DESC')->where('is_active', 1)->get();
+        
+        if(!$courseLectures->isEmpty())
+        {
+
+            //----------------------- gett status ----------------------
+                        
+                $formattedlectures = $courseLectures->map(function ($lecture) 
+                {
+                    $status = false;
+                    $user = ecom_admin_user::where('employee_id', $userId)->first();
+                    $LectureMobileUserRecord = LectureMobileUserRecord::where('lecture_id', $lecture->id)->where('user_id', $user->id)->first();
+
+                    if($LectureMobileUserRecord != null)
+                    {
+                        $status = $LectureMobileUserRecord->status;
+                    }
+
+                    return [
+                        'id' => $lecture->id,
+                        'title' => $lecture->title,
+                        'description' => $lecture->description,
+                        'local_video' => $lecture->local_video,
+                        'url_video' => $lecture->url_video,
+                        'local_document' => $lecture->local_document,
+                        'url_document' => $lecture->url_document,
+                        'Thumbnail' => $lecture->Thumbnail,
+                        'tags' => $lecture->tags,
+                        'course_id' => $lecture->course_id,
+                        'passing_ratio' => $lecture->passing_ratio,
+                        'instructor' => $lecture->Instructor->full_name ?? ' - ',
+                        'Viewstatus' => $status
+                    ];
+                });
+
+            return response()->json([
+                'status' => true,
+                'message' => $formattedlectures
+            ], 200); 
         }
         else
         {
             return response()->json([
                 'status' => false,
-                'message' => 'Please Enter Correct Course ID'
-            ], 200);                         
+                'message' => 'No Lectures Available'
+            ], 200);             
         }
+
     }
     public function LectureMobileViewStatus(Request $request)
     {
