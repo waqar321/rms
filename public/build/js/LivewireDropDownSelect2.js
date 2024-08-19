@@ -209,18 +209,59 @@
 
             if(module == '')
             {
-                ClassicEditor
-                .create( document.querySelector( '#NotificationMessage' ) )
-                .then( editor => {
-                        editor.model.document.on('change:data', () => {
-                            messageBody = editor.getData();
-                            // console.log(updatedText);
-                            livewire.emit('SetNotificationBodyEvent',editor.getData());
+                //-------------------- working without space -------------
+
+                    // ClassicEditor
+                    // .create( document.querySelector( '#NotificationMessage' ) )
+                    // .then( editor => {
+                    //         // self.editor.keystrokes.set('space', (key, stop) => {
+                    //         //     self.editor.execute('input', {
+                    //         //         text: ' '
+                    //         //     });
+                    //         //     stop();
+                    //         // });
+                    //         editor.model.document.on('change:data', () => 
+                    //         {
+                    //             // editor.execute('input', {
+                    //             //     text: ' '
+                    //             // });
+                    //             messageBody = editor.getData();
+                    //             // console.log(updatedText);
+                    //             livewire.emit('SetNotificationBodyEvent',editor.getData());
+                    //         });
+                    // } )
+                    // .catch( error => {
+                    //         console.error( error );
+                    // } );
+
+                // -----------------------------------------------------------------            
+
+                    ClassicEditor
+                        .create(document.querySelector('#NotificationMessage'))
+                        .then(editor => {
+                            const debouncedUpdate = debounce(() => {
+                                messageBody = editor.getData();
+                                livewire.emit('SetNotificationBodyEvent', messageBody);
+                            }, 300);  // Adjust the debounce delay as needed
+
+                            editor.model.document.on('change:data', () => {
+                                debouncedUpdate();
+                            });
+                        })
+                        .catch(error => {
+                            console.error(error);
                         });
-                } )
-                .catch( error => {
-                        console.error( error );
-                } );
+
+                    // Debounce function to limit the rate at which the update function is called
+                    function debounce(func, delay) {
+                        let timeout;
+                        return function(...args) {
+                            clearTimeout(timeout);
+                            timeout = setTimeout(() => func.apply(this, args), delay);
+                        };
+                    }
+
+                // -----------------------------------------------------------------            
             }
 
         // ---------------------------------ck editor --------------------------------            

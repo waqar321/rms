@@ -385,5 +385,6 @@ class Index extends Component
     public function SetNotificationBody($CkeditedData)
     {
         $this->ecom_notification->messagebody = $CkeditedData;
+        $this->Collapse = "uncollapse";
     }
 }
