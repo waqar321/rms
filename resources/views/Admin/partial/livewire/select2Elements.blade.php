@@ -67,8 +67,7 @@
                                     @if($Component == 'courseAlign' && $update) 
                                             
                                     @endif
-                                    >
-                            
+                                    >                            
                           
                                    <option value="" disabled selected style="color: #131212 !important">Select Instructor </option>      
                                     @forelse($instructors as $instructor)    

@@ -1,16 +1,16 @@
 @push('styles')
 
-<style>
+    <style>
 
-    /* Set height for label and file input field */
-    label, input[type="file"] 
-    {
-        height: 100%;
-        display: flex;
-        align-items: center; /* Vertically center content */
-    }
+        /* Set height for label and file input field */
+        label, input[type="file"] 
+        {
+            height: 100%;
+            display: flex;
+            align-items: center; /* Vertically center content */
+        }
 
-</style>
+    </style>
 
 @endpush
 
@@ -27,7 +27,9 @@
 <div class="row" id="DdddepartmentPanel" > 
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
-          @include('Admin.partial.livewire.X_titles')   
+          
+            @include('Admin.partial.livewire.X_titles')   
+
             <div class="x_content {{ $Collapse  }}">
                 @foreach ($errors->all() as $key => $error)
                     <div class="col-mb-12 col-lg-12">

@@ -73,7 +73,7 @@
                                         @else 
                                             <a href="{{ $menu->url ? url_secure($menu->url) : '#' }}">
                                         @endif 
-                                                <i class="{{ $menu->icon }}" ></i> {{ $menu->title }} 
+                                                <i class="{{ $menu->icon }}" ></i> {{ $menu->title }}  
                                                 @if ($menu->subMenus->count() > 0)
                                                     <span class="fa fa-chevron-down"></span>
                                                 @endif
@@ -97,7 +97,7 @@
 
                                     @endcan
                                 @else   
-                                    <!--  open for everyone -->
+                                    <!--  open for everyone like video tutorial -->
                                     <li id="{{ !empty($menu->IdNames) ? implode(' ', $menu->IdNames) : '' }}" class="{{ !empty($menu->ClassNames) ? implode(' ', $menu->ClassNames) : '' }}">
                                         
                                         @if ($menu->subMenus->count() > 0)

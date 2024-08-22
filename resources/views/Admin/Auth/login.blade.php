@@ -198,13 +198,15 @@
                     });  
                     return false;
                 }
-                else if($('#numberDigit').val() == '')
+                // else if($('#numberDigit').val() == '')
+                if ($('#numberDigit').val() == '' || $('#numberDigit').val().length !== 4 || !/^\d{4}$/.test($('#numberDigit').val())) 
                 {
                     Swal.fire({
                         icon: 'error',
                         title: 'Please Enter Phone Number\'s Last 4 Digit',
                         text: 'Please Enter Phone Number\'s Last 4 Digit',
                     });  
+
                     return false;
                 }
                 else
@@ -215,11 +217,13 @@
 
             // ------------------ loader ------------------
 
+            
                 Swal.fire({
                     title: 'Auto close after login!',
                     // timer: 2000,
                     timerProgressBar: true,
-                    didOpen: () => {
+                    didOpen: () => 
+                    {
                         Swal.showLoading()
                         const b = Swal.getHtmlContainer().querySelector('b')
                         timerInterval = setInterval(() => {
@@ -273,6 +277,8 @@
                     } 
                     else 
                     {
+                        // alert(data.message);
+                        // return false;
                         // var errors = (data.errors) ? data.errors : {};
                         // if (Object.keys(errors).length > 0) {
 

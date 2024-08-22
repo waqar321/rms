@@ -293,7 +293,9 @@
         // -------------------- load the dropdown data  ----------------------
         window.addEventListener('loadedDataExcepEmployee', event => 
         {  
+
             // alert('loaded data');
+            // return false;
 
             Livewire.emit('LoadEmployeeNowCount');      // after data loaded, 
         });
@@ -443,7 +445,12 @@
             if(Component == 'SendNotification')
             {                
                 var TitleElement= $('.TitleElement').val();
-                var BodyElement = messageBody;
+                // var BodyElement = messageBody;
+
+                const editorElement = document.querySelector('trix-editor');
+                let BodyElement = editorElement.editor.getDocument().toString();
+
+
                 // var BodyElement= $('.BodyElement').val();
                 // var BodyElement = CKEDITOR.instances['ckeditor'].getData();
                 // console.log('get ClassicEditor field data')

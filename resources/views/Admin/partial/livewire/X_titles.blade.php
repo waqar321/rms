@@ -21,7 +21,19 @@
     <div class="x_title collapse-link">
         <div class="row">
             <div class="col-lg-6 text-left">
-                <h2> {{ explode(" ", $pageTitle)[0] }}</h2>
+                <h2> 
+                    {{ explode(" ", $pageTitle)[0] }}
+                    
+                    <span wire:init="pageLoaded" style="padding-left: 20px;">
+                            @if(isset($total_employees) && $total_employees == 0)
+                                <label for=""> Feeding Data For Notification Sending... </label>
+                                <td colspan="18" class="text-center"> 
+                                        <img style="height:70px;" src="{{ url_secure('build/images/transpatent_leopard.gif') }}" alt="Loading123!!">
+                                </td>
+                            @endif 
+                    </span>
+                    
+                </h2>
             </div>
             <div class="col-lg-6 d-flex justify-content-end">
                 @if(!$update)

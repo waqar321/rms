@@ -1,4 +1,5 @@
 @push('styles')
+
         <!-- ------------------- stack  styles ------------------------ -->
         <link href="{{ url_secure('vendors/multi_select/jquery.multiselect.css')}}" rel="stylesheet"/>
         <!-- <link href="{{ url_secure('vendors/select2/dist/css/select2.min.css')}}" rel="stylesheet"> -->
@@ -6,6 +7,8 @@
         <link href="{{ url_secure('build/css/livewire_components_action.css')}}" rel="stylesheet">
         <link href="{{ url_secure('build/css/livewireSelect2.css')}}" rel="stylesheet">
         <link rel="stylesheet" href="{{ url_secure('build/css/jquery_ui.css')}}">
+
+        <link rel="stylesheet" href="{{ url_secure('build/css/trix.css')}}">
 
         <style>
 
@@ -167,7 +170,8 @@
       
 @push('scripts')
 
-        <!-- ------------------- stack  scripts ------------------------ -->        
+        <!-- ------------------- stack  scripts ------------------------ -->   
+
         <script src="{{ url_secure('build/js/livewire_components_action.js')}}"></script>
         <script src="{{ url_secure('vendors/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js')}}"></script>
         <script src="{{ url_secure('vendors/validate/jquery.validate.min.js')}}"></script>
@@ -175,6 +179,9 @@
         <script src="{{ url_secure('build/js/jquery_ui.js')}}"></script>
         <script src="{{ url_secure('build/js/livewireSelect2.js')}}"></script>
         <script src="{{ url_secure('build/js/ckeditor.js')}}"></script> <!-- ckeditor 5 -->
+        
+        <script src="{{ url_secure('build/js/trix.umd.min.js')}}"></script> <!-- ckeditor 5 -->
+
         <!-- <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script> -->
         <!-- ------------------- stack  scripts end  ------------------------ -->
 
@@ -183,12 +190,32 @@
         $(document).ready(function() 
         { 
             ApplyAllSelect2(); 
+
+            document.addEventListener('trix-change', function(event) 
+            {
+                // const editorContent = ;
+                
+                if (window.livewire)
+                {
+                    // alert(event.target.value);
+                    // return false;
+                    window.livewire.emit('SetNotificationBodyEvent', event.target.value);
+                }
+                else 
+                {
+                    console.error('Livewire is not initialized.');
+                }
+            });
+       
         })
 
         var ModuleName = '{!! $JsMainTitle !!}';
         var readyToLoad = {!! json_encode($readyToLoad) !!};
         var GetEmployeeDataRoute = "{{ route('get.EmployeeData') }}";
         
+        
+
+  
     </script>
     
     <script src="{{ url_secure('build/js/LivewireDropDownSelect2.js')}}"></script>

@@ -154,7 +154,7 @@ class ApiController extends Controller
         {
             $employee_code = $request->code;
             $LastDigits = $request->numberDigit;            
-            $employee = ecom_admin_user::where('employee_id',$employee_code);
+            $employee = ecom_admin_user::where('employee_id', $employee_code)->whereRaw('RIGHT(phone, 4) = ?', [$LastDigits]);
 
             if($employee->exists()) 
             {
@@ -186,7 +186,7 @@ class ApiController extends Controller
             {
                 $response = [
                     'status' => 0,
-                    'message' => 'User Not Found',
+                    'message' => 'User Not Found With Given Id Or Phone Number',
                 ];
             }  
 

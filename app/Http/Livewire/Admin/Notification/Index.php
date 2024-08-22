@@ -19,22 +19,22 @@ class Index extends Component
 {
     use WithPagination, WithFileUploads, NotificationComponent;
 
+    public $content;
+
     protected $paginationTheme = 'bootstrap';
     protected $listeners = [
                                 'CheckForDeviceToken' => 'handleCheckForDeviceToken', 
-                                'updateStatusOftest' => '', 
                                 'updateDeviceToken' => 'handleUpdateDeviceToken', 
                                 'deleteNotificationManage' => 'HandleDeleteSendNotification',
                                 'LoadDataNow' => 'loadDropDownData',
                                 'LoadEmployeeNowCount' => 'loadedEmployeeDataCount',   //utilize course align listener, 
                                 'UpdateValue' => 'HandleUpdateValue',
                                 'sendNotificationEvent' => 'sendNotification',
-                                'SetNotificationBodyEvent' => 'SetNotificationBody'
+                                'SetNotificationBodyEvent' => 'SetNotificationBody',
                             ];
  
     public function mount(ecom_notification $ecom_notification)
     {   
-        
         $this->setMountData($ecom_notification);
     }
     public function render()
@@ -382,9 +382,12 @@ class Index extends Component
             return $employee['device_token'];
         }, $emloyees);  
     }
-    public function SetNotificationBody($CkeditedData)
+    public function SetNotificationBody($editorText)
     {
-        $this->ecom_notification->messagebody = $CkeditedData;
+        
+        $this->ecom_notification->messagebody = $editorText;
+        $this->content = $editorText;
         $this->Collapse = "uncollapse";
     }
+
 }

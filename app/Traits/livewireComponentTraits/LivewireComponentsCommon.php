@@ -135,6 +135,7 @@ trait LivewireComponentsCommon
         $this->readyToLoad = true;
         // $this->LoadDataAndAppleSelec2();
         $this->dispatchBrowserEvent('loadDropDownData');
+        // $this->Collapse = "uncollapse";
     }
     public function loadDropDownData($Mount=false)
     {

@@ -29,7 +29,7 @@ trait CourseAssignEventListeners
     // }
 
     public function HandleUpdateValue($table, $field, $value)
-    {
+    {   
        
         if($value != null)
         {
@@ -93,10 +93,29 @@ trait CourseAssignEventListeners
             {                                
                 $this->ecom_course_assign->city_id = $value;
             }
+
         }
         $this->Collapse = true;
     }   
+    public function loadedEmployeeDataCount()
+    {
 
+        $data = [
+            'total_employees' => GetAllEmployeesCount(),
+            'total_Instructors' => GetAllInstructorsCount(),
+            'total_Department' => GetAllDepartmentCount(),
+            'total_Zones' => GetAllZonesCount(),
+            'total_Branches' => GetAllBranchesCount(),
+            'total_Roles' => GetAllRolesCount(),
+            'total_schedules' => GetAllSchedulesCount(),
+            'total_cities' => GetAllCitiesCount(),
+            'total_course' => GetAllCoursesCount(),
+        ];
+
+        $this->total_employees = $data['total_employees'];
+        $this->dispatchBrowserEvent('loadedEmployeeDataCount', $data); 
+        // $this->dispatchBrowserEvent('loadedEmployeeData'); 
+    }
 
     // public function HandleHRCourse($HRCourse_id)
     // {
@@ -267,24 +286,6 @@ trait CourseAssignEventListeners
     //     $this->Collapse = true;
     // }
 
-    public function loadedEmployeeDataCount()
-    {
 
-        $data = [
-            'total_employees' => GetAllEmployeesCount(),
-            'total_Instructors' => GetAllInstructorsCount(),
-            'total_Department' => GetAllDepartmentCount(),
-            'total_Zones' => GetAllZonesCount(),
-            'total_Branches' => GetAllBranchesCount(),
-            'total_Roles' => GetAllRolesCount(),
-            'total_schedules' => GetAllSchedulesCount(),
-            'total_cities' => GetAllCitiesCount(),
-            'total_course' => GetAllCoursesCount(),
-        ];
-
-        $this->total_employees = $data['total_employees'];
-        $this->dispatchBrowserEvent('loadedEmployeeDataCount', $data); 
-        // $this->dispatchBrowserEvent('loadedEmployeeData'); 
-    }
 
 }

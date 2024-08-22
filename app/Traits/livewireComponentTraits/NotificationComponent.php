@@ -142,7 +142,8 @@ trait NotificationComponent
     {
        $this->ecom_notification = $ecom_notification ?? new ecom_notification();  
        $this->ExpectedCSVHeaders = $this->GetExpectedCSVHeaderData(true);
-
+       
+    //    $this->ecom_notification->messagebody = 'waqa';  
        //$this->pageTitle = 'Send Notification';
        //$this->MainTitle = 'SendNotification';
 

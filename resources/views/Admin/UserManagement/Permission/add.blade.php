@@ -4,7 +4,9 @@
 <div class="row"> 
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
+            
             @include('Admin.partial.livewire.X_titles')   
+
             <div class="x_content {{ $Collapse  }}">
 
                 @if ($errors->any())

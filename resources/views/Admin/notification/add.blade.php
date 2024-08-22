@@ -7,31 +7,16 @@
     }
 @endphp 
 
+ {!! $content !!}
+
+
 @can('create_notification')
     
     <div class="row">  
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
-                <div class="x_title">
-                <h2> {{ $pageTitle }} 
-
-                    <span wire:init="pageLoaded" style="padding-left: 20px;">
-                            @if($total_employees == 0)
-                                <label for=""> Feeding Data For Notification Sending... </label>
-                                <td colspan="18" class="text-center"> 
-                                        <img style="height:70px;" src="{{ url_secure('build/images/transpatent_leopard.gif') }}" alt="Loading123!!">
-                                </td>
-                            @endif 
-                    </span>
-
-                </h2>
-                    <ul class="nav navbar-right panel_toolbox justify-content-end">
-                        <li>
-                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                    </ul> 
-                    <div class="clearfix"></div>
-                </div>
+                
+                @include('Admin.partial.livewire.X_titles')   
 
                 <div class="x_content {{ $Collapse  }}">
 
@@ -85,9 +70,10 @@
                                 </div>
                             </div>
 
+
                             <!-- ========================= Body Message ======================================= -->
                             
-                                <div class="form-group" >
+                                <!-- <div class="form-group" >
                                     <label for="description" class="col-form-label text-md-right CkEditorCSSLabel">
                                         Message 
                                     </label> 
@@ -97,7 +83,8 @@
                                     @error('ecom_notification.messagebody')
                                         <span style="font-size: 11px; color: #e3342f">{{ $message }}</span>
                                     @enderror
-                                </div>
+                                </div> -->
+
                                     <!-- {!!  $ecom_notification->messagebody !!}  -->
                                     <!-- <div class="col-md-6 col-lg-6">
                                         <div class="form-group">
@@ -105,6 +92,23 @@
                                             <textarea  wire:model='ecom_notification.messagebody' class="form-control BodyElement"  placeholder="Enter Text Message"></textarea>
                                         </div>
                                     </div> -->
+                            <!-- ========================= Body Message ======================================= -->
+
+                            <div class="form-group" wire:ignore>
+                                <label for="description" class="col-form-label text-md-right">
+                                    Notificatin Content
+                                </label>
+                                <input id="x" type="hidden" name="content" value="{{ $content }}">
+                                <!-- <input id="x" wire:model.debounce.500ms="ecom_notification.messagebody" type="hidden" name="content"> -->
+
+                                <trix-editor class="trix-content" input="x"></trix-editor>
+
+                                @error('content')
+                                    <span style="font-size: 11px; color: #e3342f">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            
+                            <!-- ========================= Body Message ======================================= -->
 
                             <div class="col-md-12 col-lg-12">
                                 <div class="form-group">
