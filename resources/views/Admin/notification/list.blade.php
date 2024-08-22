@@ -34,7 +34,7 @@
                                         @endif 
                                     @endforeach
                                     @can('deleteNotification')
-                                        <th>{{ Action }}</th>                                
+                                        <th> Action </th>                                
                                     @endcan 
                                 </tr>
                         </thead>
