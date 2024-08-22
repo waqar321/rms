@@ -31,45 +31,8 @@
 <div class="row" id="addCategoryPanel" data-screen-permission-id="37">  
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
-            <div class="x_title">
-            <h2> {{ $pageTitle }} 
 
-                           <span wire:init="pageLoaded" style="padding-left: 20px;">
-                                 @if($total_employees == 0)
-                                    <label for=""> Feeding Data For Course Alignment... </label>
-                                    <td colspan="18" class="text-center"> 
-                                            <img style="height:70px;" src="{{ url_secure('build/images/transpatent_leopard.gif') }}" alt="Loading123!!">
-                                    </td>
-                                @endif 
-                            </span>
-
-                   <?php 
-                        // echo 'course_id: '.$ecom_course_assign->course_id."<br>";
-                        // echo 'role_id: '.$ecom_course_assign->role_id."<br>";
-                        // echo 'instructor_id: '.$ecom_course_assign->instructor_id."<br>";
-                        // echo 'employee_id: '.$ecom_course_assign->employee_id."<br>";
-                        // echo 'department_id: '.$ecom_course_assign->department_id."<br>";
-                        // echo 'sub_department_id: '.$ecom_course_assign->sub_department_id."<br>";
-                        // echo 'zone_code: '.$ecom_course_assign->zone_code."<br>";
-                        // echo 'city_id: '.$ecom_course_assign->city_id."<br>";
-                        // echo 'branch_id: '.$ecom_course_assign->branch_id."<br>";
-                        // echo 'shift_time_id: '.$ecom_course_assign->shift_time_id."<br>";                   
-                   ?> 
-
-
-            </h2>
-                    <ul class="nav navbar-right panel_toolbox justify-content-end">
-                       
-                        <li>
-                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                    </ul> 
-                    <!-- <button onclick="startFCM()"
-                        class="btn btn-danger btn-flat ml-2">          Allow notification
-                    </button> -->
-                <div class="clearfix"></div>
-
-            </div>
+                @include('Admin.partial.livewire.X_titles')   
 
             <div class="x_content {{ $Collapse  }}">
 
