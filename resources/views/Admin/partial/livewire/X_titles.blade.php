@@ -25,11 +25,13 @@
                     {{ explode(" ", $pageTitle)[0] }}
                     
                     <span wire:init="pageLoaded" style="padding-left: 20px;">
-                            @if(isset($total_employees) && $total_employees == 0)
-                                <label for=""> Feeding Data For Notification Sending... </label>
-                                <td colspan="18" class="text-center"> 
-                                        <img style="height:70px;" src="{{ url_secure('build/images/transpatent_leopard.gif') }}" alt="Loading123!!">
-                                </td>
+                            @if(explode(" ", $pageTitle)[0] == 'CourseAlign' || explode(" ", $pageTitle)[0] == 'Notification')
+                                @if(isset($total_employees) && $total_employees == 0)
+                                    <label for=""> Feeding Data For Notification Sending... </label>
+                                    <td colspan="18" class="text-center"> 
+                                            <img style="height:70px;" src="{{ url_secure('build/images/transpatent_leopard.gif') }}" alt="Loading123!!">
+                                    </td>
+                                @endif 
                             @endif 
                     </span>
                     
