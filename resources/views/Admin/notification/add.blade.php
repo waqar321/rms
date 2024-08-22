@@ -7,8 +7,6 @@
     }
 @endphp 
 
- {!! $content !!}
-
 
 @can('create_notification')
     

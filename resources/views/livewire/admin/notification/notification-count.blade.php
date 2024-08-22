@@ -29,15 +29,22 @@
                                     
                                     <li wire:click="UpdateNotificationToRead({{ $Notification }})" wire:key="{{ $Notification->id }}" class="nav-item">
                                         <a class="dropdown-item">
-                                            <span class="image">
-                                                <img src="{{ asset('images/img.jpg') }}" alt="Profile Image" /></span>
-                                            <span>
-                                                <span>  {{$Notification->title }}</span>
-                                                <span class="time">{{ getTimeDifference($Notification->created_at) }} </span>
+                                                <span class="image">
+                                                    <img src="{{ asset('images/img.jpg') }}" alt="Profile Image" /></span>
+                                                <span>                                                     
+                                                <div class="row">
+                                                    <div class="col-lg-7">
+                                                        <span>  {{$Notification->title }}</span>
+                                                    </div>
+                                                    <div class="col-lg-5 text-center">
+                                                        <span class="time">{{ getTimeDifference($Notification->created_at) }} </span>
+                                                    </div>
+                                                </div>
+                                                
                                             </span>
-                                            <span class="message">
+                                            <!-- <span class="message">
                                                 {!! $Notification->messagebody !!}
-                                            </span>
+                                            </span> -->
                                         </a> 
                                     </li>       
                                 
