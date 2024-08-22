@@ -76,7 +76,6 @@
                                                     <td>{{ $notification->branch_id ? $notification->Branch->branch_name : 'NOT Align branch' }} </td>
                                                     <td>{{ $notification->role_id ? $notification->Role->role_name : 'NOT Align role' }} </td>
                                                     <td>{{ $notification->shift_time_id ? $notification->Shifttime->start_time.' to '.$notification->Shifttime->end_time : 'NOT Align' }} </td>
-
                                                     <td>{{ $notification->created_at }}   </td>
                                                     <td>
                                                         @if($notification->is_active == 1)
@@ -85,12 +84,17 @@
                                                             <span class="fa fa-toggle-off toggle-icon" wire:click="updateStatus({{ $notification->id }}, 1)"></span>
                                                         @endif
                                                     </td>
-
+                                                @endif 
+                                                
+                                                @can('awdaw')
                                                     <td>
                                                         <!-- <a data-screen-permission-id="43" href="{{ url_secure_api('content-management/notification?id=') . base64_encode($notification->id) }}" class="btn btn-primary">Edit</a> -->
                                                         <button data-screen-permission-id="44" onclick="confirmDelete('{{ $notification->id }}')" class="btn btn-danger">Delete</button>                                       
                                                     </td>
-                                                @endif 
+                                                @endcan 
+                                                
+
+
                                             </tr>
                                             @php  
                                                 $count++

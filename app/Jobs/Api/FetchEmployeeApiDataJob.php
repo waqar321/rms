@@ -23,11 +23,17 @@ class FetchEmployeeApiDataJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public $timeout = 600; // (600 seconds = 10 minutes)
+
     public function __construct()
     {
         
+    }  
+    public function retryAfter()
+    {
+        return 60; // 15 minutes
+    } 
 
-    }
     public function handle()
     {
 
@@ -58,6 +64,7 @@ class FetchEmployeeApiDataJob implements ShouldQueue
                 Log::info('total employees '.$totalCount);   // primt total employees 9510
                 $batches = array_chunk($employees, $batchSize);
                 $ChunkQuantity = 0;
+             
                 foreach ($batches as $batch) 
                 {
                     DB::beginTransaction();

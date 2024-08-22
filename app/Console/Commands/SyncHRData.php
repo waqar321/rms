@@ -17,13 +17,13 @@ class SyncHRData extends Command
 
     public function handle()
     {
-        FetchDepartmentApiDataJob::dispatch();
-        FetchZoneApiDataJob::dispatch();
-        FetchCityApiDataJob::dispatch();
-        FetchShiftApiDataJob::dispatch();
+        // FetchDepartmentApiDataJob::dispatch();
+        // FetchZoneApiDataJob::dispatch();
+        // FetchCityApiDataJob::dispatch();
+        // FetchShiftApiDataJob::dispatch();
         FetchEmployeeApiDataJob::dispatch();
         
-        $this->info('HR data has neem synced.');  
+        $this->info('JObs are dispatched to sync HR data.');  
 
         return Command::SUCCESS;
     }

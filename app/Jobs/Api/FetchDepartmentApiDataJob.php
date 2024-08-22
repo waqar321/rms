@@ -19,7 +19,6 @@ class FetchDepartmentApiDataJob implements ShouldQueue
 
     public function __construct()
     {      
-        
         // DB::transaction(function () 
         // {
         //     DB::table('ecom_department')->delete();
