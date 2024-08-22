@@ -123,7 +123,7 @@ trait CourseAssignComponent
        $this->pageTitle = 'CourseAlign Manage';
        $this->MainTitle = 'CourseAlignManage';
        $this->searchByName = '';
-       $this->paginateLimit = 3;
+       $this->paginateLimit = 10;
 
         //    $this->sub_departments = collect();
         //    $this->cities = collect();
