@@ -85,8 +85,8 @@
                                                         @endif
                                                     </td>
                                                 @endif 
-                                                
-                                                @can('awdaw')
+
+                                                @can('deleteNotification')
                                                     <td>
                                                         <!-- <a data-screen-permission-id="43" href="{{ url_secure_api('content-management/notification?id=') . base64_encode($notification->id) }}" class="btn btn-primary">Edit</a> -->
                                                         <button data-screen-permission-id="44" onclick="confirmDelete('{{ $notification->id }}')" class="btn btn-danger">Delete</button>                                       
