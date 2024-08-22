@@ -33,6 +33,9 @@
                                             <th>{{ $column }}</th>
                                         @endif 
                                     @endforeach
+                                    @can('deleteNotification')
+                                        <th>{{ Action }}</th>                                
+                                    @endcan 
                                 </tr>
                         </thead>
                     
