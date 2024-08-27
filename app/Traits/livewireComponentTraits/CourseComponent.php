@@ -184,7 +184,7 @@ trait CourseComponent
         }
         else
         {
-            if($value == 'searchByName' || strpos($value, 'selectedRows') !== false)
+            if($value == 'paginateLimit' || $value == 'searchByName' || strpos($value, 'selectedRows') !== false)
             {
                 $this->Collapse = "collapse";
             }
