@@ -125,14 +125,15 @@
 
                 lecture_id = '{!! json_encode($ecom_lecture->id) !!}';
                 assessmentData = {!! json_encode($assessmentData) !!};
+                console.log(assessmentData);
+                
                 assessmentStatus = {!! json_encode($assessmentStatus) !!};
 
                 function myFunction() 
                 {
-                    var VideoSecondsTime = Math.floor(video.currentTime);
+                    var VideoSecondsTime = Math.floor(video.currentTime);  // 
                 
-
-                    if (AssessmentLevel < assessmentData.length)  //first:   0 < 3
+                    if (AssessmentLevel < assessmentData.length)  //first:   0 < 2
                     {
                         if(AssessmentLevel==0)
                         {
