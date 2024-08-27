@@ -230,7 +230,16 @@ trait NotificationComponent
     }        
     public function HandleDeleteSendNotification(ecom_notification $ecom_notification)
     {
+        if ($ecom_notification->NotificationStatuses->isNotEmpty()) 
+        {
+            foreach ($ecom_notification->NotificationStatuses as $statusRecord) 
+            {
+                $statusRecord->delete();
+            }
+        }
+    
         $ecom_notification->delete();    
+
         $this->emit('refreshNotificationCount');
         // $this->emit('refreshNotificationList');
         $this->dispatchBrowserEvent('deleted_scene', ['name' => 'Notification']);

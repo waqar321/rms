@@ -38,6 +38,7 @@ class NotificationCount extends Component
             if(CheckAlignment($notification, 'notification'))
             {
                 $found = $notification->NotificationStatuses->where('user_id', auth()->user()->id)->where('read', 0)->first();
+                
                 if($found)
                 {
                     $checkCount++;

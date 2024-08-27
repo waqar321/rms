@@ -73,50 +73,50 @@ class Index extends Component
         $url = 'https://fcm.googleapis.com/fcm/send';
         
         // $FcmToken = ecom_admin_user::whereNotNull('device_token')->pluck('device_token')->all();
-        $FcmTokens = $this->GetFilterTokens();        
+        $FcmTokens = $this->GetFilterTokens();     
         $FcmTokens[auth()->user()->id] = auth()->user()->device_token;  //also send to me as i am logged in super admin
         
         //============== method 1 using curl ====================
         
-            $serverKey = 'AAAAPMgZejw:APA91bFjS_TPXqLyyXxGj_qJHRwB_-xiV1DFfxDfOjpqeKvmxxKI81F4XWbD8uyYdhQSV6R-ilX9vg5rfS7Fe2NNLBIIUl7cXiTlGsKOiCzicvP7rhyBnUigWGSKundOG4zcUulrAucQ';
-            $data = [
-                // "registration_ids" => $FcmTokens,
-                "registration_ids" => array_keys($FcmTokens),
-                "notification" => [
-                    "title" => $this->ecom_notification->title,
-                    "body" => $this->ecom_notification->messagebody,  
-                ]
-            ];
-            
-            $encodedData = json_encode($data);
-            
-            $headers = [
-                'Authorization:key=' . $serverKey,
-                'Content-Type: application/json',
-            ];            
-  
-            $ch = curl_init();                              //Initializes a cURL session to prepare for making the HTTP request.
+        $serverKey = 'AAAAPMgZejw:APA91bFjS_TPXqLyyXxGj_qJHRwB_-xiV1DFfxDfOjpqeKvmxxKI81F4XWbD8uyYdhQSV6R-ilX9vg5rfS7Fe2NNLBIIUl7cXiTlGsKOiCzicvP7rhyBnUigWGSKundOG4zcUulrAucQ';
+        $data = [
+            // "registration_ids" => $FcmTokens,
+            "registration_ids" => array_keys($FcmTokens),
+            "notification" => [
+                "title" => $this->ecom_notification->title,
+                "body" => $this->ecom_notification->messagebody,  
+            ]
+        ];
+        
+        $encodedData = json_encode($data);
+        
+        $headers = [
+            'Authorization:key=' . $serverKey,
+            'Content-Type: application/json',
+        ];            
 
-            curl_setopt($ch, CURLOPT_URL, $url);            // functions are used to configure options for the cURL session, including setting the URL, HTTP method, headers, data to be sent, and SSL options
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-            curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-            // Disabling SSL Certificate support temporarly
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $encodedData);
+        $ch = curl_init();                              //Initializes a cURL session to prepare for making the HTTP request.
 
-            // Execute post
-            $result = curl_exec($ch);                       //Executes the cURL request and stores the result. If the execution fails ($result === FALSE), it outputs the error message and terminates the script
+        curl_setopt($ch, CURLOPT_URL, $url);            // functions are used to configure options for the cURL session, including setting the URL, HTTP method, headers, data to be sent, and SSL options
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+        // Disabling SSL Certificate support temporarly
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $encodedData);
+
+        // Execute post
+        $result = curl_exec($ch);                       //Executes the cURL request and stores the result. If the execution fails ($result === FALSE), it outputs the error message and terminates the script
             
 
-            if ($result === FALSE) 
-            {
-                die('Curl failed: ' . curl_error($ch));
-            }        
-            
-            curl_close($ch);                                // Closes the cURL session after the request is completed
+        if ($result === FALSE) 
+        {
+            die('Curl failed: ' . curl_error($ch));
+        }        
+        
+        curl_close($ch);                                // Closes the cURL session after the request is completed
 
         // dd($result);
         //============== method 2 using guzzle ====================

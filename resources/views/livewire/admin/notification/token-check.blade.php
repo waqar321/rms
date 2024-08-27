@@ -12,10 +12,11 @@
                 // var tokenFound = {!! json_encode($tokenFound) !!};
 
                 document.addEventListener('livewire:load', function () 
-                {
-                    
+                {                    
                     // ----------Register the Service Worker in Your Application---------------
-                    if ('serviceWorker' in navigator) {
+
+                    if ('serviceWorker' in navigator) 
+                    {
                         navigator.serviceWorker.register('/build/js/firebase-messaging-sw.js')
                             .then(function(registration) {
                                 console.log('Service Worker registration successful with scope: ', registration.scope);
