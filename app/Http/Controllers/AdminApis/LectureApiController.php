@@ -387,7 +387,7 @@ class LectureApiController extends Controller
     {
         return response()->json([
                 'status' => 404, 
-                'requestData' => ecom_lecture::where('id', $request->lecture_id)->exists()->ToSql(), 
+                'requestData' => ecom_lecture::where('id', $request->lecture_id)->toSql(), 
                 'message' => 'Lecture Not Found'
             ], 
             404
