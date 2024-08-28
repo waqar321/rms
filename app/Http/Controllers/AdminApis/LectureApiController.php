@@ -153,7 +153,6 @@ class LectureApiController extends Controller
 
         foreach ($Questions as $Question) 
         {
-
             $assessmentStatus = LectureAssessmentStatus::where('lecture_id', $Question['lecture_id'])
                                                         ->where('assessment_level', $Question['assessmentlevel'])
                                                         ->where('question_level', $Question['question'])

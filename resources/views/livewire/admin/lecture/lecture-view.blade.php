@@ -256,6 +256,8 @@
                     let ValidationObject = ValidateAnsweredSelection();
                     LectureAssessmentDetails = ValidationObject.LectureAssessmentDetails
 
+                    console.log('assessment');
+                    console.log(LectureAssessmentDetails);
 
                     if(ValidationObject.Validation)
                     {

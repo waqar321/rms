@@ -353,17 +353,18 @@
         //     });
         // }
 
-        //Function to show loading message
-        function showLoading() {
-            .fire({
-                title: 'Loading...',
-                allowOutsideClick: false,
-                showConfirmButton: false,
-                onBeforeOpen: () => {
-                    Swal.showLoading();
-                }
-            });
-        }
+        // //Function to show loading message
+        // function showLoading() 
+        // {
+        //     .fire({
+        //         title: 'Loading...',
+        //         allowOutsideClick: false,
+        //         showConfirmButton: false,
+        //         onBeforeOpen: () => {
+        //             Swal.showLoading();
+        //         }
+        //     });
+        // }
 
         // Function to hide loading message
         function hideLoading() {

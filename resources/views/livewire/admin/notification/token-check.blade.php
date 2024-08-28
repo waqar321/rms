@@ -34,6 +34,7 @@
                         appId: "1:261055150652:web:38b334cecd6efef6a06139",
                         measurementId: "G-47XFJ4N8J6"  
                     };
+
                     firebase.initializeApp(firebaseConfig);
                     const messaging = firebase.messaging();
 
@@ -50,6 +51,7 @@
                             {
                                 // console.log('emitted event');
                                 Livewire.emit('CheckForDeviceToken', response);
+
                             }).catch(function (error) 
                             {
                                 console.log('Error obtaining permission:', error);
@@ -64,6 +66,7 @@
                         };
 
                         var notificationdDetail = new Notification(title, options);
+                        console.log('notification title');
                         console.log(notificationdDetail);
                         
                         //========================== update notification bar =====================
