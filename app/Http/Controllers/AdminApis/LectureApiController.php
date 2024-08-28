@@ -14,6 +14,7 @@ use App\Models\Admin\ecom_lecture;
 use App\Models\Admin\ecom_admin_user;
 use App\Models\Admin\ecom_course_assign;
 use App\Models\Admin\LectureAssessmentStatus;
+use App\Models\Admin\LectureAssessmentLevel;
 use App\Models\Admin\LectureUserRecords;
 use App\Models\Admin\LectureMobileUserRecord;
 use Yajra\DataTables\DataTables;
@@ -381,5 +382,49 @@ class LectureApiController extends Controller
                 ], 
                 200
             );
+    }
+    public function LectureAssessments(Request $request)
+    {
+        if(ecom_lecture::find($request->lecture_id)->exists())
+        {
+            $lectureDetails = LectureAssessmentLevel::where('lecture_id', $request->lecture_id)
+                            ->with('questions.questionLevel', 'questions')
+                            ->get();
+            
+            if($lectureDetails->isNotEmpty())
+            {
+                return response()->json([
+                        'status' => 200, 
+                        'requestData' => $lectureDetails, 
+                        'message' => 'user lecture status update successfully'
+                    ], 
+                    200
+                );
+            }
+            else
+            {
+                return response()->json([
+                        'status' => 404, 
+                        'requestData' => $request->all(), 
+                        'message' => 'Lecture Assessments Not Found'
+                    ], 
+                    404
+                );    
+            }
+        }
+        else
+        {
+            return response()->json([
+                    'status' => 404, 
+                    'requestData' => $request->all(), 
+                    'message' => 'Lecture Not Found'
+                ], 
+                404
+            );
+        }
+
+
+
+
     }
 }

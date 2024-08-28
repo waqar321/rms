@@ -125,12 +125,15 @@
 
                 lecture_id = '{!! json_encode($ecom_lecture->id) !!}';
                 assessmentData = {!! json_encode($assessmentData) !!};
-                console.log(assessmentData);
-                
+
+               console.log(assessmentData);
+
                 assessmentStatus = {!! json_encode($assessmentStatus) !!};
 
                 function myFunction() 
                 {
+                   console.log('printing');
+
                     var VideoSecondsTime = Math.floor(video.currentTime);  // 
                 
                     if (AssessmentLevel < assessmentData.length)  //first:   0 < 2
@@ -149,7 +152,7 @@
                     }
                     else
                     {
-                        //console.log('No duration for ' + AssessmentLevel);
+                        ////console.log('No duration for ' + AssessmentLevel);
                     }   
 
                     if(VideoSecondsTime == timeDuration)
@@ -165,7 +168,7 @@
                             matched = true; 
                         }
                     }
-                    console.log('video time is: ' + VideoSecondsTime + ' first assessment time is: ' + timeDuration + ' and AssessmentLevel: ' + AssessmentLevel + '  in db length of assessment: ' + assessmentData.length);
+                    //// console.log('video time is: ' + VideoSecondsTime + ' first assessment time is: ' + timeDuration + ' and AssessmentLevel: ' + AssessmentLevel + '  in db length of assessment: ' + assessmentData.length);
                     return false;
                 }
 
@@ -184,7 +187,7 @@
                                         id: "assessment_level"
                                     });
 
-                    // console.log('assessment level: ' + AssessmentLevel);
+                    //// console.log('assessment level: ' + AssessmentLevel);
                     // return false;
 
                     $('#questionlevel').last().after(hiddenField);
@@ -299,7 +302,7 @@
 
                 quizModal.on('hidden.bs.modal', function () 
                 {
-                    console.log('modal closed and timer started');
+                    //// console.log('modal closed and timer started');
                     matched = false;
                     RemoveCurrentAsessmentQuestions();
                     video.play();
@@ -307,7 +310,7 @@
                 
                 video.addEventListener('ended', function() 
                 {
-                    // console.log('ended');
+                    //// console.log('ended');
                     
                     // Livewire.emit('UpdateUserLectureResult');
 
@@ -325,8 +328,8 @@
                             {
                                 if(data.status == 200)
                                 {
-                                    console.log('record updated');
-                                    console.log(data);
+                                   // console.log('record updated');
+                                   // console.log(data);
                                     // Swal.fire({
                                     //     icon: 'success',
                                     //     title: 'Answers submitted Successfully!',
@@ -336,7 +339,7 @@
                                     // video.play();
                                     // $('#quizModal').modal('hide');
                                 }
-                                // console.log(data);
+                                //// console.log(data);
                                 // Your success handling code here
                             },
                             error: function (xhr, status, error) {
@@ -361,7 +364,7 @@
 
                     // video.muted = true; 
                     // // alert('Video duration: ' + video.duration + ' seconds');
-                    // console.log('played and timer started');
+                    //// console.log('played and timer started');
                     // startTimer();
                 });
                 
@@ -374,7 +377,7 @@
                     // return false;
 
                     // updateTimeDisplay(); // Display time when paused
-                    // console.log('video paused');
+                    //// console.log('video paused');
                 });
 
                 // Event listener for when video is seeking or progress changes
@@ -478,8 +481,8 @@
                     var assessmentLevel = assessment.assessment_level;
                     var assessmentTime = assessment.assessment_time;
                     
-                    console.log("Assessment Level: " + assessmentLevel);
-                    console.log("Assessment Time: " + assessmentTime);
+                   // console.log("Assessment Level: " + assessmentLevel);
+                   // console.log("Assessment Time: " + assessmentTime);
                     
                     assessment.questions.forEach(function(question) {
                         var questionText = question.question;
@@ -488,11 +491,11 @@
                         var answer3 = JSON.parse(question.answer).Answer3;
                         var answer4 = JSON.parse(question.answer).Answer4;
                         
-                        console.log("Question: " + questionText);
-                        console.log("Answer 1: " + answer1);
-                        console.log("Answer 2: " + answer2);
-                        console.log("Answer 3: " + answer3);
-                        console.log("Answer 4: " + answer4);
+                       // console.log("Question: " + questionText);
+                       // console.log("Answer 1: " + answer1);
+                       // console.log("Answer 2: " + answer2);
+                       // console.log("Answer 3: " + answer3);
+                       // console.log("Answer 4: " + answer4);
                     });
                 });
             }
@@ -505,11 +508,11 @@
 
                 // assessmentStatus.forEach(function(StatusDetail) 
                 // {
-                //     // console.log(AssessmentLevel);
-                //     // console.log(assessmentData[AssessmentLevel]);
+                //     //// console.log(AssessmentLevel);
+                //     //// console.log(assessmentData[AssessmentLevel]);
                 //     // return false;
                     
-                //     // console.log(StatusDetail);
+                //     //// console.log(StatusDetail);
                 //     if(StatusDetail.assessment_level == AssessmentLEVELNumber)
                 //     {
                 //         if(StatusDetail.status == 0)
@@ -524,16 +527,16 @@
                 // if (WrongQuestion.status == 0 || assessmentStatus.length < assessmentData[AssessmentLevel].questions.length) 
                 // {
                                                             
-                //     console.log('total questions: ' + assessmentData[AssessmentLevel].questions.length);
-                //     console.log('questions answered: ' + assessmentStatus.length);
-                //     console.log('must show the form');
+                //    // console.log('total questions: ' + assessmentData[AssessmentLevel].questions.length);
+                //    // console.log('questions answered: ' + assessmentStatus.length);
+                //    // console.log('must show the form');
 
                 //     showQuizForm(assessmentData[AssessmentLevel]);
                 //     AssessmentLevel++; 
                 // }
                 // else
                 // {
-                //     console.log('all are valid answers, no need to show form');
+                //    // console.log('all are valid answers, no need to show form');
                 //     return false;
                 // }
 
