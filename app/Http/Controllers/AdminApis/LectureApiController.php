@@ -385,7 +385,7 @@ class LectureApiController extends Controller
     }
     public function LectureAssessments(Request $request)
     {
-        if(ecom_lecture::find($request->lecture_id)->exists())
+        if(ecom_lecture::where('id', $request->lecture_id)->exists())
         {
             $lectureDetails = LectureAssessmentLevel::where('lecture_id', $request->lecture_id)
                             ->with('questions.questionLevel', 'questions')
