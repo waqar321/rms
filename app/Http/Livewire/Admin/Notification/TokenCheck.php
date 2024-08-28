@@ -93,7 +93,6 @@ class TokenCheck extends Component
             $this->tokenFound = false;
         }
 
-        
         $this->dispatchBrowserEvent('ReturnTokenCheckResponse', ['tokenFound' => $this->tokenFound, 'token_number' => $token]);
     }
     public function UpdateToken($token)

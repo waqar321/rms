@@ -49,7 +49,9 @@
                             })
                             .then(function (response) 
                             {
-                                // console.log('emitted event');
+                                console.log('token ');
+                                console.log(response);
+
                                 Livewire.emit('CheckForDeviceToken', response);
 
                             }).catch(function (error) 
