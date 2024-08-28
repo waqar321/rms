@@ -385,14 +385,7 @@ class LectureApiController extends Controller
     }
     public function LectureAssessments(Request $request)
     {
-        return response()->json([
-                'status' => 404, 
-                'requestData' => ecom_lecture::where('id', $request->lecture_id)->toSql(), 
-                'message' => 'Lecture Not Found'
-            ], 
-            404
-        );
-        
+       
         if(ecom_lecture::where('id', $request->lecture_id)->exists())
         {
             $lectureDetails = LectureAssessmentLevel::where('lecture_id', $request->lecture_id)
