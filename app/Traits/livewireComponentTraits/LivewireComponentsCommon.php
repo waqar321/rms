@@ -163,7 +163,6 @@ trait LivewireComponentsCommon
     public function getLectureDetails($lectureId)
     {
 
-
         // Retrieve lecture assessment levels with their times and associated questions with answers
         $lectureDetails = LectureAssessmentLevel::where('lecture_id', $lectureId)
                                                 ->with('questions.questionLevel', 'questions')

@@ -126,13 +126,13 @@
                 lecture_id = '{!! json_encode($ecom_lecture->id) !!}';
                 assessmentData = {!! json_encode($assessmentData) !!};
 
-               console.log(assessmentData);
+            //    console.log(assessmentData);
 
                 assessmentStatus = {!! json_encode($assessmentStatus) !!};
 
                 function myFunction() 
                 {
-                   console.log('printing');
+                //    console.log('printing');
 
                     var VideoSecondsTime = Math.floor(video.currentTime);  // 
                 
@@ -256,7 +256,7 @@
                     let ValidationObject = ValidateAnsweredSelection();
                     LectureAssessmentDetails = ValidationObject.LectureAssessmentDetails
 
-                    console.log('assessment');
+                    console.log('assessment submission');
                     console.log(LectureAssessmentDetails);
 
                     if(ValidationObject.Validation)

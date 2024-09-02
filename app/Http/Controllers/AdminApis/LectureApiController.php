@@ -151,6 +151,14 @@ class LectureApiController extends Controller
     {
         $Questions = $request->LectureAssessmentDetails;
 
+        return response()->json([
+            'status' => 200, 
+            'data' => var_dump($Questions),
+            'message' => 'Assessment details saved successfully'
+        ], 
+        200
+    );
+
         foreach ($Questions as $Question) 
         {
             $assessmentStatus = LectureAssessmentStatus::where('lecture_id', $Question['lecture_id'])
