@@ -158,13 +158,14 @@ class LectureApiController extends Controller
         //     ], 
         //     200
         // );
-
+        $user_id = $request['user_id'] ? ecom_admin_user::where('employee_id', $request['user_id'])->value('id') : auth()->id();
+        
         foreach ($Questions as $Question) 
         {
             $assessmentStatus = LectureAssessmentStatus::where('lecture_id', $Question['lecture_id'])
                                                         ->where('assessment_level', $Question['assessmentlevel'])
                                                         ->where('question_level', $Question['question'])
-                                                        ->where('user_id', $Question['user_id'] ?? auth()->id())
+                                                        ->where('user_id', $user_id)
                                                         ->first();
 
             // ->get(['assessment_level', 'question_level', 'status']);
@@ -180,7 +181,7 @@ class LectureApiController extends Controller
                 $LectureAssessmentStatus->lecture_id = $Question['lecture_id'];
                 $LectureAssessmentStatus->assessment_level = $Question['assessmentlevel'];
                 $LectureAssessmentStatus->question_level = $Question['question']; // Assuming 'question' is the correct key
-                $LectureAssessmentStatus->user_id = $Question['user_id'] ?? auth()->id();
+                $LectureAssessmentStatus->user_id = $user_id;
                 $LectureAssessmentStatus->status = $Question['CorrectAnswer'] == $Question['answergiven'] ? 1 : 0;
                 $LectureAssessmentStatus->save();
             }
@@ -344,7 +345,10 @@ class LectureApiController extends Controller
     {
         
         $lecture = ecom_lecture::where('id', $request->lecture_id)->first();
-        $LectureUserRecords = LectureUserRecords::where('lecture_id', $request->lecture_id)->where('user_id', $request['user_id'] ?? auth()->id())->first();
+        
+        $user_id = $request['user_id'] ? ecom_admin_user::where('employee_id', $request['user_id'])->value('id') : auth()->id();
+
+        $LectureUserRecords = LectureUserRecords::where('lecture_id', $request->lecture_id)->where('user_id', $user_id)->first();
 
         if($LectureUserRecords && (!$LectureUserRecords->status == 1)) 
         {
@@ -361,7 +365,7 @@ class LectureApiController extends Controller
         {                                
             $LectureUserRecords = new LectureUserRecords();
             $LectureUserRecords->lecture_id = $request->lecture_id;
-            $LectureUserRecords->user_id = $request['user_id'] ?? auth()->id();
+            $LectureUserRecords->user_id = $user_id;
 
             // return response()->json([
             //         'status' => 200, 
