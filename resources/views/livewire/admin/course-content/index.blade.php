@@ -19,7 +19,13 @@
             color: inherit;
         }
 
-
+        .card img 
+        {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            height: auto;
+        }
         /* ------------------------ cards styling -------------------- */
 
         .card {
@@ -30,6 +36,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            align-items: center;
         }
 
         .img-fluid {
