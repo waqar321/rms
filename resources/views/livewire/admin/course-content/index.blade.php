@@ -19,6 +19,39 @@
             color: inherit;
         }
 
+
+        /* ------------------------ cards styling -------------------- */
+
+        .card {
+            min-height: 300px; /* Adjust this value as needed */
+        }
+
+        .card .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .img-fluid {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .card .card-title, 
+        .card .card-text {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .card .card-footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+
+
+        /* ------------------------ cards styling -------------------- */
     </style>
 
 @endpush 
