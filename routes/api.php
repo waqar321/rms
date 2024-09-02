@@ -76,6 +76,7 @@ Route::post('/LectureAssessments', [LectureApiController::class, 'LectureAssessm
 
 // =================== useless at a time ======================
     Route::post('/UpdateLectureAssessmentQuestions', [LectureApiController::class, 'UpdateAssessment'])->name('update.assessment');
+    Route::post('/UpdateUserLectureResult', [LectureApiController::class, 'UpdateUserLectureResult'])->name('update.assessment');
 
     Route::post('/login_api', [ApiController::class, 'login'])->name('login.api');
     Route::post('/set_Api', [ApiController::class, 'SetOTP'])->name('set.otp_api');
