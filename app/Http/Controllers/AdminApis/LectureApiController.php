@@ -379,7 +379,7 @@ class LectureApiController extends Controller
             //     200
             // );
 
-            if((getUserLectureAssessment($lecture) == 'oneAndPass') || (getUserLectureAssessment($lecture) > $lecture->passing_ratio))
+            if((getUserLectureAssessment($lecture, $user_id) == 'oneAndPass') || (getUserLectureAssessment($lecture, $user_id) > $lecture->passing_ratio))
             {
                 $LectureUserRecords->status = 1;                    
             }
