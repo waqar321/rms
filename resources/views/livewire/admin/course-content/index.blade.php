@@ -59,7 +59,6 @@
                                         <div class="clearfix"></div>
                                     </div>
                                     <div class="x_content">
-
                                     <div class="container-fluid">
                                         <div class="row">
                                             <div class="col-lg-9"> 
@@ -69,7 +68,7 @@
                                                         <!-- ------------------- 1 ------------------------ -->
                                                         @if($readyToLoad)
                                                             @forelse($coursesListing as $key => $course)
-                                                                <div class="col-lg-3"> 
+                                                                <!-- <div class="col-lg-3">  -->
                                                                     <div class="card">
                                                                         <div class="card-header h-padding">
                                                                         
@@ -122,7 +121,7 @@
                                                                             <td>{{ getTimeDifference($course->created_at) }}</td>
                                                                         </div>
                                                                     </div>  
-                                                                </div>                                                  
+                                                                <!-- </div>                                                   -->
                                                             @empty 
                                                                     <div class="col-lg-12 text-center mt-4">
                                                                         <h1>

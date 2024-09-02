@@ -127,106 +127,105 @@
                                         <div class="clearfix"></div>
                                     </div>
                                     <div class="x_content">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-lg-9"> 
+                                                    <div class="card-deck">
 
-                                    <div class="container-fluid">
-                                        <div class="row">
-                                            <div class="col-lg-9"> 
-                                                <div class="card-deck">
+                                                        <!-- ------------------- 1 ------------------------ -->
+                                                        @forelse($courseLectures as $key => $courseLecture)
 
-                                                    <!-- ------------------- 1 ------------------------ -->
-                                                    @forelse($courseLectures as $key => $courseLecture)
+                                                            @if(CheckAlignment($courseLecture->course, 'course'))
+                                                                
+                                                                <div class="card">
+                                                                    <div class="card-header h-padding">
+                                                                            @if(isset($courseLecture->title))
+                                                                                {{ $courseLecture->course->name }} 
+                                                                            @endif 
+                                                                    </div> 
+                                                                
+                                                                    <div class="card-body text-center">
+                                                                        <h5 class="card-title">{{ $courseLecture->title ?? 'not found '}} </h5>
+                                                                        <p class="card-text">{{ $courseLecture->description ?? 'not found '}}</p>
 
-                                                        @if(CheckAlignment($courseLecture->course, 'course'))
-                                                              
-                                                            <div class="card">
-                                                                <div class="card-header h-padding">
-                                                                        @if(isset($courseLecture->title))
-                                                                            {{ $courseLecture->course->name }} 
-                                                                        @endif 
-                                                                </div> 
+                                                                            @if($courseLecture->local_video != null)
+                                                                                <!-- <a href="{{ asset('storage/'.$courseLecture->local_video) }}" class="btn btn-primary"> -->
+                                                                                <a href="{{ url_secure('content-management/courseList/lectureView?id=') . base64_encode($courseLecture->id) }}" class="btn btn-primary WatchButtonCss ">       
+                                                                                    Watch Video
+                                                                                </a>
+                                                                            @elseif($courseLecture->url_video != null )
+                                                                                <!-- <a href="{{ asset('storage/'.$courseLecture->url_video) }}" class="btn btn-primary WatchButtonCss"> -->
+                                                                                <a href="{{ url_secure('content-management/courseList/lectureView?id=') . base64_encode($courseLecture->id) }}" class="btn btn-primary WatchButtonCss">       
+                                                                                    Watch Video
+                                                                                </a>
+                                                                            @else   
+                                                                                @if($courseLecture->course_image)
+                                                                                    <img src="{{ asset('/storage/'.$courseLecture->course_image) }}" style="width: 70px; height: 45px;" class="me-4" alt="Img">
+                                                                                @endif
+                                                                            @endif 
+                                                                    </div>
                                                             
-                                                                <div class="card-body text-center">
-                                                                    <h5 class="card-title">{{ $courseLecture->title ?? 'not found '}} </h5>
-                                                                    <p class="card-text">{{ $courseLecture->description ?? 'not found '}}</p>
+                                                                    <div class="card-footer text-muted">
+                                                                        <td>{{ getTimeDifference($courseLecture->created_at) }}</td>
+                                                                    </div>
 
-                                                                        @if($courseLecture->local_video != null)
-                                                                            <!-- <a href="{{ asset('storage/'.$courseLecture->local_video) }}" class="btn btn-primary"> -->
-                                                                            <a href="{{ url_secure('content-management/courseList/lectureView?id=') . base64_encode($courseLecture->id) }}" class="btn btn-primary WatchButtonCss ">       
-                                                                                Watch Video
-                                                                            </a>
-                                                                        @elseif($courseLecture->url_video != null )
-                                                                            <!-- <a href="{{ asset('storage/'.$courseLecture->url_video) }}" class="btn btn-primary WatchButtonCss"> -->
-                                                                            <a href="{{ url_secure('content-management/courseList/lectureView?id=') . base64_encode($courseLecture->id) }}" class="btn btn-primary WatchButtonCss">       
-                                                                                Watch Video
-                                                                            </a>
-                                                                        @else   
-                                                                            @if($courseLecture->course_image)
-                                                                                <img src="{{ asset('/storage/'.$courseLecture->course_image) }}" style="width: 70px; height: 45px;" class="me-4" alt="Img">
-                                                                            @endif
-                                                                        @endif 
-                                                                </div>
-                                                        
-                                                                <div class="card-footer text-muted">
-                                                                    <td>{{ getTimeDifference($courseLecture->created_at) }}</td>
-                                                                </div>
-
-                                                                @if($courseLecture->QuestionLevels->isNotEmpty())                                                            
-                                                                    @if($courseLecture->LectureUserStatus)
-                                                                        @if($courseLecture->LectureUserStatus->status)
-                                                                            <span class="status-passed">
-                                                                                Passed
-                                                                            </span>
+                                                                    @if($courseLecture->QuestionLevels->isNotEmpty())                                                            
+                                                                        @if($courseLecture->LectureUserStatus)
+                                                                            @if($courseLecture->LectureUserStatus->status)
+                                                                                <span class="status-passed">
+                                                                                    Passed
+                                                                                </span>
+                                                                            @else 
+                                                                            <span class="status-failed">
+                                                                                    Failed
+                                                                                </span>
+                                                                            @endif 
                                                                         @else 
-                                                                        <span class="status-failed">
-                                                                                Failed
+                                                                            <span class="status-pending">
+                                                                                Pending
                                                                             </span>
-                                                                        @endif 
-                                                                    @else 
-                                                                        <span class="status-pending">
-                                                                            Pending
-                                                                        </span>
+                                                                        @endif
                                                                     @endif
-                                                                @endif
-                                                            </div>                                                      
-                                                        @endif 
-                                                    @empty 
-                                                        <div class="col-lg-12 text-center" style="argin-top: 100px;">
-                                                            <div class="text-center">
-                                                                <a class="dropdown-item">
-                                                                    <strong>No Lectures Uplaoded Yet !!!</strong>
-                                                                    <i class="fa fa-angle-right"></i>
-                                                                </a>
+                                                                </div>                                                      
+                                                            @endif 
+                                                        @empty 
+                                                            <div class="col-lg-12 text-center" style="argin-top: 100px;">
+                                                                <div class="text-center">
+                                                                    <a class="dropdown-item">
+                                                                        <strong>No Lectures Uplaoded Yet !!!</strong>
+                                                                        <i class="fa fa-angle-right"></i>
+                                                                    </a>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    @endforelse 
+                                                        @endforelse 
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3" style="height: 292px;">
+                                                    <div>
+                                                        <h3 class="decorated-headings">
+                                                            <a href="{{ route('notification.index') }}"  class="no-decoration">
+                                                                Circular
+                                                            </a>
+                                                        </h3>
+                                                        <p class="text-dark" style="font-style: italic;">On Account Of Aug 14, 2024 Our Offices Will Remain Closed.....</p>
+                                                        <h4 class="decorated-subheadings">HR Policies</h4>
+                                                        <h4 class="decorated-subheadings">Departmental Policies</h4>
+                                                        <h4 class="decorated-subheadings">Core Values</h4>
+                                                        <h4 class="decorated-subheadings">Leadership</h4>
+                                                        <h4 class="decorated-subheadings">I Have An Idea</h4>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-3" style="height: 292px;">
-                                                <div>
-                                                    <h3 class="decorated-headings">
-                                                        <a href="{{ route('notification.index') }}"  class="no-decoration">
-                                                            Circular
-                                                        </a>
-                                                    </h3>
-                                                    <p class="text-dark" style="font-style: italic;">On Account Of Aug 14, 2024 Our Offices Will Remain Closed.....</p>
-                                                    <h4 class="decorated-subheadings">HR Policies</h4>
-                                                    <h4 class="decorated-subheadings">Departmental Policies</h4>
-                                                    <h4 class="decorated-subheadings">Core Values</h4>
-                                                    <h4 class="decorated-subheadings">Leadership</h4>
-                                                    <h4 class="decorated-subheadings">I Have An Idea</h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- <div class="row">
+                                            <!-- <div class="row">
 
-                                        </div> -->
-                                         <!-- Pagination -->
-                                        <div class="row mt-3">
-                                            <div class="col-lg-9">
-                                                {{ $courseLectures->links() }}
+                                            </div> -->
+                                            <!-- Pagination -->
+                                            <div class="row mt-3">
+                                                <div class="col-lg-9">
+                                                    {{ $courseLectures->links() }}
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>  <!-- Row end -->
+                                        </div>  <!-- Row end -->
                                 </div>
                             </div>
                     </div>
