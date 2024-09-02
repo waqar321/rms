@@ -65,63 +65,64 @@
                                             <div class="col-lg-9"> 
                                                 <div class="card-deck">
 
-                                                    <div class="col-lg-3"> 
+                                                    
                                                         <!-- ------------------- 1 ------------------------ -->
                                                         @if($readyToLoad)
                                                             @forelse($coursesListing as $key => $course)
-                                                                <div class="card">
-                                                                    <div class="card-header h-padding">
-                                                                    
-                                                                            @if(isset($course->category))
-                                                                                {{ $course->category->name }} 
-                                                                            @endif 
-                                                                            @if(isset($course->subCategory)) 
-                                                                            - {{ $course->subCategory->name }} 
-                                                                            @endif 
-                                                                    </div>                                                                     
-
-                                                                    <a href="{{ url_secure('content-management/courseList?id=') . base64_encode($course->id) }}">
-                                                                        <div class="card-body text-center">
-                                                                            <h5 class="card-title">{{ $course->name ?? 'not found '}} </h5>
-                                                                            <p class="card-text">{{ $course->description ?? 'not found '}}</p>
-
-                                                                                @if($course->local_video != null)
-                                                                                    <a href="{{ asset('storage/'.$course->local_video) }}" class="btn btn-primary">
-                                                                                        Watch Video
-                                                                                    </a>
-                                                                                @elseif($course->url_video != null )
-                                                                                    <a href="{{ asset('storage/'.$course->url_video) }}" class="btn btn-primary">
-                                                                                        Watch Video
-                                                                                    </a>
-                                                                                @else   
-                                                                                    @if($course->course_image)
-                                                                                        <img src="{{ asset('/storage/'.$course->course_image) }}" style="width: 70px; height: 45px;" class="me-4" alt="Img">
-                                                                                    @endif
-                                                                                    
-                                                                                    <!-- <a href="#" class="btn btn-primary">
-                                                                                        Video is Not Uploaded Yet 
-                                                                                    </a>  -->
+                                                                <div class="col-lg-3"> 
+                                                                    <div class="card">
+                                                                        <div class="card-header h-padding">
+                                                                        
+                                                                                @if(isset($course->category))
+                                                                                    {{ $course->category->name }} 
                                                                                 @endif 
+                                                                                @if(isset($course->subCategory)) 
+                                                                                - {{ $course->subCategory->name }} 
+                                                                                @endif 
+                                                                        </div>                                                                     
 
-                                                                                    <!-- <a href="#" class="btn btn-primary"> -->
-                                                                                            <!-- <video width="500px" 
-                                                                                                    height="400px" 
-                                                                                                    controls="controls">
-                                                                                                <source 
-                                                                                                        src=
-                                                                                        "https://media.geeksforgeeks.org/wp-content/uploads/20231020155223/
-                                                                                        Full-Stack-Development-_-LIVE-Classes-_-GeeksforGeeks.mp4" 
-                                                                                                        type="video/mp4" />
-                                                                                            </video> -->
-                                                                                    <!-- </a> -->
+                                                                        <a href="{{ url_secure('content-management/courseList?id=') . base64_encode($course->id) }}">
+                                                                            <div class="card-body text-center">
+                                                                                <h5 class="card-title">{{ $course->name ?? 'not found '}} </h5>
+                                                                                <p class="card-text">{{ $course->description ?? 'not found '}}</p>
+
+                                                                                    @if($course->local_video != null)
+                                                                                        <a href="{{ asset('storage/'.$course->local_video) }}" class="btn btn-primary">
+                                                                                            Watch Video
+                                                                                        </a>
+                                                                                    @elseif($course->url_video != null )
+                                                                                        <a href="{{ asset('storage/'.$course->url_video) }}" class="btn btn-primary">
+                                                                                            Watch Video
+                                                                                        </a>
+                                                                                    @else   
+                                                                                        @if($course->course_image)
+                                                                                            <img src="{{ asset('/storage/'.$course->course_image) }}" style="width: 70px; height: 45px;" class="me-4" alt="Img">
+                                                                                        @endif
+                                                                                        
+                                                                                        <!-- <a href="#" class="btn btn-primary">
+                                                                                            Video is Not Uploaded Yet 
+                                                                                        </a>  -->
+                                                                                    @endif 
+
+                                                                                        <!-- <a href="#" class="btn btn-primary"> -->
+                                                                                                <!-- <video width="500px" 
+                                                                                                        height="400px" 
+                                                                                                        controls="controls">
+                                                                                                    <source 
+                                                                                                            src=
+                                                                                            "https://media.geeksforgeeks.org/wp-content/uploads/20231020155223/
+                                                                                            Full-Stack-Development-_-LIVE-Classes-_-GeeksforGeeks.mp4" 
+                                                                                                            type="video/mp4" />
+                                                                                                </video> -->
+                                                                                        <!-- </a> -->
+                                                                            </div>
+                                                                        </a>
+
+                                                                        <div class="card-footer text-muted">
+                                                                            <td>{{ getTimeDifference($course->created_at) }}</td>
                                                                         </div>
-                                                                    </a>
-
-                                                                    <div class="card-footer text-muted">
-                                                                        <td>{{ getTimeDifference($course->created_at) }}</td>
-                                                                    </div>
-                                                                </div>  
-                                                                                                                     
+                                                                    </div>  
+                                                                </div>                                                  
                                                             @empty 
                                                                     <div class="col-lg-12 text-center mt-4">
                                                                         <h1>
@@ -129,6 +130,7 @@
                                                                         </h1>     
                                                                     </div>
                                                             @endforelse 
+                                                            
                                                         @endif  
                                                         <div style="text-align: center; margin-top: 70px;" wire:init="pageLoaded">
                                                                 @if(!$readyToLoad)
@@ -137,7 +139,7 @@
                                                                         </td>
                                                                 @endif 
                                                         </div> 
-                                                    </div>
+                                                   
                                                 </div>
                                             </div>
                                             <div class="col-lg-3" style="height: 292px;">
