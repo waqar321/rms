@@ -46,7 +46,7 @@
 
         .card .card-title, 
         .card .card-text {
-            white-space: nowrap;
+            /* white-space: nowrap; */
             overflow: hidden;
             text-overflow: ellipsis;
         }
