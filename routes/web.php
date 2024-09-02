@@ -36,7 +36,7 @@ use App\Http\Controllers\ProductController;  //testing ck editor
 use App\Http\Controllers\testController;
 // use App\Http\Livewire\Admin\Student\StudentComponent;
 use App\Jobs\CleanCacheAndTempFilesJob;
-
+use App\Models\Admin\ecom_admin_user;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -100,6 +100,12 @@ Route::get('productTesting', [ProductController::class, 'index'])->name('product
 // Route::get('ckeditorCreate', [ProductController::class, 'create'])->name('products.create');
 // Route::get('ckeditorEdit/{product}', [ProductController::class, 'edit'])->name('products.edit');
 
+Route::get('testing_data', function ()
+{
+    $id  = '39166';
+    $id = ecom_admin_user::where('employee_id', $id)->value('id');
+    // dd($id);
+});
 
 Route::get('Allcities', [Home::class, 'Allcities'])->name('Allcities');
 Route::get('AllZones', [Home::class, 'AllZones'])->name('AllZones');

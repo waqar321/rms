@@ -154,14 +154,18 @@ class LectureApiController extends Controller
         //     return response()->json([
         //         'status' => 200, 
         //         'data' => $request->LectureAssessmentDetails,
+        //         'user_id' => $user_id,
+        //         'employee_exists' => ecom_admin_user::where('employee_id', $request['user_id'])->exists(),
         //         'message' => 'Assessment details saved successfully'
         //     ], 
         //     200
         // );
-        $user_id = $request['user_id'] ? ecom_admin_user::where('employee_id', $request['user_id'])->value('id') : auth()->id();
-        
+
+
         foreach ($Questions as $Question) 
         {
+            $user_id = $Question['user_id'] ? ecom_admin_user::where('employee_id', $Question['user_id'])->value('id') : auth()->id();
+
             $assessmentStatus = LectureAssessmentStatus::where('lecture_id', $Question['lecture_id'])
                                                         ->where('assessment_level', $Question['assessmentlevel'])
                                                         ->where('question_level', $Question['question'])
