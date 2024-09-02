@@ -149,7 +149,7 @@ class LectureApiController extends Controller
     }
     public function UpdateAssessment(Request $request)
     {
-        // $Questions = $request->LectureAssessmentDetails;
+        $Questions = $request->LectureAssessmentDetails;
 
         //     return response()->json([
         //         'status' => 200, 
