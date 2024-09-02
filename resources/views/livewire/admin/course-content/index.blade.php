@@ -45,7 +45,8 @@
                                         </div>
                                         <div  class="col-md-2 col-lg-2">
                                             <button type="button" wire:click="resetInput(true)" class="btn btn-danger SearchButton">
-                                                Clear
+                                                Clear   
+                                                <!-- All Courses -->
                                                 <i class="fa fa-search"></i>
                                             </button>
                                         </div>
@@ -61,16 +62,15 @@
 
                                     <div class="container-fluid">
                                         <div class="row">
-                                            
                                             <div class="col-lg-9"> 
+                                                <div class="card-deck">
                                                 
-                                                <!-- ------------------- 1 ------------------------ -->
-                                                @if($readyToLoad)
-                                                    @forelse($coursesListing as $key => $course)
-                                                        
-                                                            <div class="col-lg-3" style="padding-top: 10px;">
-                                                                <div class="card text-center">
-                                                                    <div class="card-header">
+                                                        <!-- ------------------- 1 ------------------------ -->
+                                                        @if($readyToLoad)
+                                                            @forelse($coursesListing as $key => $course)
+                                                                <div class="card">
+                                                                    <div class="card-header h-padding">
+                                                                    
                                                                             @if(isset($course->category))
                                                                                 {{ $course->category->name }} 
                                                                             @endif 
@@ -80,7 +80,7 @@
                                                                     </div>                                                                     
 
                                                                     <a href="{{ url_secure('content-management/courseList?id=') . base64_encode($course->id) }}">
-                                                                        <div class="card-body">
+                                                                        <div class="card-body text-center">
                                                                             <h5 class="card-title">{{ $course->name ?? 'not found '}} </h5>
                                                                             <p class="card-text">{{ $course->description ?? 'not found '}}</p>
 
@@ -117,28 +117,26 @@
                                                                     </a>
 
                                                                     <div class="card-footer text-muted">
-                                                                    
-                                                                    <td>{{ getTimeDifference($course->created_at) }}</td>
-
+                                                                        <td>{{ getTimeDifference($course->created_at) }}</td>
                                                                     </div>
-                                                                </div>
-                                                            </div>
-                                                      
-                                                    @empty 
-                                                            <div class="col-lg-12 text-center mt-4">
-                                                                <h1>
-                                                                    <span> No Courses For You !!! </span> 
-                                                                </h1>     
-                                                            </div>
-                                                    @endforelse 
-                                                @endif  
-                                                <div style="text-align: center; margin-top: 70px;" wire:init="pageLoaded">
-                                                        @if(!$readyToLoad)
-                                                                <td colspan="18" class="text-center"> 
-                                                                        <img style="height:120px;" src="{{ url_secure('build/images/transpatent_leopard.gif') }}" alt="Loading123!!">
-                                                                </td>
-                                                        @endif 
-                                                </div> 
+                                                                </div>  
+                                                                                                                     
+                                                            @empty 
+                                                                    <div class="col-lg-12 text-center mt-4">
+                                                                        <h1>
+                                                                            <span> No Courses For You !!! </span> 
+                                                                        </h1>     
+                                                                    </div>
+                                                            @endforelse 
+                                                        @endif  
+                                                        <div style="text-align: center; margin-top: 70px;" wire:init="pageLoaded">
+                                                                @if(!$readyToLoad)
+                                                                        <td colspan="18" class="text-center"> 
+                                                                                <img style="height:120px;" src="{{ url_secure('build/images/transpatent_leopard.gif') }}" alt="Loading123!!">
+                                                                        </td>
+                                                                @endif 
+                                                        </div> 
+                                                </div>
                                             </div>
                                             <div class="col-lg-3" style="height: 292px;">
                                                 <div>

@@ -106,6 +106,7 @@
                                         <div  class="col-md-2 col-lg-2">
                                             <button type="button" wire:click="resetInput(true)" class="btn btn-danger SearchButton">
                                                 Clear
+                                                     <!-- Course Lectures -->
                                                 <i class="fa fa-search"></i>
                                             </button>
                                             <!-- <button type="button" wire:click="resetInput(true)" class="btn btn-danger " >
@@ -129,45 +130,6 @@
 
                                     <div class="container-fluid">
                                         <div class="row">
-
-                                        <!-- <div class="col-lg-9">
-                                            <div class="card-deck">
-                                                        <div class="card">
-                                                            <div class="card-header">
-                                                                <h5 class="card-title">Card 1</h5>
-                                                            </div>
-                                                            <div class="card-body">
-                                                                <p class="card-text">This is a longer description to demonstrate equal card height in a card deck layout. This is a longer description to demonstrate equal card height in a card deck layout. This is a longer description to demonstrate equal card height in a card deck layout.</p>
-                                                            </div>
-                                                            <div class="card-footer">
-                                                                <small class="text-muted">Last updated 3 mins ago</small>
-                                                            </div>
-                                                        </div>
-                                                        <div class="card">
-                                                            <div class="card-header">
-                                                                <h5 class="card-title">Card 2</h5>
-                                                            </div>
-                                                            <div class="card-body">
-                                                                <p class="card-text">Short description.</p>
-                                                            </div>
-                                                            <div class="card-footer">
-                                                                <small class="text-muted">Last updated 5 mins ago</small>
-                                                            </div>
-                                                        </div>
-                                                        <div class="card">
-                                                            <div class="card-header">
-                                                                <h5 class="card-title">Card 3</h5>
-                                                            </div>
-                                                            <div class="card-body">
-                                                                <p class="card-text">Another description to demonstrate equal card height.</p>
-                                                            </div>
-                                                            <div class="card-footer">
-                                                                <small class="text-muted">Last updated 10 mins ago</small>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                        </div> -->
-
                                             <div class="col-lg-9"> 
                                                 <div class="card-deck">
 

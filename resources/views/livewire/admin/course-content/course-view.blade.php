@@ -77,6 +77,7 @@
 
                                 </div>
                                 <div class="col-lg-6">
+                                    
                                     @include('Admin.manage_course.course_content.partials.question_model')  
                                     @include('Admin.manage_course.course_content.partials.tableContent') 
 
