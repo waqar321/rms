@@ -153,7 +153,7 @@ class LectureApiController extends Controller
 
             return response()->json([
                 'status' => 200, 
-                'data' => $Questions,
+                'data' => $request->all(),
                 'message' => 'Assessment details saved successfully'
             ], 
             200
