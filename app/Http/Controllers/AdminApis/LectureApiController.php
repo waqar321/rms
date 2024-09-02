@@ -151,13 +151,13 @@ class LectureApiController extends Controller
     {
         $Questions = $request->LectureAssessmentDetails;
 
-        return response()->json([
-            'status' => 200, 
-            'data' => var_dump($Questions),
-            'message' => 'Assessment details saved successfully'
-        ], 
-        200
-    );
+            return response()->json([
+                'status' => 200, 
+                'data' => $Questions,
+                'message' => 'Assessment details saved successfully'
+            ], 
+            200
+        );
 
         foreach ($Questions as $Question) 
         {
