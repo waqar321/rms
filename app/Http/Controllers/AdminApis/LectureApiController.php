@@ -361,7 +361,7 @@ class LectureApiController extends Controller
         {                                
             $LectureUserRecords = new LectureUserRecords();
             $LectureUserRecords->lecture_id = $request->lecture_id;
-            $LectureUserRecords->user_id = auth()->id();
+            $LectureUserRecords->user_id = $request['user_id'] ?? auth()->id();
 
             // return response()->json([
             //         'status' => 200, 
