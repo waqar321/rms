@@ -350,13 +350,13 @@ class LectureApiController extends Controller
         
         $lecture = ecom_lecture::where('id', $request->lecture_id)->first();
         
-        $user_id = $request['user_id'] ? ecom_admin_user::where('employee_id', $request['user_id'])->value('id') : auth()->id();
+        $user_id = $Question['user_id'] ? ecom_admin_user::where('employee_id', $Question['user_id'])->value('id') : auth()->id();
 
         $LectureUserRecords = LectureUserRecords::where('lecture_id', $request->lecture_id)->where('user_id', $user_id)->first();
 
         if($LectureUserRecords && (!$LectureUserRecords->status == 1)) 
         {
-            if((getUserLectureAssessment($lecture) == 'oneAndPass') || (getUserLectureAssessment($lecture) > $lecture->passing_ratio))
+            if((getUserLectureAssessment($lecture, $user_id) == 'oneAndPass') || (getUserLectureAssessment($lecture, $user_id) > $lecture->passing_ratio))
             {
                 $LectureUserRecords->update(['status' => 1]);                    
             }

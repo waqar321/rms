@@ -839,24 +839,24 @@ function CheckAlignment($model, $tablename, $employee_id=null)
 
 }
 
-function getUserLectureAssessment($lecture)
+function getUserLectureAssessment($lecture, $user_id)
 {
 
     // get each lecture's assessment's question's statuses 
     $assessments_with_questions = collect([
-        $lecture->AssessmentStatus->where('user_id', auth()->id())->where('assessment_level', 1)->map(function ($item) 
+        $lecture->AssessmentStatus->where('user_id', $user_id)->where('assessment_level', 1)->map(function ($item) 
         {
             return ['question_level' => $item->question_level, 'status' => $item->status];
         }),
-        $lecture->AssessmentStatus->where('user_id', auth()->id())->where('assessment_level', 2)->map(function ($item) 
+        $lecture->AssessmentStatus->where('user_id', $user_id)->where('assessment_level', 2)->map(function ($item) 
         {
             return ['question_level' => $item->question_level, 'status' => $item->status];
         }),
-        $lecture->AssessmentStatus->where('user_id', auth()->id())->where('assessment_level', 3)->map(function ($item) 
+        $lecture->AssessmentStatus->where('user_id', $user_id)->where('assessment_level', 3)->map(function ($item) 
         {
             return ['question_level' => $item->question_level, 'status' => $item->status];
         }),
-        $lecture->AssessmentStatus->where('user_id', auth()->id())->where('assessment_level', 4)->map(function ($item) 
+        $lecture->AssessmentStatus->where('user_id', $user_id)->where('assessment_level', 4)->map(function ($item) 
         {
             return ['question_level' => $item->question_level, 'status' => $item->status];
         })
