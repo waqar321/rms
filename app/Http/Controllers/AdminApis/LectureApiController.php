@@ -149,15 +149,15 @@ class LectureApiController extends Controller
     }
     public function UpdateAssessment(Request $request)
     {
-        $Questions = $request->LectureAssessmentDetails;
+        // $Questions = $request->LectureAssessmentDetails;
 
-            return response()->json([
-                'status' => 200, 
-                'data' => $request->all(),
-                'message' => 'Assessment details saved successfully'
-            ], 
-            200
-        );
+        //     return response()->json([
+        //         'status' => 200, 
+        //         'data' => $request->all(),
+        //         'message' => 'Assessment details saved successfully'
+        //     ], 
+        //     200
+        // );
 
         foreach ($Questions as $Question) 
         {
