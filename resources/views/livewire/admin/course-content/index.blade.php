@@ -64,7 +64,8 @@
                                         <div class="row">
                                             <div class="col-lg-9"> 
                                                 <div class="card-deck">
-                                                
+
+                                                    <div class="col-lg-3"> 
                                                         <!-- ------------------- 1 ------------------------ -->
                                                         @if($readyToLoad)
                                                             @forelse($coursesListing as $key => $course)
@@ -136,6 +137,7 @@
                                                                         </td>
                                                                 @endif 
                                                         </div> 
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-3" style="height: 292px;">
