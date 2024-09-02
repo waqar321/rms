@@ -151,20 +151,20 @@ class LectureApiController extends Controller
     {
         $Questions = $request->LectureAssessmentDetails;
 
-        //     return response()->json([
-        //         'status' => 200, 
-        //         'data' => $request->all(),
-        //         'message' => 'Assessment details saved successfully'
-        //     ], 
-        //     200
-        // );
+            return response()->json([
+                'status' => 200, 
+                'data' => $request->LectureAssessmentDetails,
+                'message' => 'Assessment details saved successfully'
+            ], 
+            200
+        );
 
         foreach ($Questions as $Question) 
         {
             $assessmentStatus = LectureAssessmentStatus::where('lecture_id', $Question['lecture_id'])
                                                         ->where('assessment_level', $Question['assessmentlevel'])
                                                         ->where('question_level', $Question['question'])
-                                                        ->where('user_id', auth()->id())
+                                                        ->where('user_id', $Question['user_id'] ?? auth()->id())
                                                         ->first();
 
                                                                 // ->get(['assessment_level', 'question_level', 'status']);
@@ -179,7 +179,7 @@ class LectureApiController extends Controller
                 $LectureAssessmentStatus->lecture_id = $Question['lecture_id'];
                 $LectureAssessmentStatus->assessment_level = $Question['assessmentlevel'];
                 $LectureAssessmentStatus->question_level = $Question['question']; // Assuming 'question' is the correct key
-                $LectureAssessmentStatus->user_id = auth()->id();
+                $LectureAssessmentStatus->user_id = $Question['user_id'] ?? auth()->id();
                 $LectureAssessmentStatus->status = $Question['CorrectAnswer'] == $Question['answergiven'] ? 1 : 0;
                 $LectureAssessmentStatus->save();
             }
