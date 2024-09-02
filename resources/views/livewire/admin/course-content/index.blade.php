@@ -62,14 +62,14 @@
                                     <div class="container-fluid">
                                         <div class="row">
                                             <div class="col-lg-9"> 
-                                                <div class="card-deck">
+                                                <div class="row">
 
-                                                    
                                                         <!-- ------------------- 1 ------------------------ -->
                                                         @if($readyToLoad)
                                                             @forelse($coursesListing as $key => $course)
                                                                 <!-- <div class="col-lg-3">  -->
-                                                                    <div class="card">
+                                                                <div class="col-lg-3 mb-4">
+                                                                    <div class="card h-100">
                                                                         <div class="card-header h-padding">
                                                                         
                                                                                 @if(isset($course->category))
@@ -121,6 +121,7 @@
                                                                             <td>{{ getTimeDifference($course->created_at) }}</td>
                                                                         </div>
                                                                     </div>  
+                                                                </div>  
                                                                 <!-- </div>                                                   -->
                                                             @empty 
                                                                     <div class="col-lg-12 text-center mt-4">
