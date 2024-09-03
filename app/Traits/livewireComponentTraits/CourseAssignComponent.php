@@ -40,7 +40,7 @@ trait CourseAssignComponent
     public function __construct()
     {       
         $this->Tablename = 'ecom_course_assign';        
-        $this->availableColumns = ['ID', 'Course', 'Aligner', 'Instructor', 'Employee', 'Department', 'Sub Department', 'Zone', 'City', 'Branch', 'Role', 'Time Slot', 'Date', 'Status', 'Action'];
+        $this->availableColumns = ['ID', 'Course', 'Aligned By', 'Instructor', 'Employee', 'Department', 'Sub Department', 'Zone', 'City', 'Branch', 'Role', 'Time Slot', 'Date', 'Status', 'Action'];
         $this->update = request()->has('id') == true;
         $this->Collapse = $this->update ? 'uncollapse' : 'collapse';
         $this->selectedRows = collect();
