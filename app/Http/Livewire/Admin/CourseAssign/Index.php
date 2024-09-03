@@ -20,7 +20,7 @@ class Index extends Component
     use WithPagination, WithFileUploads, CourseAssignComponent;
     protected $paginationTheme = 'bootstrap';
     protected $listeners = [
-                                'deleteCourseAssignManage' => 'deleteCourseAlign', 
+                                'deleteCourseAlignManage' => 'deleteCourseAlign', 
                                 'updateStatusOftest' => '', 
                                 'selectedColumns' => 'export',
                                 'LoadDataNow' => 'loadDropDownData',

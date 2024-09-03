@@ -40,7 +40,7 @@ trait CourseAssignComponent
     public function __construct()
     {       
         $this->Tablename = 'ecom_course_assign';        
-        $this->availableColumns = ['ID', 'Course', 'Assigned By', 'Instructor', 'Employee', 'Department', 'Sub Department', 'Zone', 'City', 'Branch', 'Role', 'Time Slot', 'Date', 'Status', 'Action'];
+        $this->availableColumns = ['ID', 'Course', 'Aligner', 'Instructor', 'Employee', 'Department', 'Sub Department', 'Zone', 'City', 'Branch', 'Role', 'Time Slot', 'Date', 'Status', 'Action'];
         $this->update = request()->has('id') == true;
         $this->Collapse = $this->update ? 'uncollapse' : 'collapse';
         $this->selectedRows = collect();
@@ -120,8 +120,8 @@ trait CourseAssignComponent
 
         //    $this->pageTitle = 'Align Course';
         //    $this->MainTitle = 'CourseAlign';
-       $this->pageTitle = 'CourseAssign Manage';
-       $this->MainTitle = 'CourseAssignManage';
+       $this->pageTitle = 'CourseAlign Manage';
+       $this->MainTitle = 'CourseAlignManage';
        $this->searchByName = '';
        $this->paginateLimit = 10;
 
