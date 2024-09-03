@@ -120,8 +120,8 @@ trait CourseAssignComponent
 
         //    $this->pageTitle = 'Align Course';
         //    $this->MainTitle = 'CourseAlign';
-       $this->pageTitle = 'CourseAlign Manage';
-       $this->MainTitle = 'CourseAlignManage';
+       $this->pageTitle = 'CourseAssign Manage';
+       $this->MainTitle = 'CourseAssignManage';
        $this->searchByName = '';
        $this->paginateLimit = 10;
 
