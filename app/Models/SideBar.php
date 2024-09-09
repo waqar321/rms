@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\ModelTraits\CommonRelations;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Permission;
 
 class SideBar extends Model
 {
@@ -32,8 +31,6 @@ class SideBar extends Model
         'IdNames' => 'array',
         'ClassNames' => 'array',
     ];
-
-    // $awd = 'waqar, awda1, awdawd';
 
     /*    $casts
      Attributes should be treated as arrays when retrieving them from the database and setting them on the model. 

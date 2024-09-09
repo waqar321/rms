@@ -40,7 +40,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \App\Http\Middleware\LogActivity::class,
+            // \App\Http\Middleware\LogActivity::class,
             \App\Http\Middleware\AuthGates::class,
             \App\Http\Middleware\UpdateLastActivity::class,
         ],
@@ -49,7 +49,7 @@ class Kernel extends HttpKernel
              \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \App\Http\Middleware\LogActivity::class,
+            // \App\Http\Middleware\LogActivity::class,
             \App\Http\Middleware\UpdateLastActivity::class,
         ],
     ];
@@ -71,7 +71,7 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'AdminAPIToken' => AdminAPIToken::class,
-        'api_admin_auth' => \App\Http\Middleware\ApiAdminAuth::class,
+        // 'AdminAPIToken' => AdminAPIToken::class,
+        // 'api_admin_auth' => \App\Http\Middleware\ApiAdminAuth::class,
     ];
 }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\UserManagement;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Admin\Permission;
+use App\Models\Permission;
 
 class PermissionsController extends Controller
 {

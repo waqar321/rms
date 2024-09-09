@@ -38,13 +38,13 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3 col-lg-3">
+                    <!-- <div class="col-md-3 col-lg-3">
                         <input type="search" wire:model="searchByEmployeeCode" class="form-control" placeholder="Search By Employee Code...">
-                    </div>
+                    </div> -->
                     <div class="col-md-3 col-lg-3">
                         <input type="search" wire:model="searchByName" class="form-control" placeholder="Search By Employee Name...">
                     </div>
-                    <div class="col-md-3 col-lg-3">
+                    <!-- <div class="col-md-3 col-lg-3">
                         <input type="search" wire:model="searchByEmployeeRole" class="form-control" placeholder="Search By Employee Role...">
                     </div>
                     <div class="col-md-3 col-lg-3">
@@ -52,7 +52,7 @@
                     </div>
                     <div class="col-md-3 col-lg-3">
                         <input type="search" wire:model="searchByEmployeeCity" class="form-control" placeholder="Search By Employee City...">
-                    </div>
+                    </div> -->
 
                     @include('Admin.partial.livewire.ClearDeleteButtons', ['showDeleteButton' => 'true', 'modelName' => 'ecom_admin_user'])    
                     
@@ -124,10 +124,10 @@
                                                     <input type="checkbox" wire:model="selectedRows.{{ $user->id }}">
                                                     <!-- <input type="checkbox" wire:model="selectUserIDS" value="{{ $user->id }}"> -->
                                                 </td>
-                                                <td data-id="{{ $user->id }}">{{ $user->employee_id }}</td>
-                                                <td>{{ $user->full_name  }}</td>
+                                                <!-- <td data-id="{{ $user->id }}">{{ $user->employee_id }}</td> -->
+                                                <td>{{ $user->name  }}</td>
                                                 <td>{{ $user->email }}</td>
-                                                <td>{{ $user->city->city_name ?? ' - '  }}</td>
+                                                <!-- <td>{{ $user->city->city_name ?? ' - '  }}</td> -->
 
                                                 <td>
                                                     <?php 
@@ -139,7 +139,7 @@
 
                                                 </td>
 
-                                                <td>{{ $user->designation }}</td>
+                                                <!-- <td>{{ $user->designation }}</td> -->
                                                 <td>{{ $user->created_at }}</td>
                                                 
                                                 <td>

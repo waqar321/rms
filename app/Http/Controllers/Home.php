@@ -18,6 +18,7 @@ use App\Models\Admin\ecom_notification;
 use App\Models\Admin\ecom_lecture;
 use App\Models\Admin\Role;
 use App\Models\Admin\SideBar;
+use App\Models\User;
 use App\Rules\OldPassword;
 use DateInterval;
 use DatePeriod;
@@ -51,134 +52,10 @@ class Home extends Controller
      // dashboard starts
      public function dashboard()
      {
-        // dd(auth()->user());
-         //================== testing end ====================================
- 
-         // Artisan::call('make:command RunComposerInstall');
-         // $exitCode = Artisan::call('composer:install');
-         // dd('done');
- 
-         //================== testing end ====================================
- 
-         // $user = ecom_admin_user::where('id', 166185)->first();
-         // return $user->roles->pluck('title');
- 
-         // $users = ecom_admin_user::all();
- 
-                 // Create a Faker instance
-         // $faker = Faker::create();
-         // $AdminUser = new ecom_admin_user();
- 
-         //         // Fill attributes with random values
-         // $AdminUser->employee_id = $faker->unique()->randomNumber(); // Generates a unique random number
-         // $AdminUser->email = $faker->unique()->safeEmail(); // Generates a unique safe email address
-         // $AdminUser->username = $faker->userName; // Generates a random username
-         // $AdminUser->password = bcrypt($faker->password); // Generates a hashed random password
-         // $AdminUser->first_name = $faker->firstName; // Generates a random first name
-         // $AdminUser->last_name = $faker->lastName; // Generates a random last name
-         // $AdminUser->phone = $faker->phoneNumber; // Generates a random phone number
-         // $AdminUser->city_id = $faker->numberBetween(1, 100); // Generates a random number between 1 and 100 for city_id
-         // $AdminUser->zone_id = $faker->numberBetween(1, 10); // Generates a random number between 1 and 10 for zone_id
-         // $AdminUser->role_id = $faker->numberBetween(1, 5); // Generates a random number between 1 and 5 for role_id
-         // $AdminUser->department_id = $faker->numberBetween(1, 20); // Generates a random number between 1 and 20 for department_id
-         // $AdminUser->sub_department_id = $faker->numberBetween(1, 10); // Generates a random number between 1 and 10 for sub_department_id
-         // $AdminUser->time_slot_id = $faker->numberBetween(1, 50); // Generates a random number between 1 and 50 for time_slot_id
-         // $AdminUser->device_token = $faker->uuid; // Generates a random UUID for device_token
- 
- 
-         // // Save the user instance
-         // $AdminUser->save();
-         // $role_ids = [1,2,3];
-         
- 
-         //         // Ensure the user was created successfully
-         // if ($AdminUser) {
-         //     // Sync roles with the created user
-         //     $AdminUser->roles()->sync($role_ids);
-         // } else {
-         //     // Handle the case where the user was not created
-         //     // For example, log an error or throw an exception
-         //     throw new Exception('Failed to create user.');
-         // }
-         // dd('done');
-         // dd($users[0]->roles[0]->permissions);
-         // $term='';
-         // $role=[];
-         // $selectRole = Role::where(function ($query) use($term){
-         //                                     $query->where('title','like',"%$term%");
-         //                                 })
-         //                                 ->orderby('id','desc')->limit(10)->get();
- 
-         // if ($selectRole) 
-         // {
-         //     foreach ($selectRole as $val) {
-         //         $role[] = array('id' => $val->id, 'label' => uppercaseCamelCaseWithSpaces($val->title));
-         //     }
-         // }
-         // dd($role);
- 
-         
-         $Data['onlineUsers'] = ecom_admin_user::online()->where('is_active' , 1)->where('is_deleted', 0)->count();
-        //  dd( $onlineUsers);
- 
-         //================== testing end ====================================
-             
-         // dd($checkCount);
-         // dd($NotificationMessages);
-             $Data['usersCount'] = ecom_admin_user::where('is_active' , 1)
-                                                    ->where('is_deleted', 0)
-                                                        ->count();
-            // dd($Data['usersCount']);   //9284 
+                 
+            $Data['onlineUsers'] = 100;
+            $Data['usersCount'] = User::where('is_active' , 1)->count();
 
-             // Last week ke users ki count
-             $Data['lastWeekUsersCount'] = ecom_admin_user::where('is_active', 1)
-                     ->where('is_deleted', 0)
-                     ->whereBetween('created_at', [now()->subWeek(), now()])
-                     ->count();
- 
- 
-             $Data['instructorCount'] = ecom_admin_user::where('is_active' , 1)
-                                            ->where('is_deleted', 0)
-                                            ->whereHas('roles', function ($query) {
-                                                $query->where('title', 'instructor');
-                                            })
-                                            ->count();
- 
-             // Last week ke instructor ki count---------
-             $Data['lastWeekinstructorCount'] = ecom_admin_user::where('is_active', 1)
-                             ->where('is_deleted', 0)
-                             ->whereHas('roles', function ($query) {
-                                $query->where('title', 'instructor');
-                             })
-                             ->whereBetween('created_at', [now()->subWeek(), now()])
-                             ->count();
- 
-             $Data['categoriesCount'] = ecom_category::where('is_active' , 1)
-             ->where('is_deleted', 0)
-             ->count();
-             // Last week ke categories ki count---------
-             $Data['lastWeekcategoriesCount'] = ecom_category::where('is_active', 1)
-                                 ->where('is_deleted', 0)
-                                 ->whereBetween('created_at', [now()->subWeek(), now()])
-                                 ->count();
- 
-             $Data['coursesCount'] = ecom_course::where('is_active' , 1)
-             ->where('is_deleted', 0)
-             ->count();
- 
-             // Last week ke course ki count---------
-             $Data['lastWeekcourseCount'] = ecom_course::where('is_active', 1)
-                         ->where('is_deleted', 0)
-                         ->whereBetween('created_at', [now()->subWeek(), now()])
-                         ->count();
- 
-             $Data['departmentsCount'] = ecom_department::where('is_active' , 1)
-                         ->count();
- 
-             // Last week ke departments ki count---------
-             $Data['lastWeekdepartmentsCount'] = ecom_department::where('is_active', 1)
-                         ->whereBetween('created_at', [now()->subWeek(), now()])
-                         ->count();
              return view('dashboard', compact('Data'));
          // return view('dashboard');
      }

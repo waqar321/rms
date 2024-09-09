@@ -26,6 +26,7 @@
                 <livewire:admin.partials.sidebar-operation :id="$id"/>      
             </div>
         @else 
+        
             <div>    
                 <livewire:admin.partials.sidebar-operation :id="$id"/>    
             </div>

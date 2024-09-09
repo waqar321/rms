@@ -9,8 +9,8 @@ use App\Models\Admin\ecom_department;
 use App\Models\Admin\ecom_user_roles;
 use App\Models\Admin\ecom_course_assign;
 use App\Models\Admin\central_ops_city;
-use App\Models\Admin\Role;
-use App\Models\Admin\Permission;
+use App\Models\Role;
+use App\Models\Permission;
 use App\Traits\livewireComponentTraits\LivewireComponentsCommon;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Exports\Exports;
@@ -60,7 +60,7 @@ trait RolesComponent
         }
         else
         {
-            $this->role = new role();
+            $this->role = new Role();
             $this->searchByName = "";
         }
     }

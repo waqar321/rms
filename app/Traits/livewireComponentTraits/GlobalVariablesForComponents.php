@@ -6,7 +6,7 @@ namespace App\Traits\livewireComponentTraits;
 use App\Models\Admin\ecom_lecture;
 use App\Models\Admin\ecom_category;
 use App\Models\Admin\ecom_department;
-use App\Models\Admin\ecom_admin_user;
+use App\Models\User;
 use App\Models\Admin\LectureAssessmentLevel;
 use App\Rules\EitherOrRule;
 use Illuminate\Support\Facades\DB;
@@ -37,7 +37,8 @@ trait GlobalVariablesForComponents
     public $cities = [];
     public $branches = [];
     public $roles = [];
-
+    
+    public $User;
     
     public $update =false;
     public $pageTitle;

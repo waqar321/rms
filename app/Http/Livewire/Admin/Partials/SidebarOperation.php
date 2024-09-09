@@ -28,7 +28,7 @@ class SidebarOperation extends Component
         $this->setMountData($id);
         $this->pageTitle = 'SideBar Manage';
         $this->MainTitle = 'SideBarManage';
-        
+
     }
     public function render()
     {

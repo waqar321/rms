@@ -19,6 +19,10 @@
 @endpush 
 
 @section('content')
+
+
+
+
         @if(request()->has('id'))
             <div>    
                 <livewire:admin.user-management.user.index :user="$user"/>    

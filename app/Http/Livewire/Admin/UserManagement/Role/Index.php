@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Admin\UserManagement\Role;
 
 use Livewire\Component;
-use App\Models\Admin\Role;
+use App\Models\Role;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use App\Traits\livewireComponentTraits\UserManagement\RolesComponent;

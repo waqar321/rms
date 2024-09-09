@@ -3,7 +3,8 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
-use App\Models\Admin\Role;
+use App\Models\Role;
+use App\Models\User;
 use Closure;
 use Illuminate\Support\Facades\Gate;
 
@@ -15,14 +16,17 @@ class AuthGates
         // dd($user);
         if (!app()->runningInConsole() && $user) {
             $roles = Role::with('permissions')->get();
-            foreach ($roles as $role) {
+            foreach ($roles as $role) 
+            {
                 foreach ($role->permissions as $permissions) {
                     $permissionsArray[$permissions->title][] = $role->id;
                 }
             }
 
-            foreach ($permissionsArray as $title => $roles) {
-                Gate::define($title, function (\App\Models\Admin\ecom_admin_user $user) use ($roles) {
+            foreach ($permissionsArray as $title => $roles) 
+            {
+                Gate::define($title, function (\App\Models\User $user) use ($roles) 
+                {
                     return count(array_intersect($user->roles->pluck('id')->toArray(), $roles)) > 0;
                 });
             }

@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Admin\Notification;
 
 use Illuminate\Support\Facades\Redirect;
 use Livewire\Component;
-use App\Models\Admin\ecom_notification;
+use App\Models\Admin\Notification;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 
@@ -16,7 +16,7 @@ class NotificationCount extends Component
     
     public function mount()
     {
-        // $this->notificationMessages = ecom_notification::orderBy('created_at', 'desc')->take(4)->get();
+        // $this->notificationMessages = Notification::orderBy('created_at', 'desc')->take(4)->get();
         $this->UpdateCount();
                 
     }
@@ -30,7 +30,7 @@ class NotificationCount extends Component
     }
     public function UpdateCount()
     {
-        $NotificationMessages = ecom_notification::orderBy('created_at', 'desc')->take(4)->get();                   
+        $NotificationMessages = Notification::orderBy('created_at', 'desc')->take(4)->get();                   
         $checkCount=0;
 
         foreach($NotificationMessages as $notification)
@@ -47,11 +47,11 @@ class NotificationCount extends Component
         }
 
         $this->count = $checkCount;
-        $this->notificationMessages = ecom_notification::orderBy('created_at', 'desc')->take(4)->get();                                            
+        $this->notificationMessages = Notification::orderBy('created_at', 'desc')->take(4)->get();                                            
     }
-    public function UpdateNotificationToRead(ecom_notification $ecom_notification)
+    public function UpdateNotificationToRead(Notification $Notification)
     {
-        $user_status = $ecom_notification->NotificationStatuses->where('user_id', auth()->user()->id)->first();
+        $user_status = $Notification->NotificationStatuses->where('user_id', auth()->user()->id)->first();
         $user_status->update(['read' => 1]);
 
         $this->UpdateCount();
@@ -59,7 +59,7 @@ class NotificationCount extends Component
     }
     public function UpdateNotificationToSeen()
     {
-        //    $this->notificationMessages = ecom_notification::orderBy('created_at', 'desc')
+        //    $this->notificationMessages = Notification::orderBy('created_at', 'desc')
         //                                                 ->take(4)
         //                                                 ->get();
             
@@ -70,7 +70,7 @@ class NotificationCount extends Component
         //     }
 
         // dd('awdawd');
-        // $notificationMessages = ecom_notification::
+        // $notificationMessages = Notification::
                                         // where('read_notification', 0)
                                         //   where('seen', 0)
                                         // orderBy('created_at', 'desc')

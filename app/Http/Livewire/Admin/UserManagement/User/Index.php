@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Admin\UserManagement\User;
 
 use Livewire\Component;
-use App\Models\Admin\ecom_admin_user;
+use App\Models\User;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Hash;
@@ -36,7 +36,7 @@ class Index extends Component
         'searchByEmployeeCity' => ['except' => '', 'as' => 's_Cy'],
     ];
     
-    public function mount(ecom_admin_user $user)
+    public function mount(User $user)
     {
         $this->setMountData($user);
     }

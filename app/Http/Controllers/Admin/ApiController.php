@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Admin\ecom_admin_user;
+use App\Models\Admin\User;
 use App\Models\Admin\ecom_module_permissions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,112 +30,40 @@ class ApiController extends Controller
             $user_id = $request->user_id;
             $password = $request->password;
             
-            if($request->user_id == 'super_admin')
-            {
-                $result = ecom_admin_user::where('username', $request->user_id);
-            }
-            else
-            {
-                $result = ecom_admin_user::where('employee_id',$request->user_id);
-            }
+            $result = User::where('username', $request->user_id);
 
             if($result->exists()) 
             {
                 $result = $result->first();
 
-                    if ($result->is_active == 1) 
+                if ($result->is_active == 1) 
+                {
+                    $credentials = ['username' => $request->user_id, 'password' => $request->password];
+
+                    // -------------------- authenticate user using OPT --------------------------
+
+                    if (Auth::attempt($credentials)) 
                     {
-                        //-------- exception for super admin
-                        if ($request->user_id == 'super_admin') 
-                        {
-                            $credentials = ['username' => $request->user_id, 'password' => $request->password];
-                        }
-                        else
-                        {
-                            $credentials = ['employee_id' => $request->user_id, 'password' => $request->password];
-                        }
+                        // $user = Auth::user();
+                        $result->last_login = date('Y-m-d H:i:s');
+                        $result->save();
 
-                        // -------------------- authenticate user using OPT --------------------------
-
-                        if ($result->otp_code != null) 
-                        {
-                            if ($result->otp_code === $request->password && Carbon::now()->lessThanOrEqualTo($result->otp_expires_at)) 
-                            {
-                                
-                                // Invalidate the OTP
-                                $result->update([
-                                    'otp_code' => null,
-                                    'otp_expires_at' => null,
-                                    'password' => Hash::make($request->password),
-                                ]);
-
-                                if (Auth::attempt($credentials)) 
-                                {
-                                    // $user = Auth::user();
-                                    $result->last_login = date('Y-m-d H:i:s');
-                                    $result->save();
-    
-                                    $response = [
-                                        'status' => 1,
-                                        'data' => $result,
-                                        'message' => 'Login successfully',
-                                    ];
-                                    return response()->json($response, 200);
-                                }
-
-                            }   
-                            else
-                            {
-                                $response = [
-                                    'status' => 0,
-                                    'message' => 'Invalid OTP or OTP expired',
-                                ];
-
-                                return response()->json($response, 404);
-                            }
-                        }
-
-                        // -------------------- authenticate user using pass --------------------------
-
-                        if (Auth::attempt($credentials)) 
-                        // if (Auth::attempt(['username' => $request->user_id, 'password' => $request->password])) 
-                        {
-
-                            // Invalidate the OTP
-                            $result->update([
-                                'otp_code' => null,
-                                'otp_expires_at' => null,
-                            ]);
-
-                            $user = Auth::user();
-                            $result->last_login = date('Y-m-d H:i:s');
-                            $result->save();
-
-                            $response = [
-                                'status' => 1,
-                                'data' => $user,
-                                'message' => 'Login successfully',
-                            ];
-
-                            return response()->json($response, 200);
-                        }
-                        else
-                        {
-                            $response = [
-                                'status' => 0,
-                                'message' => 'Credentials Not Match',
-                            ];
-                            return response()->json($response, 404);
-                        }
-                    }
-                    else
-                    {
                         $response = [
-                            'status' => 0,
-                            'message' => 'User Not Activated',
+                            'status' => 1,
+                            'data' => $result,
+                            'message' => 'Login successfully',
                         ];
-                        return response()->json($response, 404);
+                        return response()->json($response, 200);
                     }
+                }
+                else
+                {
+                    $response = [
+                        'status' => 0,
+                        'message' => 'User Not Activated',
+                    ];
+                    return response()->json($response, 404);
+                }
             }
             else
             {

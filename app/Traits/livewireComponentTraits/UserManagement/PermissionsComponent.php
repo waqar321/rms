@@ -4,8 +4,8 @@
 namespace App\Traits\livewireComponentTraits\UserManagement;
 
 
-use App\Models\Admin\Role;
-use App\Models\Admin\Permission;
+use App\Models\Role;
+use App\Models\Permission;
 use App\Traits\livewireComponentTraits\LivewireComponentsCommon;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Exports\Exports;

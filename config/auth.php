@@ -63,7 +63,8 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Admin\ecom_admin_user::class,
+            // 'model' => App\Models\Admin\ecom_admin_user::class,
+            'model' => App\Models\User::class,
         ],
 
         // 'users' => [

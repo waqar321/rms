@@ -8,10 +8,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
 use Hermawan\DataTables\DataTable;
-use App\Models\ecom_booked_packet_model;
-use App\Models\ecom_city;
-use App\Models\ecom_status;
-use App\Models\ecom_admin_user;
+use App\Models\User;
+
 use Illuminate\Support\Facades\Route;
 class SettingsController extends Controller
 {

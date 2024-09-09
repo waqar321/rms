@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Admin\UserManagement\Permission;
 
 use Livewire\Component;
-use App\Models\Admin\permission;
+use App\Models\permission;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use App\Traits\livewireComponentTraits\UserManagement\PermissionsComponent;

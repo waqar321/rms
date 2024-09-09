@@ -5,12 +5,8 @@ namespace App\Traits\livewireComponentTraits\UserManagement;
 
 
 use App\Models\Admin\ecom_admin_user;
-use App\Models\Admin\ecom_category;
-use App\Models\Admin\ecom_department;
-use App\Models\Admin\ecom_user_roles;
-use App\Models\Admin\ecom_course_assign;
-use App\Models\Admin\central_ops_city;
-use App\Models\Admin\Role;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Validation\Rule;
 use App\Traits\livewireComponentTraits\LivewireComponentsCommon;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
@@ -43,11 +39,11 @@ trait UsersComponent
     public function __construct()
     {       
         $this->Tablename = 'ecom_admin_user';        
-        $this->availableColumns = ['Employee Code', 'Name', 'Email', 'City', 'Roles', 'Designation', 'Date', 'Status', 'Action'];
+        $this->availableColumns = ['Name', 'Email', 'Roles', 'Date', 'Status', 'Action'];
         $this->update = request()->has('id') == true;
         $this->Collapse = $this->update ? 'uncollapse' : 'collapse';
         $this->selectedRows = collect();
-        $this->ecom_course_assign = new ecom_course_assign();
+        // $this->ecom_course_assign = new ecom_course_assign();
     }
 
     public function sortBy($field)
@@ -113,11 +109,11 @@ trait UsersComponent
         'ecom_admin_user.full_name' => 'required|regex:/^[a-zA-Z\s]+$/',
         'ecom_admin_user.username' => '',
         'ecom_admin_user.email' => 'email|unique:ecom_admin_user',
-        'ecom_admin_user.phone' => '', //'required|numeric|digits_between:1,11',
-        'ecom_admin_user.gender' => '',
-        'ecom_admin_user.employee_id' => '',
+        // 'ecom_admin_user.phone' => '', //'required|numeric|digits_between:1,11',
+        // 'ecom_admin_user.gender' => '',
+        // 'ecom_admin_user.employee_id' => '',
         'password' => 'required',
-        'confirm_password' => 'required|same:password',
+        // 'confirm_password' => 'required|same:password',
     ];
     
     protected $messages = 
@@ -211,13 +207,13 @@ trait UsersComponent
             }       
         }   
     }
-    public function setMountData($ecom_admin_user)
+    public function setMountData($User)
     {
-       $this->ecom_admin_user = $ecom_admin_user ?? new ecom_admin_user(); 
+       $this->User = $User ?? new User(); 
        //$this->ecom_admin_user->phone = '03072948013';
        //dd($this->ecom_admin_user);
 
-       $this->ecom_admin_user->load('roles'); 
+       $this->User->load('roles'); 
 
        $this->pageTitle = 'User Manage';
        $this->MainTitle = 'UserManage';
@@ -242,17 +238,13 @@ trait UsersComponent
         // if($this->sortByCityNames// {
         //     dd('true');
         // }
-        $users = ecom_admin_user::when($this->searchByName !== '', function ($query) 
+        
+        // $users = User::all();
+        // dd($users);
+
+        $users = User::when($this->searchByName !== '', function ($query) 
                                     {
                                         $query->where('full_name', 'like', '%' . $this->searchByName . '%');
-                                    })
-                                    ->when($this->searchByEmployeeCode !== '', function ($query) 
-                                    {
-                                        $query->where('employee_id', 'like', '%' . $this->searchByEmployeeCode . '%');
-                                    })
-                                    ->when($this->searchByEmployeeDesignation !== '', function ($query) 
-                                    {
-                                        $query->where('designation', 'like', '%' . $this->searchByEmployeeDesignation . '%');
                                     })
                                     ->when($this->searchByEmployeeRole !== '', function ($query) 
                                     {
@@ -261,30 +253,18 @@ trait UsersComponent
                                             $query->where('title', 'like', '%' . $this->searchByEmployeeRole . '%'); 
                                         });
                                     })
-                                    ->when($this->searchByEmployeeCity !== '', function ($query) 
-                                    {
-                                        $query->whereHas('city', function ($query) 
-                                        {
-                                            $query->where('city_name', 'like', '%' . $this->searchByEmployeeCity . '%'); 
-                                        });
-                                    })
                                     ->whereHas('roles', function ($query) {
                                         $query->where('title', '!=', 'Super Admin'); // Exclude users with Super Admin role
-                                    })
-                                    ->when($this->sortByCityNames, function ($query) 
-                                    {
-                                        $query->leftJoin('central_ops_city', 'ecom_admin_user.city_id', '=', 'central_ops_city.city_id')
-                                                ->select('ecom_admin_user.*', 'central_ops_city.city_name')
-                                                ->orderBy('central_ops_city.city_name', $this->sortDirection);
                                     })
                                     ->when($this->sortByRoles, function ($query) 
                                     {
                                         $query->orderBy($this->sortBy, $this->sortDirection);
                                     })
-                                    ->orderBy($this->sortBy, $this->sortDirection)
+                                    // ->orderBy($this->sortBy, $this->sortDirection)
                                     // ->orderBy('id', 'ASC')
                                     // ->paginate($this->paginateLimit);
                                     ->get();
+
 
         $this->sortByCityNames = false;
         $this->CurrentPaginatedUsers =  $users->take($this->paginateLimit);      

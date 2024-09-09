@@ -36,58 +36,43 @@
                     <div class="tile_count">
                         <div class="col-md-2 col-sm-4  tile_stats_count">
                                 <span class="count_top"><i class="fa fa-users"></i> Total Users </span>
-                                <div class="count">{{$Data['usersCount']}}</div>
+                                <div class="count">100</div>
                                 <span class="count_bottom">
-                                    @if($Data['lastWeekUsersCount'] > 0)
-                                        <i class="green"><i class="fa fa-sort-asc"></i>{{$Data['lastWeekUsersCount']}} </i> Increase from Last Week
-                                    @else
+                                        <i class="green"><i class="fa fa-sort-asc"></i>200 </i> Increase from Last Week
                                         0 Increase from Last Week
-                                    @endif
                                 </span>
                         </div>
                     
                         <div class="col-md-2 col-sm-4  tile_stats_count">
-                                <span class="count_top"><i class="fa fa-users"></i> Total Instructor </span>
-                                <div class="count">{{$Data['instructorCount']}}</div>
+                                <span class="count_top"><i class="fa fa-users"></i> Total Roles </span>
+                                <div class="count">100</div>
                                 <span class="count_bottom">
-                                    @if($Data['lastWeekinstructorCount'] > 0)
-                                        <i class="green"><i class="fa fa-sort-asc"></i>{{$Data['lastWeekinstructorCount']}} </i> Increase from Last Week
-                                    @else
-                                        0 Increase from Last Week
-                                    @endif
+                                    <i class="green"><i class="fa fa-sort-asc"></i>100</i> Increase from Last Week
+                                    0 Increase from Last Week
                                 </span>
                         </div>
                         <div class="col-md-2 col-sm-4  tile_stats_count">
-                                <span class="count_top"><i class="fa fa-folder"></i></i> Total Category </span>
-                                <div class="count">{{$Data['instructorCount']}}</div>
+                                <span class="count_top"><i class="fa fa-folder"></i></i> Total Permissions </span>
+                                <div class="count">100</div>
                                 <span class="count_bottom">
-                                    @if($Data['lastWeekcategoriesCount'] > 0)
-                                        <i class="green"><i class="fa fa-sort-asc"></i>{{$Data['lastWeekcategoriesCount']}} </i> Increase from Last Week
-                                    @else
-                                        0 Increase from Last Week
-                                    @endif
+                                    <i class="green"><i class="fa fa-sort-asc"></i>100 </i> Increase from Last Week
+                                    0 Increase from Last Week
                                 </span>
                         </div>
                         <div class="col-md-2 col-sm-4  tile_stats_count">
-                                <span class="count_top"><i class="fa fa-book"></i> Total Course </span>
-                                <div class="count">{{$Data['coursesCount']}}</div>
+                                <span class="count_top"><i class="fa fa-book"></i> Total Operations </span>
+                                <div class="count">100</div>
                                 <span class="count_bottom">
-                                    @if($Data['lastWeekcourseCount'] > 0)
-                                        <i class="green"><i class="fa fa-sort-asc"></i>{{$Data['lastWeekcourseCount']}} </i> Increase from Last Week
-                                    @else
-                                        0 Increase from Last Week
-                                    @endif
+                                    <i class="green"><i class="fa fa-sort-asc"></i>100</i> Increase from Last Week
+                                    0 Increase from Last Week
                                 </span>
                         </div>
                         <div class="col-md-2 col-sm-4  tile_stats_count">
-                                <span class="count_top"><i class="fa fa-building"></i> Total Department </span>
-                                <div class="count">{{$Data['departmentsCount']}}</div>
+                                <span class="count_top"><i class="fa fa-building"></i> Total Something </span>
+                                <div class="count">100</div>
                                 <span class="count_bottom">
-                                    @if($Data['lastWeekdepartmentsCount'] > 0)
-                                        <i class="green"><i class="fa fa-sort-asc"></i>{{$Data['lastWeekdepartmentsCount']}} </i> Increase from Last Week
-                                    @else
-                                        0 Increase from Last Week
-                                    @endif
+                                    <i class="green"><i class="fa fa-sort-asc"></i>100 </i> Increase from Last Week
+                                    0 Increase from Last Week
                                 </span>
                         </div>
                         <div class="col-md-2 col-sm-4  tile_stats_count">
