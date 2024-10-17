@@ -47,7 +47,7 @@
                     <li class="nav-item dropdown open">
 
                         <!-- <div> -->
-                            @livewire('admin.notification.notification-count')
+                           
                         <!-- </div> -->
                     </li>
                     

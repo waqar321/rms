@@ -39,7 +39,6 @@
     
         <!-- sidebar menu -->
         <div>    
-            <livewire:admin.notification.token-check/>    
         </div>
         <!-- sidebar menu end -->
 
