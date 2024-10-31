@@ -50,7 +50,7 @@ class Index extends Component
         if(!$this->update)
         {
             $this->validate();   
-            $this->ecom_admin_user->password = Hash::make($this->password);         
+            $this->User->password = Hash::make($this->password);         
         }
         else
         {
@@ -61,25 +61,25 @@ class Index extends Component
                     'confirm_password' => 'required|same:password',
                 ]);          
             }
-            $this->ecom_admin_user->password = Hash::make($this->password);
+            $this->User->password = Hash::make($this->password);
         }
         if($this->selected_city_id != null)
         {
-            $this->ecom_admin_user->city_id = $this->selected_city_id;
+            $this->User->city_id = $this->selected_city_id;
         }
         
-        $this->ecom_admin_user->user_type_id = 1;
-        $this->ecom_admin_user->save();
+        // $this->User->user_type_id = 1;
+        $this->User->save();
         
         if(!empty($this->SelectedRolesIds))
         {
-            $this->ecom_admin_user->roles()->sync($this->SelectedRolesIds);
+            $this->User->roles()->sync($this->SelectedRolesIds);
         }
   
 
         $this->SelectedRolesIds = [];
-        $name = $this->ecom_admin_user->full_name;
-        $this->ecom_admin_user = new ecom_admin_user(); 
+        $name = $this->User->name;
+        $this->User = new User(); 
 
         session()->flash('message', $this->MainTitle.' '. $this->update ? 'Updated' : 'Added' . ' Successfully');
         $this->resetInput();
@@ -110,16 +110,16 @@ class Index extends Component
     public function HandleUpdateCountryID($FieldName, $value)
     {
         $this->Collapse = "uncollapse";
-        $this->ecom_admin_user->country_id = $value;
+        $this->User->country_id = $value;
         // dd('selectedCountry:' .$value);
-        // $this->ecom_admin_user->awd = $value;
+        // $this->User->awd = $value;
     }
     public function HandleUpdateGenderID($FieldName, $value)
     {
         $this->Collapse = "uncollapse";
-        $this->ecom_admin_user->gender = $value;
+        $this->User->gender = $value;
         // dd('selectedGender:' .$value);
-        // $this->ecom_admin_user->awd = $value;
+        // $this->User->awd = $value;
     }
     public function selectAllmethod($select)
     {

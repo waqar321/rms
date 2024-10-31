@@ -38,7 +38,7 @@ trait GlobalVariablesForComponents
     public $branches = [];
     public $roles = [];
     
-    public $User;
+    // public $User;
     
     public $update =false;
     public $pageTitle;

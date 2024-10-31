@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Title Admin | Login</title>
+    <title>ABASEEN RMS | Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="robots" content="noindex, follow">
     <link href="<?php echo url_secure('build/css/custom.min.css') ?>" rel="stylesheet">
@@ -26,7 +26,7 @@
                 <div class="form-row">
                     <div class="main">
                         <h1 class="text-alignment">
-                            <a href="" class="typewrite" data-period="2000" data-type='[ "Welcome To COD Title Portal", "Take Your Business To New Heights", "Pakistan Fastest Cash On Delivery Services"]'>
+                            <a href="" class="typewrite" data-period="2000" data-type='[ "Welcome To ABASEEN RMS Portal", "Take Your Business To New Heights", "Pakistan Fastest Cash On Delivery Services"]'>
                                 <span class="wrap"></span>
                             </a>
                         </h1>
@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div class="form-right">
-                <h2 style="color: white">Title <b style="color: #ffca00">ADMIN</b> LOGIN</h2>
+                <h2 style="color: white">ABASEEN RMS <b style="color: #ffca00">ADMIN</b> LOGIN</h2>
                 <div class="form-row">
                     <input type="text" class="form-control" placeholder="User ID" required="" name="user_id"/>
                 </div>
@@ -50,8 +50,8 @@
                     <div class="clearfix"></div>
                     <br/>
                     <div>
-                        <h1 class="text-alignment color-code"><?php echo 'Title ADMIN'; ?></h1>
-                        <p class="text-alignment color-code">©{{date('Y')}} All Rights Reserved. <?php echo 'Title ADMIN'; ?>!</p>
+                        <h1 class="text-alignment color-code"><?php echo 'ABASEEN RMS'; ?></h1>
+                        <p class="text-alignment color-code">©{{date('Y')}} All Rights Reserved. <?php echo 'ABASEEN RMS'; ?>!</p>
                     </div>
                 </div>
 

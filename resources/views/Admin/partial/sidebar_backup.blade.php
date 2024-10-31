@@ -6,7 +6,7 @@
             <a href="{{ url_secure('') }}" class="site_title">   <img src="<?php echo url_secure('build/images/logo/LCS-logo1.png'); ?>" alt="..." class="profile_img" width="65%"></a>
         </div> -->
         <div class="navbar nav_title" style="border: 0;">
-            <a href="{{ url_secure('') }}" class="site_title">  <h1 style="font-weight: bold;color: #343a40;">TITLE</h1></a>
+            <a href="{{ url_secure('') }}" class="site_title">  <h1 style="font-weight: bold;color: #343a40;">ABASEEN </h1></a>
         </div>
 
         <div class="clearfix"></div>

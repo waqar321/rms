@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="{{ url_secure('build/images/logo/logo-removebg-preview.png')}}">
-    <title> @yield('title') | Title  ADMIN</title>
+    <title> @yield('title') | ABASEEN RMS</title>
 
     <!-- Bootstrap -->
     <link href="{{ url_secure('vendors/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">

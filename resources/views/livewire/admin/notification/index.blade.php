@@ -211,7 +211,7 @@
 
         var ModuleName = '{!! $JsMainTitle !!}';
         var readyToLoad = {!! json_encode($readyToLoad) !!};
-        var GetEmployeeDataRoute = "{{ route('get.EmployeeData') }}";
+
         
         
 

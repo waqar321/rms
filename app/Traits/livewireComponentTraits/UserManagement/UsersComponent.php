@@ -4,7 +4,7 @@
 namespace App\Traits\livewireComponentTraits\UserManagement;
 
 
-use App\Models\Admin\ecom_admin_user;
+
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Validation\Rule;
@@ -22,7 +22,7 @@ trait UsersComponent
 {
     use LivewireComponentsCommon;
 
-    public ecom_admin_user $ecom_admin_user;  
+    public User $User;  
     public $availableColumns;
     public $ExpectedCSVHeaders;   
     public $csv_file;
@@ -38,7 +38,7 @@ trait UsersComponent
     
     public function __construct()
     {       
-        $this->Tablename = 'ecom_admin_user';        
+        $this->Tablename = 'user';        
         $this->availableColumns = ['Name', 'Email', 'Roles', 'Date', 'Status', 'Action'];
         $this->update = request()->has('id') == true;
         $this->Collapse = $this->update ? 'uncollapse' : 'collapse';
@@ -70,7 +70,7 @@ trait UsersComponent
         } 
         else if ($field === 'Name')
         {
-            $this->sortBy = 'full_name';
+            $this->sortBy = 'name';
         } 
         else if ($field === 'Email')
         {
@@ -104,26 +104,26 @@ trait UsersComponent
 
     protected $rules = 
     [
-        // 'ecom_admin_user.first_name' => 'required',
-        // 'ecom_admin_user.last_name' => 'required',
-        'ecom_admin_user.full_name' => 'required|regex:/^[a-zA-Z\s]+$/',
-        'ecom_admin_user.username' => '',
-        'ecom_admin_user.email' => 'email|unique:ecom_admin_user',
-        // 'ecom_admin_user.phone' => '', //'required|numeric|digits_between:1,11',
-        // 'ecom_admin_user.gender' => '',
-        // 'ecom_admin_user.employee_id' => '',
+        // 'User.first_name' => 'required',
+        // 'User.last_name' => 'required',
+        'User.name' => 'required|regex:/^[a-zA-Z\s]+$/',
+        'User.username' => '',
+        'User.email' => '',
+        // 'User.phone' => '', //'required|numeric|digits_between:1,11',
+        // 'User.gender' => '',
+        // 'User.employee_id' => '',
         'password' => 'required',
         // 'confirm_password' => 'required|same:password',
     ];
     
     protected $messages = 
     [
-        'ecom_admin_user.username.required' => 'The Username is unique required',
-        'ecom_admin_user.first_name.required' => 'The First Name is required',
-        'ecom_admin_user.last_name.required' => 'The Last Name is required',
-        'ecom_admin_user.phone.required' => 'The phone number is required',
-        'ecom_admin_user.full_name' => 'The Name Must be String',
-        // 'ecom_admin_user.email' => 'The Email must be a valid email address',
+        'User.username.required' => 'The Username is unique required',
+        'User.first_name.required' => 'The First Name is required',
+        'User.last_name.required' => 'The Last Name is required',
+        'User.phone.required' => 'The phone number is required',
+        'User.name' => 'The Name Must be String',
+        // 'User.email' => 'The Email must be a valid email address',
     ];
 
     public function resetInput($searchReset=false)
@@ -145,7 +145,7 @@ trait UsersComponent
         }
         else
         {
-            $this->ecom_admin_user = new ecom_admin_user();
+            $this->User = new User();
             $this->title = "";
         }
     }
@@ -155,18 +155,18 @@ trait UsersComponent
         
         // return true; //stop real time validation at a time
 
-        if($value == 'ecom_admin_user.employee_id')
+        if($value == 'User.employee_id')
         {
-            $this->exists = ecom_admin_user::where('employee_id', $this->ecom_admin_user->employee_id)->exists();
+            $this->exists = User::where('employee_id', $this->User->employee_id)->exists();
 
             if($this->exists)
             {
                 $this->addError('employee_id_error', 'Employee Id Already Exists');
-                $this->ecom_admin_user->employee_id = "";
+                $this->User->employee_id = "";
             }
             else
             {
-                $this->ecom_admin_user->username = $this->ecom_admin_user->employee_id;
+                $this->User->username = $this->User->employee_id;
             }
         }
         if($value == 'csv_file')
@@ -210,8 +210,8 @@ trait UsersComponent
     public function setMountData($User)
     {
        $this->User = $User ?? new User(); 
-       //$this->ecom_admin_user->phone = '03072948013';
-       //dd($this->ecom_admin_user);
+       //$this->User->phone = '03072948013';
+       //dd($this->User);
 
        $this->User->load('roles'); 
 
@@ -227,7 +227,7 @@ trait UsersComponent
 
        foreach ($this->rolesLists as $key => $roles)
        {
-           if(in_array($key, old('roles', [])) || (isset($this->ecom_admin_user)) && $this->ecom_admin_user->roles->contains($key))
+           if(in_array($key, old('roles', [])) || (isset($this->User)) && $this->User->roles->contains($key))
            {
                $this->selectRoles[] = $key;
            } 
@@ -244,7 +244,7 @@ trait UsersComponent
 
         $users = User::when($this->searchByName !== '', function ($query) 
                                     {
-                                        $query->where('full_name', 'like', '%' . $this->searchByName . '%');
+                                        $query->where('name', 'like', '%' . $this->searchByName . '%');
                                     })
                                     ->when($this->searchByEmployeeRole !== '', function ($query) 
                                     {
@@ -272,24 +272,24 @@ trait UsersComponent
         return $data;  
 
     }        
-    public function updateStatus(ecom_admin_user $ecom_admin_user, $toggle)
+    public function updateStatus(User $User, $toggle)
     {
-        $ecom_admin_user->is_active = $toggle == 0 ? 0 : 1;
-        $ecom_admin_user->save();
+        $User->is_active = $toggle == 0 ? 0 : 1;
+        $User->save();
         
-        $this->dispatchBrowserEvent('status_updated', ['name' => $ecom_admin_user->full_name]);
+        $this->dispatchBrowserEvent('status_updated', ['name' => $User->name]);
     }
-    public function HandleDeleteUserManage(ecom_admin_user $ecom_admin_user)
+    public function HandleDeleteUserManage(User $User)
     {
-        $name = $ecom_admin_user->full_name;
-        $ecom_admin_user->delete();    
+        $name = $User->name;
+        $User->delete();    
         $this->dispatchBrowserEvent('deleted_scene', ['name' => $name]);
     }
     public function deleteSelected()
     {
         if($this->getSelectedRowIDs()->isNotEmpty())
         {
-            ecom_admin_user::whereIn('id', $this->getSelectedRowIDs()->toArray())->delete();
+            User::whereIn('id', $this->getSelectedRowIDs()->toArray())->delete();
 
             $this->dispatchBrowserEvent('deleted_scene', ['name' => 'Selected Users']);
         }
@@ -302,7 +302,7 @@ trait UsersComponent
     //     // // dd($this->selectAll);
     //     // if($this->selectAll)
     //     // {
-    //     //     $this->selectedRows = ecom_admin_user::orderBy('id', 'DESC')->paginate($this->paginateLimit)->pluck('id');  
+    //     //     $this->selectedRows = User::orderBy('id', 'DESC')->paginate($this->paginateLimit)->pluck('id');  
     //     //     dd($this->selectedRows);
            
     //     //     // dd($this->selectedRows->contains(88));
