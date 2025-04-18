@@ -3,12 +3,12 @@
 @section('content')
         @if(request()->has('id'))
             <div>    
-                <livewire:admin.pos.data-entry.index :permission="$permission"/>    
+                <livewire:admin.item-category.index :permission="$permission"/>    
             </div>
         @else 
-       
+
             <div>    
-                <livewire:admin.pos.data-entry.index : />    
+                <livewire:admin.item-category.index : />    
             </div>
         @endif
 @endsection 

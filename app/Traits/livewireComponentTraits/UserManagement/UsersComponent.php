@@ -31,7 +31,7 @@ trait UsersComponent
     public $SelectedRolesIds=[];
     public $selected_city_id;
     public $password;
-    public $confirm_password;
+    // public $confirm_password;
     public $selectRoles = [];
     public $selectUserIDS = [];
     public $CurrentPaginatedUsers;
@@ -109,6 +109,7 @@ trait UsersComponent
         'User.name' => 'required|regex:/^[a-zA-Z\s]+$/',
         'User.username' => '',
         'User.email' => '',
+        'User.designation' => '',
         // 'User.phone' => '', //'required|numeric|digits_between:1,11',
         // 'User.gender' => '',
         // 'User.employee_id' => '',
@@ -217,7 +218,7 @@ trait UsersComponent
 
        $this->pageTitle = 'User Manage';
        $this->MainTitle = 'UserManage';
-       $this->paginateLimit = 10;
+       $this->paginateLimit = 50;
        $this->sortBy = 'employee_id';
        $this->sortDirection = 'asc';
        $this->sortByRealTime = 'Employee Code';

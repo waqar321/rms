@@ -14,9 +14,7 @@
     </style>
 @endpush 
 
-@can('permission_listing') 
-
-<div class="row" data-screen-permission-id="22">
+<div class="row" data-screen-category-id="22">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
@@ -24,7 +22,7 @@
                     <input type="search" wire:model="searchByName" class="form-control" placeholder="Search By Title...">
                 </div>
                 
-                @include('Admin.partial.livewire.ClearDeleteButtons', ['showDeleteButton' => 'true', 'modelName' => 'Permission'])  
+                @include('Admin.partial.livewire.ClearDeleteButtons', ['showDeleteButton' => 'true', 'modelName' => 'category'])  
 
                 <ul class="nav navbar-right panel_toolbox justify-content-end">
                     <li>
@@ -53,7 +51,7 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th> </th>
+                                    <!-- <th> </th> -->
                                     @foreach($availableColumns as $column)
                                             <th>{{ $column }}</th>
                                     @endforeach
@@ -62,25 +60,23 @@
                             <tbody>
                                 
                                 @if($readyToLoad)
-                                    @forelse($PermissionListing as $permission)
+                                    @forelse($UnitTypes as $unit_type)
                                         <tr>
+                                            <!-- <td>
+                                                <input type="checkbox" wire:model="selectedRows.{{ $unit_type->id }}">
+                                            </td> -->
+                                            <td>{{ $unit_type->id }}</td>
+                                            <td>{{ $unit_type->name  }}</td>                                            
                                             <td>
-                                                <input type="checkbox" wire:model="selectedRows.{{ $permission->id }}">
-                                            </td>
-                                            <td>{{ $permission->id }}</td>
-                                            <td>{{ $permission->title  }}</td>
-                                            <td>{{ $permission->created_at }}</td>
-                                            
-                                            <td>
-                                                @if($permission->is_active == 1)
-                                                    <span class="fa fa-toggle-on toggle-icon" wire:click="updateStatus({{ $permission->id }}, 0)"></span>
+                                                @if($unit_type->is_active == 1)
+                                                    <span class="fa fa-toggle-on toggle-icon" wire:click="updateStatus({{ $unit_type->id }}, 0)"></span>
                                                 @else
-                                                    <span class="fa fa-toggle-off toggle-icon" wire:click="updateStatus({{ $permission->id }}, 1)"></span>
+                                                    <span class="fa fa-toggle-off toggle-icon" wire:click="updateStatus({{ $unit_type->id }}, 1)"></span>
                                                 @endif
                                             </td>
                                             <td>
-                                                <a data-screen-permission-id="23" wire:click="EditData({{ $permission->id }})" class="btn btn-primary">Edit</a>
-                                                <button data-screen-permission-id="24" onclick="confirmDelete('{{ $permission->id }}')" class="btn btn-danger">Delete</button>
+                                                <a data-screen-unit_type-id="23" wire:click="EditData({{ $unit_type->id }})" class="btn btn-primary">Edit</a>
+                                                <button data-screen-unit_type-id="24" onclick="confirmDelete('{{ $unit_type->id }}')" class="btn btn-danger">Delete</button>
                                             </td>
                                         </tr>
                                     @empty
@@ -95,7 +91,7 @@
                             </tbody>
                         </table>
 
-                        @include('Admin.partial.livewire.pagination', ['ModelListing' => $PermissionListing, 'Model' => 'PermissionListing'])       
+                        @include('Admin.partial.livewire.pagination', ['ModelListing' => $UnitTypes, 'Model' => 'categoryListing'])       
             
             </div>
         </div>
@@ -103,7 +99,6 @@
 </div>
 </div>
 
-@endcan
 
 @push('scripts')
 

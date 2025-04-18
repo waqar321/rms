@@ -115,7 +115,7 @@ trait SidebarComponent
         // $this->SideBar = $SideBar ?? new SideBar();   
         $this->pageTitle = 'Sidebar Operation';
         $this->MainTitle = 'SidebarOperation';
-        $this->paginateLimit = 10;
+        $this->paginateLimit = 50;
         $this->parent_SideBars = SideBar::where('is_active', 1)->where('parent_id', null)->orderBy('order')->get();
         $this->permissionLists = Permission::pluck('title', 'id');
         

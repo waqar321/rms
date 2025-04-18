@@ -138,6 +138,19 @@
                                     <span class="error-container danger w-100"></span>
                                 </div>
                             </div>
+
+                            <!-- =========================== designation ========================== -->
+                            <div class="col-md-6 col-sm-6 col-xs-12" >
+                                <div class="form-group">
+                                    <label for="designation">Designation *</label>
+                                    <input  class="form-control" 
+                                            type="text" 
+                                            id="designation" 
+                                            placeholder="Enter designation"
+                                            wire:model.debounce.500ms="User.designation">
+                                    <span class="error-container danger w-100"></span>
+                                </div>
+                            </div>
                             <!-- =========================== confirm password ========================== -->
                                 <!-- <div class="col-md-6 col-sm-6 col-xs-12" >
                                     <div class="form-group">

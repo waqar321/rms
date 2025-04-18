@@ -22,7 +22,8 @@
             if (result.isConfirmed) 
             {
                 //
-                // alert(ModuleName);
+                // alert('delete'+ ModuleName);
+                // alert(id);
                 // return false;
                 
                 Livewire.emit('delete'+ ModuleName, id); 

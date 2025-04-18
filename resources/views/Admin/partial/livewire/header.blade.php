@@ -1,7 +1,7 @@
 <div class="page-title" wire:ignore>
     <div class="title_left">
 
-            <h3>{{ explode(" ", $pageTitle)[0] }}  </h3>
+    <h3> {{ getPageTitle() }} </h3>
 
     </div>
     <div class="title_right cleanuphead text-right">

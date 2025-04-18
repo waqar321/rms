@@ -31,9 +31,9 @@
     <link href="{{ url_secure('vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{ url_secure('vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{ url_secure('vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css')}}" rel="stylesheet">
-    <link href="{{ url_secure('vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css')}}" rel="stylesheet">
-    <link href="{{ url_secure('vendors/select2/dist/css/select2.min.css')}}" rel="stylesheet">
-    <link href="https://editor.datatables.net/extensions/Editor/css/editor.dataTables.min.css" rel="stylesheet"> -->
+    <link href="{{ url_secure('vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css')}}" rel="stylesheet">-->
+    <!-- <link href="{{ url_secure('vendors/select2/dist/css/select2.min.css')}}" rel="stylesheet">  -->
+     <!--<link href="https://editor.datatables.net/extensions/Editor/css/editor.dataTables.min.css" rel="stylesheet"> -->
     <!--    additional datatables-->
     <!-- <link href="{{ url_secure('vendors/datatable/vendors/css/tables/datatable/datatables.min.css')}}" rel="stylesheet"/> -->
 

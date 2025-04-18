@@ -73,6 +73,8 @@ trait GlobalVariablesForComponents
     //#[Url()]
     public $paginateLimit;
 
+    public $items;
+
 
     // protected $queryString = [
     //     'searchByName' => ['except' => ''],

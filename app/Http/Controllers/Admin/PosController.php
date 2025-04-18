@@ -11,12 +11,14 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\Rule;
 use Yajra\DataTables\DataTables;
 use Validator;
-use App\Models\ecom_merchant_role;
+// use App\Models\ecom_merchant_role;
 
-class PosController extends Controller
+class POSController extends Controller
 {
     public function index(Request $request)
     {
+       
+
         if($request->has('id'))
         {
             // $permission = Permission::find(base64_decode($request->id));
@@ -24,8 +26,8 @@ class PosController extends Controller
         }
         else
         {
-
-            return view('Admin/post/data-entry/index');
+           
+            return view('Admin/POS/index');
         }
     }
 

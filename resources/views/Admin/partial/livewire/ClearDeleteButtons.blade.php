@@ -5,7 +5,7 @@
         </button>
         @if($showDeleteButton == 'true')
             <button type="button" wire:click="deleteSelected('{{ $modelName }}')" class="btn btn-danger SearchButton">
-                Delete Selected
+                Delete Selected 
                 <i class="fa fa-trash"></i>
             </button>                    
         @endif 

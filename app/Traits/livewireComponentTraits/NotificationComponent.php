@@ -7,7 +7,7 @@ namespace App\Traits\livewireComponentTraits;
 use App\Models\Admin\ecom_admin_user;
 use App\Models\Admin\ecom_category;
 use App\Models\Admin\ecom_department;
-use App\Models\Admin\ecom_user_roles;
+// use App\Models\Admin\ecom_user_roles;
 use App\Models\Admin\ecom_notification;
 use App\Models\Admin\ecom_course_assign;
 use App\Models\Admin\central_ops_city;

@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\ApiController;
 use App\Http\Controllers\Home;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
@@ -26,39 +27,39 @@ use Illuminate\Http\Request;
     Route::post('/GetOTP', [ApiController::class, 'GetOTP']);
 
     Route::post('/forgot/password', [AuthController::class, 'forgotPasswordSubmit'])->name('forgot.password');
-    Route::get('/get_cities', [DataListController::class, 'getCityForSearch'])->name('get.search.cities');
-    Route::get('/get_client_wise_cities', [DataListController::class, 'clientWiseCity'])->name('get.search.client.wise.cities');
-    Route::get('/get_states', [DataListController::class, 'getStateForSearch'])->name('get.search.states');
-    Route::get('/get_zones', [DataListController::class, 'getZoneForSearch'])->name('get.search.zones');
-    Route::get('/get_regions', [DataListController::class, 'getRegionForSearch'])->name('get.search.regions');
-    Route::get('get_areas', [DataListController::class, 'getAreas'])->name('get.area');
-    Route::get('/get_countries', [DataListController::class, 'getCountryForSearch'])->name('get.search.countries');
+    // Route::get('/get_cities', [DataListController::class, 'getCityForSearch'])->name('get.search.cities');
+    // Route::get('/get_client_wise_cities', [DataListController::class, 'clientWiseCity'])->name('get.search.client.wise.cities');
+    // Route::get('/get_states', [DataListController::class, 'getStateForSearch'])->name('get.search.states');
+    // Route::get('/get_zones', [DataListController::class, 'getZoneForSearch'])->name('get.search.zones');
+    // Route::get('/get_regions', [DataListController::class, 'getRegionForSearch'])->name('get.search.regions');
+    // Route::get('get_areas', [DataListController::class, 'getAreas'])->name('get.area');
+    // Route::get('/get_countries', [DataListController::class, 'getCountryForSearch'])->name('get.search.countries');
 
-    Route::prefix('category-management')->group(function () 
-    {
-        Route::prefix('category')->group(function () {
-            Route::get('/', [CategoryController::class, 'index'])->name('index');
-            Route::get('edit', [CategoryController::class, 'add'])->name('edit'); 
-        });
-        Route::prefix('sub_category')->group(function () {
-            Route::get('/', [CategoryController::class, 'sub_category_index'])->name('index');
-            Route::get('edit', [CategoryController::class, 'sub_category_add'])->name('edit'); 
-        });
-    });
+    // Route::prefix('category-management')->group(function () 
+    // {
+    //     Route::prefix('category')->group(function () {
+    //         Route::get('/', [CategoryController::class, 'index'])->name('index');
+    //         Route::get('edit', [CategoryController::class, 'add'])->name('edit'); 
+    //     });
+    //     Route::prefix('sub_category')->group(function () {
+    //         Route::get('/', [CategoryController::class, 'sub_category_index'])->name('index');
+    //         Route::get('edit', [CategoryController::class, 'sub_category_add'])->name('edit'); 
+    //     });
+    // });
 
 //================= Department ==================
 
-    Route::prefix('department-management')->group(function () 
-    {
-        Route::prefix('department')->group(function () {
-            Route::get('/', [DepartmentController::class, 'index'])->name('index');
-            Route::get('edit', [DepartmentController::class, 'add'])->name('edit'); 
-        });
-        Route::prefix('sub_department')->group(function () {
-            Route::get('/', [DepartmentController::class, 'sub_department_index'])->name('index');
-            Route::get('edit', [DepartmentController::class, 'sub_department_add'])->name('edit'); 
-        });
-    });
+    // Route::prefix('department-management')->group(function () 
+    // {
+    //     Route::prefix('department')->group(function () {
+    //         Route::get('/', [DepartmentController::class, 'index'])->name('index');
+    //         Route::get('edit', [DepartmentController::class, 'add'])->name('edit'); 
+    //     });
+    //     Route::prefix('sub_department')->group(function () {
+    //         Route::get('/', [DepartmentController::class, 'sub_department_index'])->name('index');
+    //         Route::get('edit', [DepartmentController::class, 'sub_department_add'])->name('edit'); 
+    //     });
+    // });
 
 
 

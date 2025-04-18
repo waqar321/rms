@@ -58,7 +58,7 @@ class Index extends Component
             {
                 $this->validate([
                     'password' => 'required',
-                    'confirm_password' => 'required|same:password',
+                    // 'confirm_password' => 'required|same:password',
                 ]);          
             }
             $this->User->password = Hash::make($this->password);

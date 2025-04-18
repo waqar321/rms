@@ -11,7 +11,7 @@ use App\Models\Admin\ecom_module_permissions;
 use App\Models\Admin\ecom_module_screen_permission;
 use App\Models\Admin\ecom_modules;
 use App\Models\Admin\ecom_permissions;
-use App\Models\Admin\ecom_user_roles;
+// use App\Models\Admin\ecom_user_roles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -30,7 +30,7 @@ class RoleController extends Controller
 
     public function __construct()
     {
-        $this->role = new ecom_user_roles();
+        // $this->role = new ecom_user_roles();
         $this->merchant_role = new ecom_merchant_role();
         $this->exportController = new ExportController();
     }

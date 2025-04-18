@@ -4,12 +4,31 @@ namespace App\Models\Admin;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Customer extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name', 'address', 'email', 'phone', 'table_number', 'time_in', 'time_out'];
+    protected $fillable = [
+        'name',
+        'phone',
+        'email',
+        'address',
+        'city',
+        'cnic',
+        'gender',
+        'dob',
+        'total_spent',
+        'visits',
+        'is_active',
+    ];
+
+    protected $casts = [
+        'dob' => 'date',
+        'is_active' => 'boolean',
+        'total_spent' => 'decimal:2',
+    ];
 
     public function orders()
     {
