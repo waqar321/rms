@@ -1,3 +1,5 @@
+
+
 @extends('Admin.layout.main')
 
 @section('styles')
@@ -35,8 +37,8 @@
                 <div class="row" style="display: inline-block;">
                     <div class="tile_count">
                         <div class="col-md-2 col-sm-4  tile_stats_count">
-                                <span class="count_top"><i class="fa fa-users"></i> Total Users </span>
-                                <div class="count">100</div>
+                                <span class="count_top"><i class="fa fa-users"></i> Total Sale </span>
+                                <div class="count">50000</div>
                                 <span class="count_bottom">
                                         <i class="green"><i class="fa fa-sort-asc"></i>200 </i> Increase from Last Week
                                         0 Increase from Last Week
@@ -44,46 +46,46 @@
                         </div>
                     
                         <div class="col-md-2 col-sm-4  tile_stats_count">
-                                <span class="count_top"><i class="fa fa-users"></i> Total Roles </span>
-                                <div class="count">100</div>
+                                <span class="count_top"><i class="fa fa-users"></i> Total Expense </span>
+                                <div class="count">42000</div>
                                 <span class="count_bottom">
                                     <i class="green"><i class="fa fa-sort-asc"></i>100</i> Increase from Last Week
                                     0 Increase from Last Week
                                 </span>
                         </div>
                         <div class="col-md-2 col-sm-4  tile_stats_count">
-                                <span class="count_top"><i class="fa fa-folder"></i></i> Total Permissions </span>
-                                <div class="count">100</div>
+                                <span class="count_top"><i class="fa fa-folder"></i></i> Total Profit </span>
+                                <div class="count">8000</div>
                                 <span class="count_bottom">
                                     <i class="green"><i class="fa fa-sort-asc"></i>100 </i> Increase from Last Week
                                     0 Increase from Last Week
                                 </span>
                         </div>
                         <div class="col-md-2 col-sm-4  tile_stats_count">
-                                <span class="count_top"><i class="fa fa-book"></i> Total Operations </span>
-                                <div class="count">100</div>
+                                <span class="count_top"><i class="fa fa-book"></i> Total vendors </span>
+                                <div class="count">6</div>
                                 <span class="count_bottom">
                                     <i class="green"><i class="fa fa-sort-asc"></i>100</i> Increase from Last Week
                                     0 Increase from Last Week
                                 </span>
                         </div>
                         <div class="col-md-2 col-sm-4  tile_stats_count">
-                                <span class="count_top"><i class="fa fa-building"></i> Total Something </span>
-                                <div class="count">100</div>
+                                <span class="count_top"><i class="fa fa-building"></i> Total Rosh </span>
+                                <div class="count">22</div>
                                 <span class="count_bottom">
                                     <i class="green"><i class="fa fa-sort-asc"></i>100 </i> Increase from Last Week
                                     0 Increase from Last Week
                                 </span>
                         </div>
                         <div class="col-md-2 col-sm-4  tile_stats_count">
-                            <span class="count_top"><i class="fa fa-play-circle"></i>Total Tutorials</span>
-                            <div class="count">0</div>
+                            <span class="count_top"><i class="fa fa-play-circle"></i>Total Palao</span>
+                            <div class="count">25</div>
                             <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>0% </i> Increase from Last Week</span>
                         </div>
                         
                     </div>
                 </div>
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-md-4 col-sm-4">
                         <div class="x_panel tile fixed_height_320 overflow_hidden">
                             <div class="x_title">
@@ -221,7 +223,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         @endcan
 

@@ -82,88 +82,88 @@
        
         if (myUser.user_type_id != 1) 
         {
-            delayfunc();
-            $.ajax({
-                url: '<?php echo api_url('permissions/update'); ?>',
-                method: 'GET',
-                data: {ajax: true, user_id: myUser.id},
-                dataType: 'json', // Set the expected data type to JSON
-                headers: headers5,
-                beforeSend: function () {
-                    $('.error-container').html('');
-                },
-                success: function (data) {
-                    if (data && data.status == 1) {
-                        savePermissions(JSON.stringify(data.permissions));
-                        delayfunc();
-                    } else {
-                        Swal.fire(
-                            'Error!',
-                            'Something Went Wrong',
-                            'error'
-                        );
-                    }
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    // Handle AJAX errors here
-                    Swal.fire(
-                        'Error!',
-                        'Form submission failed: ' + errorThrown,
-                        'error'
-                    );
-                }
-            });
+            // delayfunc();
+            // $.ajax({
+            //     url: '<?php echo api_url('permissions/update'); ?>',
+            //     method: 'GET',
+            //     data: {ajax: true, user_id: myUser.id},
+            //     dataType: 'json', // Set the expected data type to JSON
+            //     headers: headers5,
+            //     beforeSend: function () {
+            //         $('.error-container').html('');
+            //     },
+            //     success: function (data) {
+            //         if (data && data.status == 1) {
+            //             savePermissions(JSON.stringify(data.permissions));
+            //             delayfunc();
+            //         } else {
+            //             Swal.fire(
+            //                 'Error!',
+            //                 'Something Went Wrong',
+            //                 'error'
+            //             );
+            //         }
+            //     },
+            //     error: function (xhr, textStatus, errorThrown) {
+            //         // Handle AJAX errors here
+            //         Swal.fire(
+            //             'Error!',
+            //             'Form submission failed: ' + errorThrown,
+            //             'error'
+            //         );
+            //     }
+            // });
         }
     }
 
-    function delayfunc(id = 0) {
-        if (myUser.user_type_id != 1) {
-            console.log('here');
-            var permissions = JSON.parse(getPermissions());
+    // function delayfunc(id = 0) {
+    //     if (myUser.user_type_id != 1) {
+    //         console.log('here');
+    //         var permissions = JSON.parse(getPermissions());
 
-            var GetModules = document.querySelectorAll('[data-module-id]');
-            var GetSubModules = document.querySelectorAll('[data-sub-module-id]');
-
-
-            var GetClientModule = Object.values(permissions.module_id).map(String);
-            var GetClientSubModules = Object.values(permissions.sub_module_id).map(String);
+    //         var GetModules = document.querySelectorAll('[data-module-id]');
+    //         var GetSubModules = document.querySelectorAll('[data-sub-module-id]');
 
 
-            GetModules.forEach(function (modules) {
-                var module_id = `${modules.getAttribute("data-module-id")}`;
+    //         var GetClientModule = Object.values(permissions.module_id).map(String);
+    //         var GetClientSubModules = Object.values(permissions.sub_module_id).map(String);
 
-                if (GetClientModule.includes(module_id)) {
-                    modules.style.display = 'block'; // Set display to 'block'
-                } else {
-                    modules.style.display = 'none'; // Set display to 'none'
-                }
 
-                GetSubModules.forEach(function (submodules) {
-                    var sub_module_id = submodules.getAttribute('data-sub-module-id');
-                    if (GetClientSubModules.includes(sub_module_id)) {
-                        submodules.style.display = 'block'; // Set display to 'block'
-                    } else {
-                        submodules.style.display = 'none'; // Set display to 'none'
-                    }
-                });
-            });
-            var GetScreenPermissions = document.querySelectorAll('[data-screen-permission-id]');
-            var GetClientScreenSubModules = Object.values(permissions.screens).map(String);
+    //         GetModules.forEach(function (modules) {
+    //             var module_id = `${modules.getAttribute("data-module-id")}`;
 
-            GetScreenPermissions.forEach(function (screenPermission) {
+    //             if (GetClientModule.includes(module_id)) {
+    //                 modules.style.display = 'block'; // Set display to 'block'
+    //             } else {
+    //                 modules.style.display = 'none'; // Set display to 'none'
+    //             }
 
-                var screen_permission_id = `${screenPermission.getAttribute("data-screen-permission-id")}`;
+    //             GetSubModules.forEach(function (submodules) {
+    //                 var sub_module_id = submodules.getAttribute('data-sub-module-id');
+    //                 if (GetClientSubModules.includes(sub_module_id)) {
+    //                     submodules.style.display = 'block'; // Set display to 'block'
+    //                 } else {
+    //                     submodules.style.display = 'none'; // Set display to 'none'
+    //                 }
+    //             });
+    //         });
+    //         var GetScreenPermissions = document.querySelectorAll('[data-screen-permission-id]');
+    //         var GetClientScreenSubModules = Object.values(permissions.screens).map(String);
 
-                if (GetClientScreenSubModules.includes(screen_permission_id)) {
-                    screenPermission.style.display = 'block'; // Set display to 'block'
-                    screenPermission.disabled = false;
-                } else {
-                    screenPermission.style.display = 'none'; // Set display to 'none'
-                    screenPermission.disabled = true;
-                }
-            });
-        }
-    }
+    //         GetScreenPermissions.forEach(function (screenPermission) {
+
+    //             var screen_permission_id = `${screenPermission.getAttribute("data-screen-permission-id")}`;
+
+    //             if (GetClientScreenSubModules.includes(screen_permission_id)) {
+    //                 screenPermission.style.display = 'block'; // Set display to 'block'
+    //                 screenPermission.disabled = false;
+    //             } else {
+    //                 screenPermission.style.display = 'none'; // Set display to 'none'
+    //                 screenPermission.disabled = true;
+    //             }
+    //         });
+    //     }
+    // }
 </script>
 
 <script>

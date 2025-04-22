@@ -1098,7 +1098,7 @@
 }
 
 .left_col {
-    background: #ffcb05;
+    background: #181816;
     color: black;
     /* background: #000000; */
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -1334,7 +1334,7 @@
 
 .nav_menu {
     float: left;
-    background: #343a40;
+    background: #121315;
     margin-bottom: 10px;
     width: 100%;
     color: white;
@@ -1905,7 +1905,7 @@ a:focus {
 }
 
 .nav.side-menu>li>a, .nav.child_menu>li>a {
-    color: black !important;
+    color: #fff !important;
     font-weight: 400;
 }
 

@@ -10,14 +10,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
 
-use App\Traits\livewireComponentTraits\CourseAssignCSVComponent;
 use App\Traits\livewireComponentTraits\GlobalVariablesForComponents;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 
 trait LivewireComponentsCommon
 {
-    use CourseAssignCSVComponent, GlobalVariablesForComponents;
+    use GlobalVariablesForComponents;
     
     public function deleteSelected($modelName)
     {

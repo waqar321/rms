@@ -48,7 +48,7 @@
                                         <!-- <span class="btn btn-info btn-xs select-all">Select all</span>
                                         <span class="btn btn-info btn-xs deselect-all">Deselect all</span> -->
                                 </label>
-                                <select name="permissions[]" id="permissions" class="form-control select2 permissions Select2DropDown multiplePermissions" data-table="permissions" data-table-field="permissions_id" data-id="permissions" multiple="multiple" required>
+                                <select name="permissions[]" id="permissions" class="form-control select2 permissions Select2DropDown multiplePermissions" data-table="permissions" data-table-field="permissions_id" data-id="permissions" multiple="multiple" >
                                     @foreach ($permissionLists as $id => $permissions)
                                         <option value="{{ $id }}"
                                             {{ in_array($id, old('permissions', [])) || (isset($role) && $role->permissions->contains($id)) ? 'selected' : '' }}>

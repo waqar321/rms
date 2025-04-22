@@ -39,7 +39,7 @@
                                     <input type="text" id="first_name" 
                                                         name="first_name"
                                                         class="form-control"
-                                                        wire:model.defer="ecom_admin_user.first_name" wire:loading.class="opacity-25"
+                                                        wire:model.defer="User.first_name" wire:loading.class="opacity-25"
                                                         placeholder="Enter first name">
                                     <span class="error-container danger w-100"></span>
                                 </div>
@@ -58,7 +58,7 @@
                                     <input type="text" id="last_name" 
                                                         name="last_name"
                                                         class="form-control"
-                                                        wire:model.defer="ecom_admin_user.last_name" wire:loading.class="opacity-25"
+                                                        wire:model.defer="User.last_name" wire:loading.class="opacity-25"
                                                         placeholder="Enter last name">
                                                         
                                     <span class="error-container danger w-100"></span>
@@ -68,7 +68,7 @@
                                 <!-- <div class="col-md-6 col-sm-6 col-xs-12" >
                                     <div class="form-group">
                                         <label for="employee_id">Employee Code <span class="danger">*</span> </label>
-                                        <input id="employee_id" wire:model.debounce.500ms="ecom_admin_user.employee_id" class="form-control" type="number"
+                                        <input id="employee_id" wire:model.debounce.500ms="User.employee_id" class="form-control" type="number"
                                                 name="employee_id" placeholder="Please Enter Employee Code" required>
                                     </div>
                                 </div> -->
@@ -80,7 +80,7 @@
                                         <input type="text" id="fullname" 
                                                             name="fullname"
                                                             class="form-control"
-                                                            wire:model="user.full_name" wire:loading.class="opacity-25"
+                                                            wire:model="User.name" wire:loading.class="opacity-25"
                                                             placeholder="Please Enter Name" required>
                                                             
                                         <span class="error-container danger w-100"></span>
@@ -107,7 +107,7 @@
                                             type="text" 
                                             id="username" 
                                             placeholder="Enter Username"
-                                            wire:model.debounce.500ms="ecom_admin_user.username">
+                                            wire:model.debounce.500ms="User.username">
                                     <span class="error-container danger w-100"></span>
                                 </div>
                             </div> -->
@@ -119,7 +119,7 @@
                                         <input class="form-control" 
                                             type="email" 
                                             id="email" 
-                                            wire:model.debounce.500ms="user.email"  
+                                            wire:model.debounce.500ms="User.email"  
                                             placeholder="Enter email address">
                                         <span class="error-container danger w-100"></span>
                                     </div>
@@ -135,6 +135,19 @@
                                                         wire:model.defer="password" wire:loading.class="opacity-25"
                                                         placeholder="Enter password"
                                                         >
+                                    <span class="error-container danger w-100"></span>
+                                </div>
+                            </div>
+
+                            <!-- =========================== designation ========================== -->
+                            <div class="col-md-6 col-sm-6 col-xs-12" >
+                                <div class="form-group">
+                                    <label for="designation">Designation *</label>
+                                    <input  class="form-control" 
+                                            type="text" 
+                                            id="designation" 
+                                            placeholder="Enter designation"
+                                            wire:model.debounce.500ms="User.designation">
                                     <span class="error-container danger w-100"></span>
                                 </div>
                             </div>

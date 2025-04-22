@@ -6,7 +6,6 @@ use Livewire\Component;
 use App\Models\Admin\SideBar as SideBarModel;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
-// use App\Traits\livewireComponentTraits\CategoryComponent;
     
 class Sidebar extends Component
 {
@@ -14,7 +13,8 @@ class Sidebar extends Component
     protected $paginationTheme = 'bootstrap';
     // protected $listeners = ['deletetest' => 'deletetestRecord', 'updateStatusOftest' => '', 'selectedColumns' => 'export'];
     protected $listeners = [
-                                'sidebarUpdated' => 'handleSidebarUpdated', ];
+                            'sidebarUpdated' => 'handleSidebarUpdated'
+                        ];
 
     public function mount()
     {
@@ -80,11 +80,12 @@ class Sidebar extends Component
         //     // 'ClassNames' => ['class1', 'class2']
         // ]);
 
-        // dd('done');
    }
     public function render()
     {
+
         $menus = SideBarModel::where('is_active', 1)->where('parent_id', null)->orderBy('order')->get();        
+
         return view('livewire.admin.partials.sidebar', compact('menus'));
     }
     public function SaveModel()

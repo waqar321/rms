@@ -12,6 +12,8 @@
 
 </head>
 
+
+
 <body class="nav-md">
 <div id="leopard_loader" class="leopard_loader">
     <img src="{{ url_secure('build/images/transpatent_leopard.gif') }}" alt="Loading...">
@@ -28,18 +30,17 @@
 </audio>
 <div class="container body">
     <div class="main_container">
-
-
+        
+    
         <!-- sidebar menu -->
         <div>    
             <livewire:admin.partials.sidebar/>    
         </div>
         <!-- sidebar menu end -->
-    
+
     
         <!-- sidebar menu -->
         <div>    
-            <livewire:admin.notification.token-check/>    
         </div>
         <!-- sidebar menu end -->
 

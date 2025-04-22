@@ -52,6 +52,7 @@ class Home extends Controller
      // dashboard starts
      public function dashboard()
      {
+  
                  
             $Data['onlineUsers'] = 100;
             $Data['usersCount'] = User::where('is_active' , 1)->count();

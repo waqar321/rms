@@ -37,13 +37,13 @@ class Kernel extends ConsoleKernel
         // '\App\Console\Commands\SyncOmsCodBooking',
         // '\App\Console\Commands\CreateGstManual',
         // '\App\Console\Commands\PushApiStatus',
-        '\App\Console\Commands\SyncHRData',
+        // '\App\Console\Commands\SyncHRData',
     ];
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
         
-        $schedule->command('sync:hrData')->everyTwoMinutes();     // sync HR data
+        // $schedule->command('sync:hrData')->everyTwoMinutes();     // sync HR data
         // $schedule->command('sync:hrData')->everyTenMinutes();     // sync HR data
         // $schedule->command('sync:hrData')->everyMinute();     // sync HR data
         // $schedule->command('sync:hrData')->dailyAt(7);     // sync HR data

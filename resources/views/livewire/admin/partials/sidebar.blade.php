@@ -24,7 +24,11 @@
         .child_menu > li > a:hover {
             color: #007bff; /* Hover color for submenu items */
         }
-        
+        /* .profile_img
+        {
+            width: 100%;
+            height: 100%;
+        } */
     </style>
 @endpush 
 
@@ -35,7 +39,14 @@
                         <a href="{{ url_secure('') }}" class="site_title">   <img src="<?php echo url_secure('build/images/logo/LCS-logo1.png'); ?>" alt="..." class="profile_img" width="65%"></a>
                     </div> -->
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="{{ url_secure('') }}" class="site_title">  <h1 style="font-weight: bold;color: #343a40;">TITLE</h1></a>
+                        <a href="{{ url_secure('') }}" class="site_title">  
+                            <!-- <h1 style="font-weight: bold;color: #343a40;"> -->
+                                <!-- </h1> -->
+                            
+                            <img src="<?php echo url_secure('build/images/abaseen_logo.png'); ?>" alt="..." 
+                                style="width: 100%; height: 100%"
+                                class="profile_img" >
+                        </a>
                     </div>
                     <div class="clearfix"></div>
                 <br/>

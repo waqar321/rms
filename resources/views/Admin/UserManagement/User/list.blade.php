@@ -151,9 +151,8 @@
                                                 </td>
                                                 <td>
                                                 
-
-                                                    <a data-screen-permission-id="23" href="{{ url_secure_api('manage_user/?id=' . base64_encode($user->id)) }}" class="btn btn-primary">Edit</a>
-                                                    <button data-screen-permission-id="24" onclick="confirmDelete('{{ $user->id }}')" class="btn btn-danger">Delete</button>
+                                                    <a  href="{{ url_secure_api('manage_user/?id=' . base64_encode($user->id)) }}"><i class="fa fa-edit fa-2x"></i></a>
+                                                    <button  onclick="confirmDelete('{{ $user->id }}')" style="border:0; background:none;padding:0; margin:0" class="fa fa-trash fa-2x"></button>
                                                 </td>
                                             </tr>
                                         @empty

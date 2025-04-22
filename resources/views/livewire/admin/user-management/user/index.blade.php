@@ -107,7 +107,7 @@
         
         var ModuleName = '{!! $JsMainTitle !!}';
         var readyToLoad = {!! json_encode($readyToLoad) !!};
-        var GetEmployeeDataRoute = "{{ route('get.EmployeeData') }}";
+
     
         // -------------------- send response that page is loaded, ----------------------
         window.addEventListener('ResetDropDowns', event => 

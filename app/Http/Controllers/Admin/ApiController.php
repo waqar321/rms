@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Admin\User;
+use App\Models\User;
 use App\Models\Admin\ecom_module_permissions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +24,7 @@ class ApiController extends Controller
         //     'message' => 'api is working fine',
         // ];
         // return response()->json($response, 404);
-
+       
         if (isset($request->user_id) && isset($request->password)) 
         {
             $user_id = $request->user_id;
@@ -45,7 +45,7 @@ class ApiController extends Controller
                     if (Auth::attempt($credentials)) 
                     {
                         // $user = Auth::user();
-                        $result->last_login = date('Y-m-d H:i:s');
+                        // $result->last_login = date('Y-m-d H:i:s');
                         $result->save();
 
                         $response = [
