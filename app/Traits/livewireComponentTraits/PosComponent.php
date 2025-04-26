@@ -8,6 +8,7 @@ use App\Models\Admin\Receipt;
 use App\Models\Admin\Item;
 use App\Models\User;
 use App\Models\Admin\ItemCategory;
+use App\Models\Admin\VendorLedger;
 use App\Traits\livewireComponentTraits\LivewireComponentsCommon;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 // use App\Exports\CategoriesExport;
@@ -122,15 +123,15 @@ trait PosComponent
         // $this->Receipt = $pos ?? new pos();   
         $this->pageTitle = 'POS Operation';
         $this->MainTitle = 'POSOperation';
-        $this->paginateLimit = 50;
+        $this->paginateLimit = 30;
         $this->items = Item::orderBy('order', 'ASC')->get();
-        $this->categories = ItemCategory::all();
+        $this->categories = ItemCategory::where('id', '!=', 12)->get();
         $this->cart = [];
         $this->selectedCategory = ItemCategory::first()->id;
 
         $this->vendors = User::whereHas('roles', function ($query) {
-            $query->where('id', 15);
-        })->get();
+                            $query->where('id', 15);
+                        })->get();
 
         // dd($this->vendors);
 
@@ -181,7 +182,8 @@ trait PosComponent
         // Perform saving logic here, e.g., create entry in vendor ledger
         // You can also store current cart info or subtotal
 
-        if (!$this->selectedVendor) {
+        if (!$this->selectedVendor) 
+        {
             $this->addError('selectedVendor', 'Please select a vendor.');
             return;
         }

@@ -21,7 +21,9 @@ trait ItemComponent
     use LivewireComponentsCommon;
 
     public Item $Item;  
-    // public $parent_SideBars;
+    public $Item_category_id;
+    // publi ? ;
+    // pu : nullc->category_id $0;
     // public $IdNames='';
     // public $ClassNames='';
     // public $SelectedPermissionIds=[];
@@ -127,7 +129,7 @@ trait ItemComponent
         $this->paginateLimit = 30;
         $this->categories = ItemCategory::all();
         $this->unitTypes = UnitType::all();
-
+        // $this->Item->is_vendor_product = false;
         // $this->parent_Items = Item::where('is_active', 1)->where('parent_id', null)->orderBy('order')->get();
         // $this->permissionLists = Permission::pluck('title', 'id');
         
@@ -145,6 +147,7 @@ trait ItemComponent
     }
     protected function RenderData()
     {
+        
         $Items = Item::when($this->searchByName !== '', function ($query) 
                             {
                                 $query->where('name', 'like', '%' . $this->searchByName . '%');
@@ -180,11 +183,13 @@ trait ItemComponent
     public function EditData(Item $Item)
     {
         $this->Item = $Item;
+        $Item_category_id = $this->Item ? $this->Item->category_id : 0; 
         $this->Collapse = 'uncollapse';
         $this->Update = true;   
         $this->RenderData();
         // dd($this->Item );     
         // $this->dispatchBrowserEvent('updateData');
+        $this->dispatchBrowserEvent('scrollToForm', ['Item_category_id' => $Item_category_id]);
     }
     public function DeleteItem(Item $Item)
     {

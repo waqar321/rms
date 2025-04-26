@@ -3,13 +3,30 @@
 
  
     <style>
-        .testForm
-        {  
-            display: block !important;
-            margin-top: 0em !important;
-            unicode-bidi: isolate !important;
-            padding-top: 20px;
-        }
+            .zoom-wrapper {
+                overflow: visible; /* allow zoom to overflow */
+                width: 80px;
+                position: relative;
+            }
+
+            .zoom-content {
+                transition: transform 0.3s ease;
+                display: inline-block;
+                text-align: center;
+                transform-origin: top left; /* ensures it zooms from corner */
+            }
+
+            .zoom-wrapper:hover .zoom-content {
+                transform: scale(2.5);
+                z-index: 999;
+                position: absolute;
+                background: white;
+                padding: 10px;
+                border-radius: 6px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+                min-width: 200px; /* ✅ increase the width */
+            }
+
 
     </style>
 @endpush 
@@ -83,16 +100,20 @@
                                             <td>
                                                 <div class="d-flex flex-wrap gap-2">
                                                     @foreach($Receipt->receiptItems as $receiptItem)
-                                                        <div class="text-center" style="width: 80px;">
-                                                            <img src="{{ asset('storage/' . $receiptItem->item->image_path) }}" 
-                                                                alt="{{ $receiptItem->item->name }}" 
-                                                                class="img-thumbnail" 
-                                                                style="height: 60px; object-fit: cover;">
-                                                            <small class="d-block mt-1">{{ $receiptItem->item->name }}</small>
+                                                        <div class="text-center zoom-wrapper">
+                                                            <div class="zoom-content">
+                                                                <img src="{{ asset('storage/' . $receiptItem->item->image_path) }}" 
+                                                                    alt="{{ $receiptItem->item->name }}" 
+                                                                    class="img-thumbnail" 
+                                                                    style="height: 60px; object-fit: cover;">
+                                                                <!-- <small class="d-block mt-1">{{ $receiptItem->item->name }} : {{ $receiptItem->item_qty }}</small> -->
+                                                                <small class="d-block mt-1">{{ $receiptItem->item->name }} : {{ $receiptItem->item_qty }}</small>
+                                                            </div>
                                                         </div>
                                                     @endforeach 
                                                 </div>
                                             </td>
+
                                             <td>{{ $Receipt->total_amount  }}</td>
 
                                             <td>{{ $Receipt->entry_person->username }}</td>

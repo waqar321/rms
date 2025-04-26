@@ -2,7 +2,7 @@
 
 <div class="row"> 
     <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
+        <div class="x_panel" id="x_panel_id">
             
             @include('Admin.partial.livewire.X_titles')   
 
@@ -19,7 +19,7 @@
                     @endforeach
                 @endif
 
-                <div class="col-mb-12 col-lg-12">
+                <div class="col-mb-12 col-lg-12 testForm">
 
                     <form wire:submit.prevent="saveItem">
 
@@ -42,6 +42,7 @@
                         </div>
                         
                         <!-- =========================== Category ========================== -->
+
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <div class="form-group" wire:ignore>
                                 <label for="category">Categories {{ $Item->category_id }} </label>
@@ -51,10 +52,10 @@
                                                 data-table-field="category"
                                                 class="form-control Select2DropDown categoryClass">
                                                 
-                                                <!-- <option value="" disabled selected style="color: #131212 !important">Select Region </option>  -->
+                                            <!-- <option value="" disabled selected style="color: #131212 !important">Select Region </option>  -->
                                             @foreach($categories as $id => $category)     
-                                                    <option value="{{ $category->id }}" >
-                                                        {{ $category->name }} 
+                                                    <option value="{{ $category->id }}" {{ $category->id == $Item_category_id ? 'selected' : '' }}>
+                                                        {{ $category->name }} {{ $Item->category_id }} 
                                                     </option>   
                                             @endforeach  
                                     </select>
@@ -160,12 +161,16 @@
                             </div>
                         </div>
                         <!-- =========================== Order ========================== -->
-                        <div class="col-md-6 col-lg-6">
-                            <div class="form-group">
-                                <label for="order">Order <span class="danger">*</span></label>
-                                <input type="number" wire:model.debounce.500ms="Item.order" id="order" placeholder="Enter the order" class="form-control">
+                            <div class="col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label for="order">Order <span class="danger">*</span></label>
+                                    <input type="number" wire:model.debounce.500ms="Item.order" id="order" placeholder="Enter the order" class="form-control">
+                                </div>
                             </div>
-                        </div>
+                        <!-- =========================== Order ========================== -->
+                    
+
+
 
                         
                         <div class="col-md-12 col-lg-12">
