@@ -74,9 +74,15 @@
 
         @foreach($cart as $item)
             <div class="item-row">
-                <div style="width: 50%;">{{ $item['name'] }}</div>
-                <div style="width: 20%; text-align:center;">{{ $item['qty'] }}</div>
-                <div style="width: 30%; text-align:right;">{{ number_format($item['subtotal'], 2) }}</div>
+                <div style="width: 20%;">
+                    <img src="{{ asset('storage/' . $item['image_path']) }}" 
+                                                                            alt="$item['name']" 
+                                                                            class="img-thumbnail" 
+                                                                            style="height: 35px; object-fit: cover;">
+                </div>
+                <div style="width: 40%;">{{ $item['name'] }}</div>
+                <div style="width: 15%; text-align:center;">{{ $item['qty'] }}</div>
+                <div style="width: 15%; text-align:right;">{{ number_format($item['subtotal'], 2) }}</div>
             </div>
         @endforeach
 

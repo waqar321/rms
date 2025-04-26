@@ -84,6 +84,7 @@ class Index extends Component
     {
         $pos = [];
 
+        // dd($this->cart);
         if(count($this->cart) < 1)
         {
             $this->dispatchBrowserEvent('no_item_selected', ['message' => 'please select items to print!!']); // JS event to open in new tab

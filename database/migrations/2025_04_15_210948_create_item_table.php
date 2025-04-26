@@ -30,7 +30,7 @@ return new class extends Migration
             $table->integer('order')->default(0); // store image path if needed
             $table->string('image_path')->nullable(); // store image path if needed
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
-            // $table->boolean('is_active')->default(true);
+            $table->boolean('is_vendor_product')->default(true);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -43,7 +43,7 @@
                             <!-- <h1 style="font-weight: bold;color: #343a40;"> -->
                                 <!-- </h1> -->
                             
-                            <img src="<?php echo url_secure('build/images/abaseen_logo.png'); ?>" alt="..." 
+                            <img src="<?php //echo url_secure('build/images/abaseen_logo.png'); ?>" alt="..." 
                                 style="width: 100%; height: 100%"
                                 class="profile_img" >
                         </a>

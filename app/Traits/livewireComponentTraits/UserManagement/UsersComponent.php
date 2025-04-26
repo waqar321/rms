@@ -223,7 +223,7 @@ trait UsersComponent
        $this->sortDirection = 'asc';
        $this->sortByRealTime = 'Employee Code';
 
-       $this->rolesLists = Role::where('title','!=','Super Admin')->where('title','!=','User')->pluck('title', 'id');;
+       $this->rolesLists = Role::where('title','!=','Super Admin')->where('title','!=','User')->pluck('title', 'id');
        $this->cities = collect(); 
 
        foreach ($this->rolesLists as $key => $roles)

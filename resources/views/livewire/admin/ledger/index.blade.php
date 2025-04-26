@@ -49,8 +49,8 @@
 
                     @include('Admin.partial.livewire.header')         
 
-                    @include('Admin.ItemCategory.add') 
-                    @include('Admin.ItemCategory.list') 
+                    @include('Admin.Ledger.add') 
+                    @include('Admin.Ledger.list') 
                     
 
             </div>
@@ -71,6 +71,8 @@
            <!-- ------------------- stack  scripts end  ------------------------ -->
 
     <script>
+        var item_price = 0;
+        var item_qty = 0;
 
         $(document).ready(function() 
         {
@@ -78,12 +80,112 @@
             //     Livewire.restart();
             // }, 100);
             ApplyAllSelect2(); 
+
+            $('#vendor_item_section').addClass('d-none');
+            $('#unit_price_section').addClass('d-none');
+            $('#cash_amount_section').addClass('d-none');
+            $('#unit_qty_section').addClass('d-none');
+            $('#total_amount_section').addClass('d-none');
+
+            $('#cash_amount').on('input', function () 
+            {
+                    // alert('awdawd');
+                    // return false;
+
+                    updateTotal();
+            });
+    
+            // $('#cash_amount').on('input', updateTotal);
+    
+            // $('#cash_amount').on('change', function () 
+            // {
+            //     updateTotal();
+            // });
+    
+            $('#unit_qty').on('input', function ()
+            {
+                item_qty = $(this).val();
+                // alert(item_qty);
+                updateTotal();
+            });
+
+            $('#item_id').on('change', function ()
+            {
+                // const selectedValues = $(this).select2("val");
+                const selectedValues = $(this).val();
+                Livewire.emit('getItemAmount', selectedValues);  // Emit the event with the selected item ID
+                // alert(selectedValues);
+            });
+            window.addEventListener('item_price', event => 
+            {
+                item_price = event.detail.item_price;
+                updateTotal();
+            });
+            $('#payment_type').on('change', function () 
+            {
+                let type = $(this).val();
+
+                if (type === 'cash') 
+                {
+                    $('#cash_amount_section').removeClass('d-none');
+                    $('#unit_price_section').addClass('d-none');
+                    $('#total_amount_section').removeClass('d-none');
+                } 
+                else if (type === 'product_bought') 
+                {
+                    // $('#cash_amount_section').removeClass('d-none');
+                    $('#vendor_item_section').removeClass('d-none');
+                    $('#unit_price_section').removeClass('d-none');
+                    // $('#unit_price_section').addattr('readonly');
+                    $('#unit_qty_section').removeClass('d-none');
+                    $('#total_amount_section').removeClass('d-none');
+                    // alert('awd');                    
+                    updateTotal();
+                } 
+                // else if (type === 'product_sold') 
+                // {
+                //     $('#productSection').removeClass('d-none');
+                //     $('#cashAmountSection').addClass('d-none');
+                //     updateTotal();
+                // } 
+                // else 
+                // {
+                //     $('#productSection').addClass('d-none');
+                //     $('#cashAmountSection').addClass('d-none');
+                // }
+            });
+
+            function updateTotal() 
+            {
+                let total_amount=0;
+
+                if(item_price!=0)
+                {
+                    // alert(item_qty);
+
+                    $('#unit_price').val(item_price);
+                    // item_qty = $('#unit_qty').val();
+                    total_amount = item_qty * item_price;
+                    // alert(item_price);
+                    // alert(item_qty);
+                }
+                else
+                {
+                    total_amount = parseFloat($('#cash_amount').val()) || 0;
+                }
+                
+                $('#total_amount').val((total_amount).toFixed(2));
+                // let unit_price = parseFloat($('#unit_price').val()) || 0;
+                // let unit_qty = parseFloat($('#unit_qty').val()) || 0;
+                // $('#total_amount').val((qty * unit).toFixed(2));
+            }
         });
         var ModuleName = '{!! $JsMainTitle !!}';
         var readyToLoad = {!! json_encode($readyToLoad) !!};
 
     
         // -------------------- send response that page is loaded, ----------------------
+
         window.addEventListener('ResetDropDowns', event => 
         {
             $('.multiplePermissions').empty();
@@ -167,6 +269,7 @@
                 Livewire.emit('saveCourseAlignEvent');
             }
         });
+       
 
 
     </script>

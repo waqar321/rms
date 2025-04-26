@@ -13,14 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vendor_ledgers', function (Blueprint $table) {
+        Schema::create('ledgers', function (Blueprint $table) {
             $table->id();
             $table->decimal('amount', 10, 2);
-            $table->unsignedBigInteger('vendor_id')->nullable();
-            $table->foreign('vendor_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('details');
             $table->dateTime('entry_date');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vendor_ledger');
+        Schema::dropIfExists('ledgers');
     }
 };

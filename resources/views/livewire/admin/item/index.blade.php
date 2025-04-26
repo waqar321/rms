@@ -78,7 +78,14 @@
             //     Livewire.restart();
             // }, 100);
             ApplyAllSelect2(); 
+
+            // on page load point to id x_panel
         });
+        
+        // document.addEventListener('DOMContentLoaded', function () 
+        // {
+        //         document.getElementById('x_panel_id')?.scrollIntoView({ behavior: 'smooth' });
+        // });
 
         
         function ApplyAllSelect2()
@@ -90,17 +97,18 @@
           
             $('#category').select2();
 
-            window.initSelectCompanyDrop=()=>{
+            window.initSelectCompanyDrop=()=>
+            {
                 $('#category').select2({
                     placeholder: 'Please Select Category',
                     allowClear: true
                 });
+                
                 $('#unittype').select2({
                     placeholder: 'Please Select Unit Type',
                     allowClear: true
                 });
             }
-            // alert('awd');
 
             initSelectCompanyDrop();
 
@@ -123,9 +131,20 @@
             // ApplyAllSelect2();
             // Livewire.emit('LoadDataNow');                          
         });
-        window.addEventListener('updateData', event => 
+        window.addEventListener('scrollToForm', event => 
         {
+            const form = $(".testForm");
 
+            if (form.length) 
+            {
+                form[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            
+            const categoryId = event.detail.Item_category_id;
+            let select = $('.categoryClass');
+            select.val(categoryId).trigger('change');
+
+            ApplyAllSelect2();  
         });
         window.addEventListener('loadDropDownData', event => 
         {
@@ -145,7 +164,12 @@
             // ApplyAllSelect2();
             // Livewire.emit('LoadDataNow');                          
         });
+        
 
+        // $('.is_vendor_product').on('change', function(e) 
+        // {
+        //     alert($(this));
+        // });
 
         $('.Select2DropDown').on('change', function(e) 
         {      

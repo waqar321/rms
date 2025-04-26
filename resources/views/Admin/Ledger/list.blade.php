@@ -60,28 +60,34 @@
                             <tbody>
                                 
                                 @if($readyToLoad)
-                                    @forelse($UnitTypes as $unit_type)
+                                    @forelse($Ledgers as $Ledger)
+                                        
+
                                         <tr>
                                             <!-- <td>
-                                                <input type="checkbox" wire:model="selectedRows.{{ $unit_type->id }}">
+                                                <input type="checkbox" wire:model="selectedRows.{{ $Ledger->id }}">
                                             </td> -->
-                                            <td>{{ $unit_type->id }}</td>
-                                            <td>{{ $unit_type->name  }}</td>                                            
+                                            <td>{{ $Ledger->id }}</td>
+                                            <td>{{ $Ledger->vendor->name  }}</td>                                            
+                                            <td>{{ $Ledger->details  }}</td>                                            
+                                            <td>{{ $Ledger->amount  }}</td>                                            
+                                            <td>{{ $Ledger->entry_date  }}</td>   
+                                         
                                             <td>
-                                                @if($unit_type->is_active == 1)
-                                                    <span class="fa fa-toggle-on toggle-icon" wire:click="updateStatus({{ $unit_type->id }}, 0)"></span>
+                                                @if($Ledger->is_active == 1)
+                                                    <span class="fa fa-toggle-on toggle-icon" wire:click="updateStatus({{ $Ledger->id }}, 0)"></span>
                                                 @else
-                                                    <span class="fa fa-toggle-off toggle-icon" wire:click="updateStatus({{ $unit_type->id }}, 1)"></span>
+                                                    <span class="fa fa-toggle-off toggle-icon" wire:click="updateStatus({{ $Ledger->id }}, 1)"></span>
                                                 @endif
                                             </td>
                                             <td>
-                                                <a data-screen-unit_type-id="23" wire:click="EditData({{ $unit_type->id }})" class="btn btn-primary">Edit</a>
-                                                <button data-screen-unit_type-id="24" onclick="confirmDelete('{{ $unit_type->id }}')" class="btn btn-danger">Delete</button>
+                                                <a data-screen-Ledger-id="23" wire:click="EditData({{ $Ledger->id }})" class="btn btn-primary">Edit</a>
+                                                <button data-screen-Ledger-id="24" onclick="confirmDelete('{{ $Ledger->id }}')" class="btn btn-danger">Delete</button>
                                             </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="8" class="text-center"> <h2> No User Record Found!!! </h2></td>
+                                            <td colspan="8" class="text-center"> <h2> No Record Found!!! </h2></td>
                                         </tr>
                                     @endforelse
                                 @endif 
@@ -91,7 +97,7 @@
                             </tbody>
                         </table>
 
-                        @include('Admin.partial.livewire.pagination', ['ModelListing' => $UnitTypes, 'Model' => 'categoryListing'])       
+                        @include('Admin.partial.livewire.pagination', ['ModelListing' => $Ledgers, 'Model' => 'categoryListing'])       
             
             </div>
         </div>

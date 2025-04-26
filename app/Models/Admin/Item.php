@@ -26,6 +26,8 @@ class Item extends Model
         'order',
         'image_path',
         'created_by',
+        // 'is_vendor_product',
+
         // 'is_active',
     ];
 

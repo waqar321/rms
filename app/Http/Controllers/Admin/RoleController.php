@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\Rule;
 use Yajra\DataTables\DataTables;
 use Validator;
-use App\Models\ecom_merchant_role;
+// use App\Models\ecom_merchant_role;
 use App\Models\Admin\ecom_merchant_module_screen_permission;
 
 class RoleController extends Controller
@@ -31,7 +31,7 @@ class RoleController extends Controller
     public function __construct()
     {
         // $this->role = new ecom_user_roles();
-        $this->merchant_role = new ecom_merchant_role();
+        // $this->merchant_role = new ecom_merchant_role();
         $this->exportController = new ExportController();
     }
 

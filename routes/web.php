@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\UnitTypeController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\POSController;
 use App\Http\Controllers\Admin\VendorController;
+use App\Http\Controllers\Admin\LedgerController;
 use App\Jobs\CleanCacheAndTempFilesJob;
 use App\Models\Admin\ecom_admin_user;
 /*
@@ -130,18 +131,22 @@ Route::group(['middleware' => 'auth'], function ()
         // Route::get('roles', [ItemCategoryController::class, 'index'])->name('roles.index');
         // Route::get('permissions', [ItemCategoryController::class, 'index'])->name('permissions.index');
     });
-    Route::prefix('customers')->group(function ()
+    Route::prefix('ledgers')->group(function ()
     {
-        Route::get('/', [CustomerController::class, 'index'])->name('index');
+        Route::get('/', [LedgerController::class, 'index'])->name('index');
     });
+    // Route::prefix('customers')->group(function ()
+    // {
+    //     Route::get('/', [CustomerController::class, 'index'])->name('index');
+    // });
     Route::prefix('pos')->group(function ()
     {
         Route::get('/', [POSController::class, 'index'])->name('pos.index');
     });
-    Route::prefix('VendorList')->group(function ()
-    {
-        Route::get('/', [VendorController::class, 'index'])->name('index');
-    });
+    // Route::prefix('VendorList')->group(function ()
+    // {
+    //     Route::get('/', [VendorController::class, 'index'])->name('index');
+    // });
     Route::get('/print-receipt', function () {
         $cart = session('cart', []);
         // dd($cart);
