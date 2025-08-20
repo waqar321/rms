@@ -7,13 +7,16 @@
 
             @if(isset($ecom_category))
                 <img src="{{ $path }}" style="width: 70px; height: 45px;" class="me-4 selected-photo" data-category-id="{{$ecom_category->id }}" alt="Selected Image">
-            @endif  
+            @endif
 
             @if(isset($ecom_course))
                 <img src="{{ $path }}" style="width: 70px; height: 45px;" class="me-4 selected-photo" data-category-id="{{$ecom_course->id }}" alt="Selected Image">
-            @endif     
+            @endif
+            @if(isset($Setting))
+                <img src="{{ $path }}" style="width: 70px; height: 45px;" class="me-4 selected-photo" data-category-id="{{$Setting->id }}" alt="Selected Image">
+            @endif
 
-            <button type="button" wire:click="removeImage()" class="btn btn-danger mt-2">Remove Image</button>        
+            <button type="button" wire:click="removeImage()" class="btn btn-danger mt-2">Remove Image</button>
         </label>
     <!-- </div> -->
 <!-- </div> -->

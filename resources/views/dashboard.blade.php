@@ -27,6 +27,10 @@
         .date-to{
             height: 33px;
         }
+        .tile_count .tile_stats_count .count
+        {
+            font-size: 28px !important;
+        }
     </style>
 @endsection
 
@@ -34,62 +38,120 @@
 
         @can('dashboard_view')
             <div class="right_col" role="main" data-screen-permission-id="53">
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-group">
+                            {{-- <label for="description">NOTE</label> --}}
+                             <textarea class="form-control" id="description" name="description" rows="10" placeholder="Enter NOTE">{{ $Data['setting']->note_description }}</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="display: inline-block;">
+                     <h1>
+                        Stats of {{ \Carbon\Carbon::create()->month($Data['currentMonth'])->format('F') }} {{ $Data['currentYear'] }}
+                     </h1>
+                </div>
                 <div class="row" style="display: inline-block;">
                     <div class="tile_count">
                         <div class="col-md-2 col-sm-4  tile_stats_count">
                                 <span class="count_top"><i class="fa fa-users"></i> Total Sale </span>
-                                <div class="count">50000</div>
+                                <div class="count">{{ formatIndianNumber($Data['total_sale']) }}</div>
+
                                 <span class="count_bottom">
                                         <i class="green"><i class="fa fa-sort-asc"></i>200 </i> Increase from Last Week
                                         0 Increase from Last Week
                                 </span>
                         </div>
-                    
+                        <div class="col-md-2 col-sm-4  tile_stats_count">
+                                <span class="count_top"><i class="fa fa-users"></i> Total Purchase </span>
+                                <div class="count">{{ formatIndianNumber($Data['total_purchase']) }}</div>
+
+                                <span class="count_bottom">
+                                        <i class="green"><i class="fa fa-sort-asc"></i>200 </i> Increase from Last Week
+                                        0 Increase from Last Week
+                                </span>
+                        </div>
+
                         <div class="col-md-2 col-sm-4  tile_stats_count">
                                 <span class="count_top"><i class="fa fa-users"></i> Total Expense </span>
-                                <div class="count">42000</div>
+                                <div class="count">{{ formatIndianNumber($Data['total_expense']) }}  </div>
                                 <span class="count_bottom">
                                     <i class="green"><i class="fa fa-sort-asc"></i>100</i> Increase from Last Week
                                     0 Increase from Last Week
                                 </span>
                         </div>
                         <div class="col-md-2 col-sm-4  tile_stats_count">
-                                <span class="count_top"><i class="fa fa-folder"></i></i> Total Profit </span>
-                                <div class="count">8000</div>
+                                <span class="count_top"><i class="fa fa-folder"></i></i> Total Salary </span>
+                                <div class="count">{{ formatIndianNumber($Data['total_diharhi_given']) }} </div>
                                 <span class="count_bottom">
                                     <i class="green"><i class="fa fa-sort-asc"></i>100 </i> Increase from Last Week
                                     0 Increase from Last Week
                                 </span>
                         </div>
                         <div class="col-md-2 col-sm-4  tile_stats_count">
-                                <span class="count_top"><i class="fa fa-book"></i> Total vendors </span>
-                                <div class="count">6</div>
+                                <span class="count_top"><i class="fa fa-book"></i> Total Credit Sale </span>
+                                <div class="count">{{ formatIndianNumber($Data['total_credit_sale']) }} </div>
                                 <span class="count_bottom">
                                     <i class="green"><i class="fa fa-sort-asc"></i>100</i> Increase from Last Week
                                     0 Increase from Last Week
                                 </span>
                         </div>
                         <div class="col-md-2 col-sm-4  tile_stats_count">
-                                <span class="count_top"><i class="fa fa-building"></i> Total Rosh </span>
-                                <div class="count">22</div>
+                                <span class="count_top"><i class="fa fa-book"></i> Total Credit Of Vendors </span>
+                                <div class="count">{{ formatIndianNumber($Data['total_credit_amount']) }} </div>
+                                <span class="count_bottom">
+                                    <i class="green"><i class="fa fa-sort-asc"></i>100</i> Increase from Last Week
+                                    0 Increase from Last Week
+                                </span>
+                        </div>
+                        <div class="col-md-2 col-sm-4  tile_stats_count">
+                                <span class="count_top"><i class="fa fa-book"></i> Total Amount Added </span>
+                                <div class="count">{{ formatIndianNumber($Data['total_amount_added']) }} </div>
+                                <span class="count_bottom">
+                                    <i class="green"><i class="fa fa-sort-asc"></i>100</i> Increase from Last Week
+                                    0 Increase from Last Week
+                                </span>
+                        </div>
+                            <div class="col-md-2 col-sm-4  tile_stats_count">
+                                <span class="count_top"><i class="fa fa-building"></i> Total Profit </span>
+                                <div class="count">{{ formatIndianNumber($Data['earning']) }} </div>
+
                                 <span class="count_bottom">
                                     <i class="green"><i class="fa fa-sort-asc"></i>100 </i> Increase from Last Week
                                     0 Increase from Last Week
                                 </span>
                         </div>
+                        {{-- <div class="col-md-2 col-sm-4  tile_stats_count">
+                            <span class="count_top"><i class="fa fa-play-circle"></i>Total Kabab Roll</span>
+                             <div class="count">{{ formatIndianNumber($Data['total_kabab_roll']) }} </div>
+                            <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>0% </i> Increase from Last Week</span>
+                        </div> --}}
+
                         <div class="col-md-2 col-sm-4  tile_stats_count">
-                            <span class="count_top"><i class="fa fa-play-circle"></i>Total Palao</span>
-                            <div class="count">25</div>
+                            <span class="count_top"><i class="fa fa-play-circle"></i>Total Adha Pao Qeema</span>
+                             <div class="count">{{ formatIndianNumber($Data['total_adha_pao_qeema']) }} </div>
                             <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>0% </i> Increase from Last Week</span>
                         </div>
-                        
+                        <div class="col-md-2 col-sm-4  tile_stats_count">
+                            <span class="count_top"><i class="fa fa-play-circle"></i>Total Kabab Roll</span>
+                             <div class="count">{{ formatIndianNumber($Data['total_kabab_roll']) }} </div>
+                            <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>0% </i> Increase from Last Week</span>
+                        </div>
+                        <div class="col-md-2 col-sm-4  tile_stats_count">
+                            <span class="count_top"><i class="fa fa-play-circle"></i>Total Zinger</span>
+                             <div class="count">{{ formatIndianNumber($Data['total_zinger']) }} </div>
+                            <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>0% </i> Increase from Last Week</span>
+                        </div>
+
                     </div>
                 </div>
-                <!-- <div class="row">
+                <div class="row">
                     <div class="col-md-4 col-sm-4">
-                        <div class="x_panel tile fixed_height_320 overflow_hidden">
+                        {{-- <div class="x_panel tile fixed_height_320 overflow_hidden"> --}}
+                        <div class="x_panel tile overflow_hidden">
                             <div class="x_title">
-                                <h2>Device Usage</h2>
+                                <h2>Customer Balances</h2>
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                                     <li class="dropdown">
@@ -106,42 +168,175 @@
                             <div class="x_content">
                                 <table style="width:100%">
                                     <tr>
-                                        <th style="width:37%;">
+                                        {{-- <th style="width:37%;">
                                             <p>Top 5</p>
-                                        </th>
+                                        </th> --}}
                                         <th>
                                             <div class="col-lg-7 col-md-7 col-sm-7">
-                                                <p class="">Device</p>
+                                                <p class="">Customer</p>
                                             </div>
                                             <div class="col-lg-5 col-md-5 col-sm-5">
-                                                <p class="">Progress</p>
+                                                <p class="TEXT-RIGHT">Balance</p>
                                             </div>
                                         </th>
                                     </tr>
                                     <tr>
-                                        <td>
+                                        {{-- <td>
                                             <canvas class="canvasDoughnut" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
-                                        </td>
+                                        </td> --}}
                                         <td>
-                                            <table class="tile_info">
-                                                <tr><td><p><i class="fa fa-square blue"></i>IOS</p></td><td>30%</td></tr>
-                                                <tr><td><p><i class="fa fa-square green"></i>Android</p></td><td>10%</td></tr>
-                                                <tr><td><p><i class="fa fa-square purple"></i>Blackberry</p></td><td>20%</td></tr>
-                                                <tr><td><p><i class="fa fa-square aero"></i>Symbian</p></td><td>15%</td></tr>
-                                                <tr><td><p><i class="fa fa-square red"></i>Others</p></td><td>30%</td></tr>
-                                            </table>
+                                                <table class="countries_list">
+                                                    <tbody>
+
+                                                            @foreach($Data['customers'] as $customer)
+                                                                <tr>
+                                                                    <td data-id='{{ $customer->id }}'> {{ $customer->name }} </td>
+                                                                        {{-- <a href="{{ url_secure_api('ledgers/?customer_id=' . base64_encode($customer->id)) }}">
+                                                                            {{ $customer->name }} </td>
+                                                                        </a> --}}
+                                                                    <td class="fs15 fw700 text-right">{{ $customer->remaining_amount }}</td>
+                                                                </tr>
+                                                            @endforeach
+
+                                                    </tbody>
+                                                </table>
                                         </td>
                                     </tr>
                                 </table>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8 col-sm-8">
+                    <div class="col-md-4 col-sm-4">
+                        {{-- <div class="x_panel tile fixed_height_320 overflow_hidden"> --}}
+                        <div class="x_panel tile overflow_hidden">
+                            <div class="x_title">
+                                <h2>Vendor Balances</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="#">Settings 1</a>
+                                            <a class="dropdown-item" href="#">Settings 2</a>
+                                        </div>
+                                    </li>
+                                    <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <table style="width:100%">
+                                    <tr>
+                                        {{-- <th style="width:37%;">
+                                            <p>Top 5</p>
+                                        </th> --}}
+                                        <th>
+                                            <div class="col-lg-7 col-md-7 col-sm-7">
+                                                <p class="">Vendor</p>
+                                            </div>
+                                            <div class="col-lg-5 col-md-5 col-sm-5">
+                                                <p class="TEXT-RIGHT">Balance</p>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        {{-- <td>
+                                            <canvas class="canvasDoughnut" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
+                                        </td> --}}
+                                        <td>
+                                                <table class="countries_list">
+                                                    <tbody>
+
+                                                            @foreach($Data['vendors'] as $vendor)
+                                                                <tr><td data-id='{{ $vendor->name }}'> {{ $vendor->name }} </td><td class="fs15 fw700 text-right">{{ $vendor->remaining_amount }}</td></tr>
+                                                            @endforeach
+
+                                                    </tbody>
+                                                </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                        {{-- <div class="x_panel tile fixed_height_320 overflow_hidden"> --}}
+                        <div class="x_panel tile overflow_hidden">
+                            <div class="x_title">
+                                <h2>Running Items</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="#">Settings 1</a>
+                                            <a class="dropdown-item" href="#">Settings 2</a>
+                                        </div>
+                                    </li>
+                                    <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <table style="width:100%">
+                                    <tr>
+                                        {{-- <th style="width:37%;">
+                                            <p>Top 5</p>
+                                        </th> --}}
+                                        <th>
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <p class="">Item</p>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                <p class="TEXT-RIGHT">Qty</p>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                <p class="TEXT-RIGHT">Sold</p>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        {{-- <td>
+                                            <canvas class="canvasDoughnut" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
+                                        </td> --}}
+                                        <td>
+                                                <table class="countries_list">
+                                                    <tbody>
+
+                                                            @foreach($Data['running_items'] as $running_item)
+                                                                <tr data-id='{{ $running_item->item_id }}'>
+                                                                    <td>
+                                                                        {{-- <div class="col-lg-6 col-md-6 col-sm-6"> --}}
+                                                                            {{ $running_item->name }}
+                                                                        {{-- </div> --}}
+                                                                    </td>
+                                                                    <td class="fs15 fw700 text-right">
+                                                                            {{-- <div class="col-lg-3 col-md-3 col-sm-3"> --}}
+                                                                            {{ $running_item->sold_qty }}
+                                                                        {{-- </div> --}}
+                                                                    </td>
+                                                                    <td class="fs15 fw700 text-right">
+                                                                            {{-- <div class="col-lg-3 col-md-3 col-sm-3"> --}}
+                                                                            {{ $running_item->total_sale }}
+                                                                        {{-- </div> --}}
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+
+                                                    </tbody>
+                                                </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- <div class="col-md-8 col-sm-8">
                         <div class="row">
                             <div class="col-md-12 col-sm-12">
                                 <div class="x_panel">
                                     <div class="x_title">
-                                        <h2>Visitors location <small>geo-presentation</small></h2>
+                                        <h2>Vendor Balances <small>last remaining amounts</small></h2>
                                         <ul class="nav navbar-right panel_toolbox">
                                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                                             <li class="dropdown">
@@ -158,14 +353,14 @@
                                     <div class="x_content">
                                         <div class="dashboard-widget-content">
                                             <div class="col-md-4 hidden-small">
-                                                <h2 class="line_30">125.7k Views from 30 Cities</h2>
+                                                <h2 class="line_30">Vendor Balances</h2>
                                                 <table class="countries_list">
                                                     <tbody>
-                                                        <tr><td>Karachi </td><td class="fs15 fw700 text-right">33%</td></tr>
-                                                        <tr><td>Lahore</td><td class="fs15 fw700 text-right">27%</td></tr>
-                                                        <tr><td>Islamabad</td><td class="fs15 fw700 text-right">16%</td></tr>
-                                                        <tr><td>Multan</td><td class="fs15 fw700 text-right">11%</td></tr>
-                                                        <tr><td>Hyderabad</td><td class="fs15 fw700 text-right">10%</td></tr>
+
+                                                            @foreach($Data['vendors'] as $vendor)
+                                                                <tr><td data-id='{{ $vendor->name }}'> {{ $vendor->name }} </td><td class="fs15 fw700 text-right">{{ $vendor->remaining_amount }}</td></tr>
+                                                            @endforeach
+
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -175,8 +370,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
+
                 <div class="row">
                     <div class="col-md-12">
                         <div class="x_panel">
@@ -223,7 +419,8 @@
                             </div>
                         </div>
                     </div>
-                </div> -->
+                </div>
+
             </div>
         @endcan
 
@@ -241,10 +438,11 @@
         };
 
         // document ready for city dropdown
-        $(document).ready(function () {
+        $(document).ready(function ()
+        {
 
             // $("#city_id").select2({
-                
+
             //     // console.log('yes coming');
             //     // return false;
 
@@ -270,7 +468,7 @@
             //     }
             // });
 
-            // ============= check for device token ============= 
+            // ============= check for device token =============
 
 
 
@@ -341,7 +539,7 @@
         // }
 
         // //Function to show loading message
-        // function showLoading() 
+        // function showLoading()
         // {
         //     .fire({
         //         title: 'Loading...',
@@ -380,9 +578,46 @@
         //filter form on dashboard for counts data
 
 
-        function submitFilterForm() 
+            $('#description').on('keyup', function()
+            {
+                let description = $(this).val();
+                // let description = $(this).serialize();
+                $.ajax({
+                        url: '{{ route("save.dashboard.description") }}',
+                        method: 'POST',
+                        data: {
+                            description: description,
+                            _token: $('meta[name="csrf-token"]').attr('content')
+                        },
+                        headers: headers,
+                        dataType: 'json', // Set the expected data type to JSON
+                        beforeSend: function () {
+                            $('.error-container').html('');
+                        },
+                        success: function (data)
+                        {
+                            // alert('returning response');
+                            // console.log(data);
+                            // hideLoading();
+                            // console.log(data.data.total_shipment)
+                            if (data && data.status == 1)
+                            {
+                            }
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            // Handle AJAX errors here
+                            Swal.fire(
+                                'Error!',
+                                'Form submission failed: ' + errorThrown,
+                                'error'
+                            );
+                        }
+                    });
+            });
+
+        function submitFilterForm()
         {
-            
+
             var data = $('#filter-form').serialize();
 
 
@@ -521,7 +756,7 @@
                     hideLoading();
                     // Iterate through the noOfShipmentsData and push data to chartData
                     noOfShipmentsData.data.forEach(function (item) {
-                        chartData.data.push(item.bookings_count);
+                        chartData.data.push(item.   kings_count);
                         chartData.labels.push(item.booked_packet_date);
                     });
 
@@ -652,7 +887,7 @@
         var lineChart;
         var myChartCod;
         function barChartZoneWise(shipments, shipmentCounts){
-            
+
             var chartData = {
                 labels: [],
                 data: []

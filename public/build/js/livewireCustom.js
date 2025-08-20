@@ -1,18 +1,18 @@
 
-    $(document).ready(function() 
+    $(document).ready(function()
     {
-        $('#addStudentPanel').css('display', 'none'); 
+        $('#addStudentPanel').css('display', 'none');
 
         $('.add_student').css('display', 'block');
         $('.add_student').addClass('btn btn-primary float-end custom-margin-bottom');
         $('.add_student').text('Add Student');
-        
+
         $('.close_form').css('display', 'none');
         $('.close_form').addClass('btn btn-primary float-end custom-margin-bottom');
-        $('.close_form').css('background-color', 'red'); 
+        $('.close_form').css('background-color', 'red');
         $('.close_form').text('Close Form');
 
-        function uncollapsePanel(collapse) 
+        function uncollapsePanel(collapse)
         {
             if(collapse == 0)
             {
@@ -28,7 +28,7 @@
             }
         }
 
-        function confirmDelete(studentId) 
+        function confirmDelete(studentId)
         {
             Swal.fire({
                 title: 'Are you sure?',
@@ -38,14 +38,14 @@
                 confirmButtonColor: '#d33',
                 cancelButtonColor: '#3085d6',
                 confirmButtonText: 'Yes, delete it!'
-            }).then((result) => 
+            }).then((result) =>
             {
-                if (result.isConfirmed) 
+                if (result.isConfirmed)
                 {
-                    // console.log('working ' + studentId);
-                    Livewire.emit('deleteStudent', studentId); 
+                    alert('working ' + studentId);
+                    Livewire.emit('deleteStudent', studentId);
                 }
             });
-        }                
+        }
     });
 

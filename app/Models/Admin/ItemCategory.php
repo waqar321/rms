@@ -13,7 +13,11 @@ class ItemCategory extends Model
 
     protected $fillable = [
         'name',
-        'is_active'
+        'order',
+        'is_active',
+        'is_pos_product',
+        'is_item_purchasing_category',
+        'is_active',
     ];
 
     // public function orders()

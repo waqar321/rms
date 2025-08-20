@@ -23,29 +23,29 @@ class Index extends Component
 
     protected $paginationTheme = 'bootstrap';
     protected $listeners = [
-                                'CheckForDeviceToken' => 'handleCheckForDeviceToken', 
-                                'updateDeviceToken' => 'handleUpdateDeviceToken', 
+                                'CheckForDeviceToken' => 'handleCheckForDeviceToken',
+                                'updateDeviceToken' => 'handleUpdateDeviceToken',
                                 'deleteNotificationManage' => 'HandleDeleteSendNotification',
                                 'LoadDataNow' => 'loadDropDownData',
-                                'LoadEmployeeNowCount' => 'loadedEmployeeDataCount',   //utilize course align listener, 
+                                'LoadEmployeeNowCount' => 'loadedEmployeeDataCount',   //utilize course align listener,
                                 'UpdateValue' => 'HandleUpdateValue',
                                 'sendNotificationEvent' => 'sendNotification',
                                 'SetNotificationBodyEvent' => 'SetNotificationBody',
                             ];
- 
+
     public function mount(ecom_notification $ecom_notification)
-    {   
+    {
         $this->setMountData($ecom_notification);
     }
     public function render()
-    {        
+    {
         $this->Collapse = $this->hasErrors() ? "uncollapse" : $this->Collapse;
         return view('livewire.admin.notification.index', $this->RenderData());
     }
     public function handleUpdateDeviceToken($token)
     {
          $user = auth()->user();
-         if ($user) 
+         if ($user)
          {
              $user->device_token = $token;
              $user->save();
@@ -56,7 +56,7 @@ class Index extends Component
     public function sendNotification()
     {
         // GetDeviceTokensJob::dispatch();
-        
+
         $this->ecom_notification = ReplaceStringAttributeValuesWithNull($this->ecom_notification);
         // $this->ecom_notification->user_id = auth()->user()->id;
         // $this->ecom_notification->sub_department_id = null;
@@ -67,33 +67,33 @@ class Index extends Component
             // $ecom_department = ecom_department::where('department_id', $this->ecom_notification->department_id)->first();
             // $this->ecom_notification->department_id = $ecom_department->department_id;
         }
-        
-  
+
+
 
         $url = 'https://fcm.googleapis.com/fcm/send';
-        
+
         // $FcmToken = ecom_admin_user::whereNotNull('device_token')->pluck('device_token')->all();
-        $FcmTokens = $this->GetFilterTokens();     
+        $FcmTokens = $this->GetFilterTokens();
         $FcmTokens[auth()->user()->id] = auth()->user()->device_token;  //also send to me as i am logged in super admin
-        
+
         //============== method 1 using curl ====================
-        
+
         $serverKey = 'AAAAPMgZejw:APA91bFjS_TPXqLyyXxGj_qJHRwB_-xiV1DFfxDfOjpqeKvmxxKI81F4XWbD8uyYdhQSV6R-ilX9vg5rfS7Fe2NNLBIIUl7cXiTlGsKOiCzicvP7rhyBnUigWGSKundOG4zcUulrAucQ';
         $data = [
             // "registration_ids" => $FcmTokens,
             "registration_ids" => array_keys($FcmTokens),
             "notification" => [
                 "title" => $this->ecom_notification->title,
-                "body" => $this->ecom_notification->messagebody,  
+                "body" => $this->ecom_notification->messagebody,
             ]
         ];
-        
+
         $encodedData = json_encode($data);
-        
+
         $headers = [
             'Authorization:key=' . $serverKey,
             'Content-Type: application/json',
-        ];            
+        ];
 
         $ch = curl_init();                              //Initializes a cURL session to prepare for making the HTTP request.
 
@@ -109,13 +109,13 @@ class Index extends Component
 
         // Execute post
         $result = curl_exec($ch);                       //Executes the cURL request and stores the result. If the execution fails ($result === FALSE), it outputs the error message and terminates the script
-            
 
-        if ($result === FALSE) 
+
+        if ($result === FALSE)
         {
             die('Curl failed: ' . curl_error($ch));
-        }        
-        
+        }
+
         curl_close($ch);                                // Closes the cURL session after the request is completed
 
         // dd($result);
@@ -125,10 +125,10 @@ class Index extends Component
             //     'base_uri' => 'https://fcm.googleapis.com/',
             //     'timeout'  => 2.0,
             // ]);
-            
+
             // $FcmTokens = ecom_admin_user::whereNotNull('device_token')->pluck('device_token')->all();
             // $serverKey = 'AAAAPMgZejw:APA91bFjS_TPXqLyyXxGj_qJHRwB_-xiV1DFfxDfOjpqeKvmxxKI81F4XWbD8uyYdhQSV6R-ilX9vg5rfS7Fe2NNLBIIUl7cXiTlGsKOiCzicvP7rhyBnUigWGSKundOG4zcUulrAucQ';
-            
+
             // $response = $client->post('fcm/send', [
             //     'headers' => [
             //         'Authorization' => 'key=' . $serverKey,
@@ -146,11 +146,11 @@ class Index extends Component
 
         //===================Store record in db ===============
 
-            $resultArray = json_decode($result, true); // true to get an associative array        
+            $resultArray = json_decode($result, true); // true to get an associative array
             $this->ecom_notification->user_id = Auth()->user()->id;
             $this->ecom_notification->multicast_id = isset($resultArray['multicast_id']) ? $resultArray['multicast_id'] : null;
             $this->ecom_notification->firebase_message_id = isset($resultArray['results'][0]['message_id']) ? $resultArray['results'][0]['message_id'] : null;
-            $this->ecom_notification->save();        
+            $this->ecom_notification->save();
 
         // ======================ecom_notifications_status============================
 
@@ -162,11 +162,11 @@ class Index extends Component
                     'device_token' => $user_device_token,
                 ]);
             }
-            
+
         // ======================ecom_notifications_status============================
 
         $this->ecom_notification = new ecom_notification();
-        
+
         $this->emit('refreshNotificationCount');
         $this->dispatchBrowserEvent('notificationSent', ['name' => 'dummy']);
         $this->Collapse = "collapse";
@@ -177,7 +177,7 @@ class Index extends Component
     }
     public function GetFilterTokens()
     {
-              
+
         // dd($this->ecom_notification);
         $deviceTokens = [];
 
@@ -193,7 +193,7 @@ class Index extends Component
             $this->ecom_notification->branch_id !== null ||
             $this->ecom_notification->shift_time_id !== null
         )   // it is notification, get specified token and make bridge for tracking
-        { 
+        {
             if($this->ecom_notification->instructor_id != null)
             {
                 if(!empty(SpecificInstructorToken($this->ecom_notification->instructor_id)->toArray()))
@@ -201,15 +201,15 @@ class Index extends Component
                     $deviceTokens['instructor_token'] = SpecificInstructorToken($this->ecom_notification->instructor_id)->toArray();
                 }
             }
-            
-    
+
+
             if($this->ecom_notification->employee_id != null)
-            {    
+            {
 
                 if(!empty(SpecificInstructorToken($this->ecom_notification->employee_id)->toArray()))
                 {
                     $deviceTokens['employee_token'] = SpecificInstructorToken($this->ecom_notification->employee_id)->toArray();
-                }            
+                }
             }
 
 
@@ -220,7 +220,7 @@ class Index extends Component
                     $deviceTokens['department_tokens'] = SpecificDepartmentEmployeeTokens($this->ecom_notification->department_id)->toArray();
                 }
             }
-    
+
             if($this->ecom_notification->sub_department_id != null)
             {
 
@@ -235,7 +235,7 @@ class Index extends Component
                 {
                     $deviceTokens['zone_employees'] = SpecificZoneEmployeeTokens($this->ecom_notification->zone_code)->toArray();
                 }
-                
+
                 // $zone_employees = SpecificZoneEmployees($this->ecom_notification->zone_name)->toArray();
                 // $deviceTokens['zone_employees'] = $this->GetTokens($zone_employees);
             }
@@ -286,19 +286,19 @@ class Index extends Component
                 // $deviceTokens['schedule_employees'] = $this->GetTokens($schedule_employees);
             }
 
-            if(!empty($deviceTokens))   // Remove duplicate tokens 
+            if(!empty($deviceTokens))   // Remove duplicate tokens
             {
                 $flattenedArray = [];
                 foreach ($deviceTokens as $subArray)
                 {
                     $flattenedArray += $subArray;
                 }
-                return array_unique($flattenedArray, SORT_REGULAR); 
+                return array_unique($flattenedArray, SORT_REGULAR);
             }
-                
+
                 // $keys = array_keys($deviceTokens);
                 // $values = array_values($deviceTokens);
-                
+
                 // if(in_array('instructor_token', $keys))
                 // {
                 //     $finalTokens[] = $deviceTokens['instructor_token'];
@@ -313,21 +313,21 @@ class Index extends Component
                 //     // dd($deviceTokens['employee_token']);
                 //     if(!empty($finalTokens))
                 //     {
-                //         dd($deviceTokens['department_tokens']); 
+                //         dd($deviceTokens['department_tokens']);
                 //        $finalTokens = array_push($finalTokens, $deviceTokens['department_tokens']);
 
-                //        dd($deviceTokens['department_tokens']); 
+                //        dd($deviceTokens['department_tokens']);
                 //        $finalTokens = array_merge($deviceTokens['department_tokens'], $finalTokens);
                 //     }
                 //     else
                 //     {
                 //         $finalTokens = $deviceTokens['department_tokens'];
                 //     }
-                //     dd($finalTokens);      
+                //     dd($finalTokens);
 
                 //     $finalTokens = !empty($finalTokens) ? array_merge($deviceTokens['department_tokens'], $finalTokens) : $deviceTokens['department_tokens'];
-                // }  
-                // dd($finalTokens);      
+                // }
+                // dd($finalTokens);
                 // if(in_array('sub_department_tokens', $keys))
                 // {
                 //     $finalTokens = !empty($finalTokens) ? array_merge($deviceTokens['sub_department_tokens'], $finalTokens) : $deviceTokens['sub_department_tokens'];
@@ -354,7 +354,7 @@ class Index extends Component
                 // }
 
                 // dd($finalTokens);
-                
+
                 // if(isset($finalTokens))
                 // {
                 //     return array_unique($finalTokens);
@@ -368,23 +368,23 @@ class Index extends Component
             // $FcmCircularTokens = ecom_admin_user::whereNotNull('device_token')->pluck('device_token', 'id')->all();
         }
 
-        
+
     }
     public function GetTokens($emloyees)
     {
         // dd($emloyees);
-        $emloyees = array_filter($emloyees, function($emloyee) 
+        $emloyees = array_filter($emloyees, function($emloyee)
         {
             return $emloyee['device_token'] != null;
         });
 
         return array_map(function($employee) {
             return $employee['device_token'];
-        }, $emloyees);  
+        }, $emloyees);
     }
     public function SetNotificationBody($editorText)
     {
-        
+
         $this->ecom_notification->messagebody = $editorText;
         $this->content = $editorText;
         $this->Collapse = "uncollapse";

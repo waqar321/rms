@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 
 use App\Http\Controllers\Admin\AuthController;
@@ -35,29 +35,29 @@ use Illuminate\Http\Request;
     // Route::get('get_areas', [DataListController::class, 'getAreas'])->name('get.area');
     // Route::get('/get_countries', [DataListController::class, 'getCountryForSearch'])->name('get.search.countries');
 
-    // Route::prefix('category-management')->group(function () 
+    // Route::prefix('category-management')->group(function ()
     // {
     //     Route::prefix('category')->group(function () {
     //         Route::get('/', [CategoryController::class, 'index'])->name('index');
-    //         Route::get('edit', [CategoryController::class, 'add'])->name('edit'); 
+    //         Route::get('edit', [CategoryController::class, 'add'])->name('edit');
     //     });
     //     Route::prefix('sub_category')->group(function () {
     //         Route::get('/', [CategoryController::class, 'sub_category_index'])->name('index');
-    //         Route::get('edit', [CategoryController::class, 'sub_category_add'])->name('edit'); 
+    //         Route::get('edit', [CategoryController::class, 'sub_category_add'])->name('edit');
     //     });
     // });
 
 //================= Department ==================
 
-    // Route::prefix('department-management')->group(function () 
+    // Route::prefix('department-management')->group(function ()
     // {
     //     Route::prefix('department')->group(function () {
     //         Route::get('/', [DepartmentController::class, 'index'])->name('index');
-    //         Route::get('edit', [DepartmentController::class, 'add'])->name('edit'); 
+    //         Route::get('edit', [DepartmentController::class, 'add'])->name('edit');
     //     });
     //     Route::prefix('sub_department')->group(function () {
     //         Route::get('/', [DepartmentController::class, 'sub_department_index'])->name('index');
-    //         Route::get('edit', [DepartmentController::class, 'sub_department_add'])->name('edit'); 
+    //         Route::get('edit', [DepartmentController::class, 'sub_department_add'])->name('edit');
     //     });
     // });
 
@@ -70,6 +70,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 
+    Route::post('save-dashboard-description', [Home::class, 'saveDashboardDescription'])->name('save.dashboard.description');
     Route::post('dashboard_data', [Home::class, 'dashboard_data'])->name('dashboard.data');
     Route::post('summary_report', [Home::class, 'summaryReportClientWise'])->name('summary.report');
     Route::post('weekly_summary_report', [Home::class, 'weeklySummaryReport'])->name('weekly.summary.report');
@@ -79,12 +80,20 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('permissions/update', [RoleController::class, 'permissionUpdate'])->name('api.permission.update');
     Route::post('change/password', [Home::class, 'changePasswordUpdate'])->name('merchant.change.password.update');
+    // Route::post('ledgers/data/{id}/', [LedgerController::class, 'ledger_data'])->name('ledgers.data.api');
 
     Route::prefix('rights')->group(function () {
         Route::prefix('city')->group(function () {
             Route::get('/', [DataListController::class, 'getRightsWiseCity']);
         });
     });
+
+    Route::prefix('ledgers')->group(function ()
+    {
+        Route::get('/', [LedgerController::class, 'index'])->name('ledgers');
+        // Route::get('data/{id}/', [LedgerController::class, 'ledger_data'])->name('ledger_data.data');
+    });
+
 });
 //\Illuminate\Support\Facades\URL::forceScheme('https');
 

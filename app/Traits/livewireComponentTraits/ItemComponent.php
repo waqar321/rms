@@ -14,14 +14,15 @@ use App\Exports\Exports;
 use Illuminate\Support\Collection;
 use Symfony\Component\HttpFoundation\Response;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Rules\CommaSeparated; 
+use App\Rules\CommaSeparated;
 
 trait ItemComponent
 {
     use LivewireComponentsCommon;
 
-    public Item $Item;  
+    public Item $Item;
     public $Item_category_id;
+    public $vendor_product;
     // publi ? ;
     // pu : nullc->category_id $0;
     // public $IdNames='';
@@ -33,9 +34,9 @@ trait ItemComponent
     public $Update=false;
 
     public function __construct()
-    {       
-        $this->Tablename = 'ecom_notification';        
-        $this->availableColumns = ['ID', 'Name', 'Order', 'Category', 'Description', 'Cost', 'Price', 'Stock', 'Unit Type', 'Image', 'Created By', 'Status', 'Action'];
+    {
+        $this->Tablename = 'ecom_notification';
+        $this->availableColumns = ['ID', 'Name', 'Order', 'Category', 'Description', 'Cost', 'Price', 'Stock', 'Unit Type', 'Show In POS', 'Show In Item Purchasing', 'Image', 'Created By', 'Status', 'Action'];
 
         // $this->update = request()->has('id') == true;
         $this->Collapse = $this->update ? 'uncollapse' : 'collapse';
@@ -56,10 +57,12 @@ trait ItemComponent
         'Item.image' => '',
         'Item.created_by' => '',
         'Item.order' => '',
+        'Item.is_pos_product' => '',
+        'Item.is_item_purchasing_product' => '',
         // 'Item.is_active' => '',
         // 'Item.order' => 'required',
-        // 'IdNames' => '', //['required', new CommaSeparated], 
-        // 'ClassNames' => '', //['required', new CommaSeparated], 
+        // 'IdNames' => '', //['required', new CommaSeparated],
+        // 'ClassNames' => '', //['required', new CommaSeparated],
         // 'Item.is_active' => '',
         // 'Item.parent_id' => '',
     ];
@@ -70,7 +73,7 @@ trait ItemComponent
         // 'Item.classNames' => 'please follow the format.',
     ];
     public function resetInput($searchReset=false)
-    {       
+    {
         $this->searchByName = "";
     }
     public function updated($value)
@@ -78,23 +81,23 @@ trait ItemComponent
         if ($value == 'searchByName' || $value == 'paginateLimit')
         {
             $this->Collapse = "collapse";
-        } 
-        else if ($value == 'IdNames') 
+        }
+        else if ($value == 'IdNames')
         {
-            if (!preg_match('/^([\w-]+,? ?)*[\w-]+$/', $this->IdNames))           
+            if (!preg_match('/^([\w-]+,? ?)*[\w-]+$/', $this->IdNames))
             {
                 $this->addError('IdNames', 'Invalid format. Accepted format: value1, value2, value3');
             }
             $this->Collapse = "uncollapse";
         }
-        else if ($value == 'ClassNames') 
+        else if ($value == 'ClassNames')
         {
-            if (!preg_match('/^([\w-]+,? ?)*[\w-]+$/', $this->ClassNames))           
+            if (!preg_match('/^([\w-]+,? ?)*[\w-]+$/', $this->ClassNames))
             {
                 $this->addError('ClassNames', 'Invalid format. Accepted format: value1, value2, value3');
             }
             $this->Collapse = "uncollapse";
-            
+
         }
         else
         {
@@ -122,52 +125,51 @@ trait ItemComponent
     public function setMountData($id=null)
     {
         $this->Item = $id != 0 ? Item::find($id) : new Item();
-        
-        // $this->Item = $Item ?? new Item();   
+
+        // $this->Item = $Item ?? new Item();
         $this->pageTitle = 'Item Operation';
         $this->MainTitle = 'ItemOperation';
-        $this->paginateLimit = 30;
+        $this->paginateLimit = 200;
         $this->categories = ItemCategory::all();
         $this->unitTypes = UnitType::all();
         // $this->Item->is_vendor_product = false;
         // $this->parent_Items = Item::where('is_active', 1)->where('parent_id', null)->orderBy('order')->get();
         // $this->permissionLists = Permission::pluck('title', 'id');
-        
+
         // dd($this->parent_SideBars);
 
         // foreach ($this->permissionLists as $key => $roles)
         // {
-        //     // if(in_array($key, old('roles', [])) || (isset($user) && $user->roles->contains($key)) 
+        //     // if(in_array($key, old('roles', [])) || (isset($user) && $user->roles->contains($key))
         //     if(in_array($key, old('permissions', [])) || (isset($this->role)) && $this->role->permissions->contains($key))
         //     {
         //         $this->selectPermissions[] = $key;
-        //     } 
+        //     }
         // }
         // $this->Updatet
     }
     protected function RenderData()
     {
-        
-        $Items = Item::when($this->searchByName !== '', function ($query) 
+        $Items = Item::when($this->searchByName !== '', function ($query)
                             {
                                 $query->where('name', 'like', '%' . $this->searchByName . '%');
                             })
                             // ->where('parent_id', null)
-                            ->orderBy('order', 'ASC')
+                            ->orderBy('id', 'DESC')
                             // ->where('is_available', 1)
                             ->get();
                                     // ->paginate($this->paginateLimit);
         $data['Items'] = $this->readyToLoad ? $this->PaginateData($Items) : [];
-        
+
 
         // dd($data['categories']);
 
-        return $data;  
+        return $data;
 
-    }        
+    }
     public function HandledeleteSidebarOperation(Item $Item)
     {
-        $SideBar->delete();    
+        $SideBar->delete();
         // $this->emit('refreshNotificationCount');
         // $this->emit('refreshNotificationList');
         $this->emit('sidebarUpdated');
@@ -179,15 +181,15 @@ trait ItemComponent
         $Item->is_available = $toggle == 0 ? 0 : 1;
         $Item->save();
         // $this->emit('ItemUpdated');
-    }  
+    }
     public function EditData(Item $Item)
     {
         $this->Item = $Item;
-        $Item_category_id = $this->Item ? $this->Item->category_id : 0; 
+        $Item_category_id = $this->Item ? $this->Item->category_id : 0;
         $this->Collapse = 'uncollapse';
-        $this->Update = true;   
+        $this->Update = true;
         $this->RenderData();
-        // dd($this->Item );     
+        // dd($this->Item );
         // $this->dispatchBrowserEvent('updateData');
         $this->dispatchBrowserEvent('scrollToForm', ['Item_category_id' => $Item_category_id]);
     }
@@ -195,7 +197,7 @@ trait ItemComponent
     {
         // dd('DeleteCategory');
         $name = $Item->name;
-        $Item->delete();    
+        $Item->delete();
         $this->dispatchBrowserEvent('deleted_scene', ['name' => $name]);
     }
     public function UpdateDropDowns($Field, $id)

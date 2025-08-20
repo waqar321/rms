@@ -1,18 +1,23 @@
 @push('styles')
     <style>
-        .nav 
+        .nav
         {
             /* flex-wrap: nowrap  !important; */
         }
     </style>
 
-@endpush 
+@endpush
 
 
 <!-- top navigation -->
 <div class="top_nav sticky-top">
     <div class="nav_menu">
-        <div style="position: absolute; padding: 10px 0 10px 0px; font-size: 24px; left:60px"><b>ABASEEN </b>RMS</div>
+        <?php
+
+            use \App\Models\Admin\Setting;
+            $Setting = Setting::first();
+        ?>
+        <div style="position: absolute; padding: 10px 0 10px 0px; font-size: 24px; left:60px"><b>{{ $Setting->Brand_name ?? ' '}} </b>{{ $Setting->Brand_name ?? ''}}</div>
         <div class="nav toggle">
             <a id="menu_toggle"><i class="fa fa-bars"></i></a>
         </div>
@@ -37,7 +42,7 @@
                     </div>
                 </li>
 
-  
+
                 <!-- =================================================================== -->
 
 
@@ -47,14 +52,14 @@
                     <li class="nav-item dropdown open">
 
                         <!-- <div> -->
-                           
+
                         <!-- </div> -->
                     </li>
-                    
+
                 </div>
                 <!-- =================================================================== -->
-                    
-                                    
+
+
 
             </ul>
         </nav>
@@ -68,4 +73,4 @@
         var sweepUrl = '<?php echo url_secure('/generalSweepUp'); ?>';
     </script>
     <script src="{{ url_secure('build/js/sweep.js')}}"></script>
-@endpush 
+@endpush

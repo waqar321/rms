@@ -26,11 +26,13 @@ return new class extends Migration
             $table->integer('stock_quantity')->nullable(); // optional if you track stock
             // $table->string('unit')->default('pcs'); // pcs, plate, bottle, etc.
             $table->boolean('is_available')->default(true); // show/hide in POS
-            $table->string('image')->nullable(); // store image path if needed
             $table->integer('order')->default(0); // store image path if needed
+            $table->string('image')->nullable(); // store image path if needed
             $table->string('image_path')->nullable(); // store image path if needed
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
-            $table->boolean('is_vendor_product')->default(true);
+            $table->boolean('is_pos_product')->default(true);
+            $table->boolean('is_item_purchasing_product')->default(true);
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
             $table->softDeletes();
         });

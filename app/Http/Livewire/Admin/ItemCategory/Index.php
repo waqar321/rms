@@ -7,17 +7,18 @@ use App\Models\Admin\ItemCategory;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use App\Traits\livewireComponentTraits\ItemCategoryComponent;
-    
+
 class Index extends Component
 {
     use WithPagination, WithFileUploads, ItemCategoryComponent;
     protected $paginationTheme = 'bootstrap';
     protected $listeners = [
-                            'deletetest' => 'deletetestRecord', 
-                            'updateStatusOftest' => '', 
+                            'deletetest' => 'deletetestRecord',
+                            'updateStatusOftest' => '',
                             'selectedColumns' => 'export',
                             // 'CategoryOperation' => 'DeleteCategory'
-                            'deleteCategoryOperation' => 'DeleteCategory'
+                            'deleteCategoryOperation' => 'DeleteCategory',
+                            'UpdateCategoryIds' => 'HandleCategoryIds'
                         ];
 
     public function mount()
@@ -44,5 +45,12 @@ class Index extends Component
 
         // dd($this->ItemCategory);
 
+    }
+    public function HandleCategoryIds($data_id, $value)
+    {
+        if($data_id == 'category_type_id')
+        {
+            $this->category_type = $value;
+        }
     }
 }

@@ -4,10 +4,10 @@
         <!-- <link href="{{ url_secure('vendors/select2/dist/css/select2.min.css')}}" rel="stylesheet"> -->
         <link href="{{ url_secure('vendors/sweet_alert/sweetalert2.min.css')}}"  rel="stylesheet"/>
         <link href="{{ url_secure('build/css/livewire_components_action.css')}}" rel="stylesheet">
-        
+
         <link href="{{ url_secure('build/css/livewireSelect2.css')}}" rel="stylesheet">
         <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> -->
-        
+
         <link rel="stylesheet" href="{{ url_secure('build/css/jquery_ui.css')}}">
 
         <style>
@@ -15,8 +15,8 @@
             /* .select2-container--default .select2-selection--multiple .select2-selection__choice { */
             .select2
             {
-                background-color: #f0f8ff; 
-                color: #000 !important; 
+                background-color: #f0f8ff;
+                color: #000 !important;
                 /* border: 1px solid #aaa;  */
                 width: 100% !important;
             }
@@ -39,29 +39,29 @@
         $MainTitle = preg_split('/(?=[A-Z])/', $MainTitle);
         $MainTitle = $MainTitle[1] . ' ' . $MainTitle[2];
     @endphp
-            
+
 
     @section('title') {{ $MainTitle }} Listing  @endsection
 
-     
+
         <div class="right_col" role="main">
             <div class="">
 
-                    @include('Admin.partial.livewire.header')         
+                    @include('Admin.partial.livewire.header')
 
-                    @include('Admin.ItemCategory.add') 
-                    @include('Admin.ItemCategory.list') 
-                    
+                    @include('Admin.ItemCategory.add')
+                    @include('Admin.ItemCategory.list')
+
 
             </div>
-        </div>       
-      
+        </div>
+
 @push('scripts')
-       
+
        <script src="{{ url_secure('build/js/livewire_components_action.js')}}"></script>
 
         <!-- ------------------- stack  scripts ------------------------ -->
-           
+
         <script src="{{ url_secure('vendors/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js')}}"></script>
         <script src="{{ url_secure('vendors/validate/jquery.validate.min.js')}}"></script>
         <script src="{{ url_secure('build/js/main.js')}}"></script>
@@ -72,33 +72,33 @@
 
     <script>
 
-        $(document).ready(function() 
+        $(document).ready(function()
         {
             // setTimeout(function () {
             //     Livewire.restart();
             // }, 100);
-            ApplyAllSelect2(); 
+            ApplyAllSelect2();
         });
         var ModuleName = '{!! $JsMainTitle !!}';
         var readyToLoad = {!! json_encode($readyToLoad) !!};
 
-    
+
         // -------------------- send response that page is loaded, ----------------------
-        window.addEventListener('ResetDropDowns', event => 
+        window.addEventListener('ResetDropDowns', event =>
         {
             $('.multiplePermissions').empty();
             // $("#city_id").empty();
             // $("#country_id").empty();
             // ApplyAllSelect2();
-            // Livewire.emit('LoadDataNow');                          
+            // Livewire.emit('LoadDataNow');
         });
-        window.addEventListener('updateData', event => 
+        window.addEventListener('updateData', event =>
         {
 
         });
-        window.addEventListener('loadDropDownData', event => 
+        window.addEventListener('loadDropDownData', event =>
         {
-            
+
             // alert($('#username').val());
 
             setTimeout(function () {
@@ -112,19 +112,19 @@
                 // alert($('#username').val());
             }, 1000);
             // ApplyAllSelect2();
-            // Livewire.emit('LoadDataNow');                          
+            // Livewire.emit('LoadDataNow');
         });
 
 
-        $('.Select2DropDown').on('change', function(e) 
-        {      
-            if($(this).attr('data-id') === 'permissions')
-            {
-                console.log('print permissions');
+        $('.Select2DropDown').on('change', function(e)
+        {
+            // if($(this).attr('data-id') === 'permissions')
+            // {
+            //     console.log('print permissions');
                 const selectedValues = $(this).select2("val");
-                console.log('Selected Values:', selectedValues);
-                Livewire.emit('UpdatePermissionIds', $(this).attr('data-id'), selectedValues);
-            }
+                // console.log('Selected Values:', selectedValues);
+                Livewire.emit('UpdateCategoryIds', $(this).attr('data-id'), selectedValues);
+            // }
         });
 
         function ApplyAllSelect2()
@@ -133,8 +133,9 @@
             const headers = {
                 "Authorization": `Bearer ${token}`,
             };
-          
+
             $('.multiplePermissions').select2();
+            $('#category_type_id').select2();
 
             window.initSelectCompanyDrop=()=>{
                 $('.multiplePermissions').select2({
@@ -149,15 +150,15 @@
             });
         }
 
-               
-        window.addEventListener('ItemCategoryUpdated', event => 
-        {                
+
+        window.addEventListener('ItemCategoryUpdated', event =>
+        {
             console.log(event.detail);
 
             if(event.detail.value == false)
             {
                 Swal.fire({
-                    icon: 'sucess', 
+                    icon: 'sucess',
                     title: 'Category updated Successfully',
                     text: event.detail.messsage,
                 });
@@ -168,9 +169,18 @@
             }
         });
 
+        window.addEventListener('categoryItemUpdated', event =>
+        {
+                Swal.fire({
+                    icon: 'sucess',
+                    title: 'Category updated Successfully',
+                    text: event.detail.messsage,
+                });
+        });
+
 
     </script>
-    
+
     <!-- <script src="{{ url_secure('build/js/LivewireDropDownSelect2.js')}}"></script> -->
 
 

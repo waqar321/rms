@@ -13,36 +13,43 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ApiController extends Controller
 {
     // ---------------------  exception for super admin login work ----------------------
     public function login(Request $request)
     {
-        // $response = [
-        //     'status' => 0,
-        //     'message' => 'api is working fine',
-        // ];
-        // return response()->json($response, 404);
-       
-        if (isset($request->user_id) && isset($request->password)) 
+
+        if (isset($request->user_id) && isset($request->password))
         {
             $user_id = $request->user_id;
             $password = $request->password;
-            
-            $result = User::where('username', $request->user_id);
 
-            if($result->exists()) 
+            $result = User::where('username', $request->user_id);
+            $currentDb = DB::connection()->getDatabaseName();
+
+
+            if($result->exists())
             {
                 $result = $result->first();
 
-                if ($result->is_active == 1) 
+                if ($result->is_active == 1)
                 {
                     $credentials = ['username' => $request->user_id, 'password' => $request->password];
 
                     // -------------------- authenticate user using OPT --------------------------
+                    // $response = [
+                    //     'status' => 0,
+                    //     'user_id' => $request->user_id,
+                    //     'result' => $result->exists(),
+                    //     'currentDb' => $currentDb,
+                    //     'message' => 'api is working fine',
+                    // ];
 
-                    if (Auth::attempt($credentials)) 
+                    // return response()->json($response, 200);
+
+                    if (Auth::attempt($credentials))
                     {
                         // $user = Auth::user();
                         // $result->last_login = date('Y-m-d H:i:s');
@@ -78,20 +85,20 @@ class ApiController extends Controller
 
     public function SetOTP(Request $request)
     {
-        if (isset($request->code) && isset($request->numberDigit)) 
+        if (isset($request->code) && isset($request->numberDigit))
         {
             $employee_code = $request->code;
-            $LastDigits = $request->numberDigit;            
+            $LastDigits = $request->numberDigit;
             $employee = ecom_admin_user::where('employee_id', $employee_code)->whereRaw('RIGHT(phone, 4) = ?', [$LastDigits]);
 
-            if($employee->exists()) 
+            if($employee->exists())
             {
                 $employee = $employee->first();
 
-                if ($employee->is_active == 1) 
+                if ($employee->is_active == 1)
                 {
                     $employee->update(['otp_code' => GenerateOTP(), 'otp_expires_at' => Carbon::now()->addMinutes(1)]);   // OTP valid for 10 minutes
-                    
+
                     $response = [
                         'status' => 1,
                         'data' => $employee->full_name,
@@ -109,19 +116,19 @@ class ApiController extends Controller
 
                     return response()->json($response, 404);
                 }
-            }  
+            }
             else
             {
                 $response = [
                     'status' => 0,
                     'message' => 'User Not Found With Given Id Or Phone Number',
                 ];
-            }  
+            }
 
             return response()->json($response, 404);
-        }  
+        }
 
-                
+
         $response = [
             'status' => true,
             'message' => $request->all(),
@@ -142,7 +149,7 @@ class ApiController extends Controller
 
         $employee = ecom_admin_user::where('employee_id', $RequestData['employee_code'])->first();
 
-        if ($employee) 
+        if ($employee)
         {
             // $OTP_code = GenerateOTP();
             // $employee->update(['password' => Hash::make($OTP_code)]);
@@ -163,10 +170,10 @@ class ApiController extends Controller
                 return response()->json([
                     'status' => false,
                     'message' => 'OTP Not Set or Expired.'
-                ], 404);    
+                ], 404);
             }
         }
-        else 
+        else
         {
             return response()->json([
                 'status' => false,
@@ -191,12 +198,12 @@ class ApiController extends Controller
             'data' => $user,
             'message' => 'Login successfully',
         ];
-        
+
     }
     // public function login(Request $request)
     // {
 
-        
+
     //     // $response = [
     //     //     'status' => 0,
     //     //     'message' => 'api is working fine',
@@ -204,23 +211,23 @@ class ApiController extends Controller
     //     // return response()->json($response, 404);
 
 
-    //     if (isset($request->user_id) && isset($request->password)) 
+    //     if (isset($request->user_id) && isset($request->password))
     //     {
-            
+
     //         $user_id = $request->user_id;
     //         $password = $request->password;
-            
+
     //         $result = ecom_admin_user::where('username',$request->user_id);
 
-    //         if($result->exists()) 
+    //         if($result->exists())
     //         {
     //             $result = $result->first();
 
-    //             if($result->user_type_id == 1 || $result->user_type_id == 3 ) 
+    //             if($result->user_type_id == 1 || $result->user_type_id == 3 )
     //             {
-    //                 if ($result->is_active == 1) 
+    //                 if ($result->is_active == 1)
     //                 {
-    //                     if (Auth::attempt(['username' => $request->user_id, 'password' => $request->password])) 
+    //                     if (Auth::attempt(['username' => $request->user_id, 'password' => $request->password]))
     //                     {
     //                         $user = Auth::user();
 

@@ -22,9 +22,9 @@ trait UsersComponent
 {
     use LivewireComponentsCommon;
 
-    public User $User;  
+    public User $User;
     public $availableColumns;
-    public $ExpectedCSVHeaders;   
+    public $ExpectedCSVHeaders;
     public $csv_file;
     public $UpdateBulkColumns;
     public $rolesLists;
@@ -35,11 +35,11 @@ trait UsersComponent
     public $selectRoles = [];
     public $selectUserIDS = [];
     public $CurrentPaginatedUsers;
-    
+
     public function __construct()
-    {       
-        $this->Tablename = 'user';        
-        $this->availableColumns = ['Name', 'Email', 'Roles', 'Date', 'Status', 'Action'];
+    {
+        $this->Tablename = 'user';
+        $this->availableColumns = ['ID', 'Name', 'Email', 'Roles', 'Date', 'Status', 'Action'];
         $this->update = request()->has('id') == true;
         $this->Collapse = $this->update ? 'uncollapse' : 'collapse';
         $this->selectedRows = collect();
@@ -51,7 +51,7 @@ trait UsersComponent
         $this->sortByRealTime = $field;
         $this->sortByCityNames = false;
         $this->sortByRoles = false;
-        
+
         $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
 
         if ($field === 'City')
@@ -63,27 +63,27 @@ trait UsersComponent
             // $this->sortBy = '';
             // $this->sortByRoles = true;
         }
-                 
+
         if ($field === 'Employee Code')
         {
             $this->sortBy = 'employee_id';
-        } 
+        }
         else if ($field === 'Name')
         {
             $this->sortBy = 'name';
-        } 
+        }
         else if ($field === 'Email')
         {
             $this->sortBy = 'email';
-        } 
+        }
         else if ($field === 'Designation')
         {
             $this->sortBy = 'designation';
-        } 
+        }
         else if ($field === 'Date')
         {
             $this->sortBy = 'created_at';
-        } 
+        }
         // else
         // {
         //     // $this->sortBy = $field;
@@ -91,7 +91,7 @@ trait UsersComponent
         // }
 
         // dd($field , $this->sortBy);
-        // if ($this->sortBy === $field) 
+        // if ($this->sortBy === $field)
         // {
         //     $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
         // }
@@ -102,11 +102,12 @@ trait UsersComponent
         // }
     }
 
-    protected $rules = 
+    protected $rules =
     [
         // 'User.first_name' => 'required',
         // 'User.last_name' => 'required',
-        'User.name' => 'required|regex:/^[a-zA-Z\s]+$/',
+        // 'User.name' => 'required|regex:/^[a-zA-Z\s]+$/',
+        'User.name' => '',
         'User.username' => '',
         'User.email' => '',
         'User.designation' => '',
@@ -116,8 +117,8 @@ trait UsersComponent
         'password' => 'required',
         // 'confirm_password' => 'required|same:password',
     ];
-    
-    protected $messages = 
+
+    protected $messages =
     [
         'User.username.required' => 'The Username is unique required',
         'User.first_name.required' => 'The First Name is required',
@@ -133,7 +134,7 @@ trait UsersComponent
         // {
         //     $this->parent_category = '';
         // }
-        
+
         if($searchReset)
         {
             $this->searchByName = '';
@@ -151,9 +152,9 @@ trait UsersComponent
         }
     }
     public function updated($value)
-    {   
+    {
         $this->emit('select2');
-        
+
         // return true; //stop real time validation at a time
 
         if($value == 'User.employee_id')
@@ -177,18 +178,18 @@ trait UsersComponent
         }
         else
         {
-   
+
             // public $searchByEmployeeCode = '';
             // public $searchByEmployeeRole = '';
             // public $searchByEmployeeDesignation = '';
             // public $searchByEmployeeCity = '';
 
-            if($value == 'paginateLimit' || 
-                $value == 'searchByName' || 
-                $value == 'searchByEmployeeCode' || 
-                $value == 'searchByEmployeeRole' || 
-                $value == 'searchByEmployeeDesignation' || 
-                $value == 'searchByEmployeeCity' ||  
+            if($value == 'paginateLimit' ||
+                $value == 'searchByName' ||
+                $value == 'searchByEmployeeCode' ||
+                $value == 'searchByEmployeeRole' ||
+                $value == 'searchByEmployeeDesignation' ||
+                $value == 'searchByEmployeeCity' ||
                 strpos($value, 'selectedRows') !== false
             )
             {
@@ -205,16 +206,16 @@ trait UsersComponent
 
                 $this->Collapse = "uncollapse";
                 $this->validateOnly($value);
-            }       
-        }   
+            }
+        }
     }
     public function setMountData($User)
     {
-       $this->User = $User ?? new User(); 
+       $this->User = $User ?? new User();
        //$this->User->phone = '03072948013';
        //dd($this->User);
 
-       $this->User->load('roles'); 
+       $this->User->load('roles');
 
        $this->pageTitle = 'User Manage';
        $this->MainTitle = 'UserManage';
@@ -224,14 +225,14 @@ trait UsersComponent
        $this->sortByRealTime = 'Employee Code';
 
        $this->rolesLists = Role::where('title','!=','Super Admin')->where('title','!=','User')->pluck('title', 'id');
-       $this->cities = collect(); 
+       $this->cities = collect();
 
        foreach ($this->rolesLists as $key => $roles)
        {
            if(in_array($key, old('roles', [])) || (isset($this->User)) && $this->User->roles->contains($key))
            {
                $this->selectRoles[] = $key;
-           } 
+           }
        }
     }
     protected function RenderData()
@@ -239,25 +240,25 @@ trait UsersComponent
         // if($this->sortByCityNames// {
         //     dd('true');
         // }
-        
+
         // $users = User::all();
         // dd($users);
 
-        $users = User::when($this->searchByName !== '', function ($query) 
+        $users = User::when($this->searchByName !== '', function ($query)
                                     {
                                         $query->where('name', 'like', '%' . $this->searchByName . '%');
                                     })
-                                    ->when($this->searchByEmployeeRole !== '', function ($query) 
+                                    ->when($this->searchByEmployeeRole !== '', function ($query)
                                     {
-                                        $query->whereHas('roles', function ($query) 
+                                        $query->whereHas('roles', function ($query)
                                         {
-                                            $query->where('title', 'like', '%' . $this->searchByEmployeeRole . '%'); 
+                                            $query->where('title', 'like', '%' . $this->searchByEmployeeRole . '%');
                                         });
                                     })
                                     ->whereHas('roles', function ($query) {
                                         $query->where('title', '!=', 'Super Admin'); // Exclude users with Super Admin role
                                     })
-                                    ->when($this->sortByRoles, function ($query) 
+                                    ->when($this->sortByRoles, function ($query)
                                     {
                                         $query->orderBy($this->sortBy, $this->sortDirection);
                                     })
@@ -268,22 +269,22 @@ trait UsersComponent
 
 
         $this->sortByCityNames = false;
-        $this->CurrentPaginatedUsers =  $users->take($this->paginateLimit);      
+        $this->CurrentPaginatedUsers =  $users->take($this->paginateLimit);
         $data['userListing'] = $this->readyToLoad ? $this->PaginateData($users) : [];
-        return $data;  
+        return $data;
 
-    }        
+    }
     public function updateStatus(User $User, $toggle)
     {
         $User->is_active = $toggle == 0 ? 0 : 1;
         $User->save();
-        
+
         $this->dispatchBrowserEvent('status_updated', ['name' => $User->name]);
     }
     public function HandleDeleteUserManage(User $User)
     {
         $name = $User->name;
-        $User->delete();    
+        $User->delete();
         $this->dispatchBrowserEvent('deleted_scene', ['name' => $name]);
     }
     public function deleteSelected()
@@ -303,9 +304,9 @@ trait UsersComponent
     //     // // dd($this->selectAll);
     //     // if($this->selectAll)
     //     // {
-    //     //     $this->selectedRows = User::orderBy('id', 'DESC')->paginate($this->paginateLimit)->pluck('id');  
+    //     //     $this->selectedRows = User::orderBy('id', 'DESC')->paginate($this->paginateLimit)->pluck('id');
     //     //     dd($this->selectedRows);
-           
+
     //     //     // dd($this->selectedRows->contains(88));
     //     //     // dd('collection', $this->selectedRows);
     //     //     // dd($notificationIds);
@@ -317,7 +318,7 @@ trait UsersComponent
     //     // }
     //     // // dd($this->selectedRows);
     //     // // $this->emit('$refresh');
-    //     // // dd($this->selectedRows);            
+    //     // // dd($this->selectedRows);
 
     // }
 }

@@ -3,14 +3,18 @@
 @section('content')
 
         @if(request()->has('id'))
-            <div>    
-                <livewire:admin.ledger.index :permission="$permission"/>    
+            <div>
+                <livewire:admin.ledger.index :ledger="$ledger"/>
             </div>
-        @else 
+        @elseif(request()->has('customer_id'))
+            <div>
+                <livewire:admin.ledger.index :ledger="$ledger"/>
+            </div>
+        @else
 
-            <div>    
-                <livewire:admin.ledger.index : />    
+            <div>
+                <livewire:admin.ledger.index : />
             </div>
         @endif
-@endsection 
+@endsection
 

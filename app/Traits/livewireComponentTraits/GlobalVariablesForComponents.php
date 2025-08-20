@@ -23,10 +23,10 @@ trait GlobalVariablesForComponents
     public $total_cities=0;
     public $total_course=0;
     public $total_records=0;
-    
+    public $total_item_sale=0;
     public $categories;
     public $subcategories;
-    
+
     public $departments  = [];
     public $sub_departments;
     public $employees = [];
@@ -37,13 +37,13 @@ trait GlobalVariablesForComponents
     public $cities = [];
     public $branches = [];
     public $roles = [];
-    
+
     // public $User;
-    
+
     public $update =false;
     public $pageTitle;
     public $MainTitle;
-    
+
     // #[Url(as : 's')]
     public $searchByName='';
     //#[Url(as : 'st')]
@@ -59,11 +59,11 @@ trait GlobalVariablesForComponents
     public $searchByEmployeeDesignation = '';
     //#[Url(as : 'E_CY')]
     public $searchByEmployeeCity = '';
-    
-    public $sortByCityNames = false;
-    public $sortByRoles = false;   
 
-    public $Collapse = 'collapse'; 
+    public $sortByCityNames = false;
+    public $sortByRoles = false;
+
+    public $Collapse = 'collapse';
     public $photo;
     public $Tablename;
     public $Exportdata = [];

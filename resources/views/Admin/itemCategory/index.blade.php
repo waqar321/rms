@@ -2,14 +2,14 @@
 
 @section('content')
         @if(request()->has('id'))
-            <div>    
-                <livewire:admin.item-category.index :permission="$permission"/>    
+            <div>
+                <livewire:admin.item-category.index :permission="$permission"/>
             </div>
-        @else 
+        @else
 
-            <div>    
-                <livewire:admin.item-category.index : />    
+            <div>
+                <livewire:admin.item-category.index : />
             </div>
         @endif
-@endsection 
+@endsection
 

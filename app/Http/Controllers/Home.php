@@ -18,6 +18,7 @@ use App\Models\Admin\ecom_notification;
 use App\Models\Admin\ecom_lecture;
 use App\Models\Admin\Role;
 use App\Models\Admin\SideBar;
+use App\Models\Admin\Setting;
 use App\Models\User;
 use App\Rules\OldPassword;
 use DateInterval;
@@ -44,6 +45,12 @@ use App\Jobs\Api\FetchShiftApiDataJob;
 use Faker\Factory as Faker;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Artisan;
+use App\Models\Admin\Receipt;
+use App\Models\Admin\Expense;
+use App\Models\Admin\Ledger;
+use App\Models\Admin\ReceiptItem;
+use Carbon\Carbon;
+
 
 class Home extends Controller
 {
@@ -52,31 +59,160 @@ class Home extends Controller
      // dashboard starts
      public function dashboard()
      {
-  
-                 
-            $Data['onlineUsers'] = 100;
+        // $Setting = Setting::first();
+        // dd($Setting);
+
+            $currentMonth = Carbon::now()->month;
+            $currentYear = Carbon::now()->year;
+
+
+            $total_sale = Receipt::whereMonth('created_at', $currentMonth)->whereYear('created_at', $currentYear)->sum('total_amount');
+            // $total_kabab_roll = Receipt::whereMonth('created_at', $currentMonth)->whereYear('created_at', $currentYear)
+            //                         ->whereHas('receiptItems', function ($sub_query)
+            //                         {
+            //                             $sub_query->where('item_id', 5)
+            //                             $sub_query->count();
+            //                         })
+            //                         ->sum('total_amount');
+
+            $total_expense = Expense::whereMonth('created_at', $currentMonth)->whereYear('created_at', $currentYear)->sum('amount');
+            $total_diharhi_given = Ledger::whereMonth('created_at', $currentMonth)->whereYear('created_at', $currentYear)->where('payment_type', 'Cash')->whereIn('role_id', [12])->whereNotIn('user_id', [1, 7, 41, 44])->sum('total_amount');
+            // $total_waqar_added = Ledger::whereMonth('created_at', $currentMonth)->whereYear('created_at', $currentYear)->where('payment_type', 'Cash')->whereIn('role_id', [12])->where('user_id', [1])->sum('total_amount');
+            $total_amount_added = Ledger::whereMonth('created_at', $currentMonth)->whereYear('created_at', $currentYear)->where('payment_type', 'Cash')->where('amount_added', 1)->sum('total_amount');
+            // $total_faisal_added = Ledger::whereMonth('created_at', $currentMonth)->whereYear('created_at', $currentYear)->where('payment_type', 'Cash')->whereIn('role_id', [12])->where('user_id', [41])->sum('total_amount');
+            $total_purchase = Ledger::whereMonth('created_at', $currentMonth)->whereYear('created_at', $currentYear)->where('payment_type', 'Buy')->sum('total_amount');
+            $total_credit_sale = Ledger::whereMonth('created_at', $currentMonth)->whereYear('created_at', $currentYear)->whereNotNull('receipt_id')->sum('total_amount');
+
+        //    $latestEntries = Ledger::select(DB::raw('MAX(id) as id'))
+        //                                 ->whereMonth('created_at', $currentMonth)
+        //                                 ->whereYear('created_at', $currentYear)
+        //                                 ->where('role_id', 15)
+        //                                 ->groupBy('user_id'); // Replace with your actual vendor column $total_credit_amount = Ledger::whereMonth('created_at', $currentMonth)->whereYear('created_at', $currentYear)
+
+            // dd($latestEntries->pluck('id')->toArray());
+            // $total_credit_amount = Ledger::whereIn('id', $latestEntries->pluck('id'))->whereMonth('created_at', $currentMonth)->whereYear('created_at', $currentYear)->sum('remaining_amount');
+            $total_credit_amount = Ledger::
+                            // whereIn('id', $latestEntries->pluck('id'))
+                                            whereMonth('created_at', $currentMonth)
+                                            ->whereYear('created_at', $currentYear)
+                                            ->where('payment_type', 'Sale')
+                                            ->sum('total_amount');
+
+            $total_kabab_roll = ReceiptItem::whereMonth('created_at', $currentMonth)
+                                           ->whereYear('created_at', $currentYear)
+                                           ->where('item_id', 5)
+                                           ->sum('item_qty');
+
+            $total_zinger = ReceiptItem::whereMonth('created_at', $currentMonth)->whereYear('created_at', $currentYear)->where('item_id', 11)->sum('item_qty');
+            $total_adha_pao_qeema = ReceiptItem::whereMonth('created_at', $currentMonth)->whereYear('created_at', $currentYear)->where('item_id', 2)->sum('item_qty');
+            // $ledger_cash = Ledger::whereNotNull('receipt_id')->whereNull('purchase_id')->sum('total_amount');
+
+            // dd($total_sale, $total_expense, $total_diharhi_given, $total_purchase);
+
+            $earning = $total_sale - $total_purchase;
+            $earning = $earning - $total_expense;
+            $earning = $earning - $total_diharhi_given;
+            $earning = $earning - $total_credit_sale;
+            $earning = $earning - $total_amount_added;
+            $earning = $earning - $total_credit_amount;
+
+            $customers = DB::table('ledgers as l')
+                        ->join('users as u', 'u.id', '=', 'l.user_id')
+                        ->join(DB::raw('
+                            (SELECT MAX(id) AS last_id
+                            FROM ledgers
+                            WHERE role_id = 14
+                            GROUP BY user_id
+                            ) as latest'), 'latest.last_id', '=', 'l.id')
+                        ->where('l.role_id', 14)
+                        ->select('l.id', 'u.name', 'l.remaining_amount')
+                        ->whereNull('deleted_at')
+                        ->orderBy('l.remaining_amount', 'desc')
+                        ->get();
+
+            $vendors = DB::table('ledgers as l')
+                    ->join('users as u', 'u.id', '=', 'l.user_id')
+                    ->join(DB::raw('
+                        (SELECT MAX(id) AS last_id
+                        FROM ledgers
+                        WHERE role_id = 15
+                        GROUP BY user_id
+                        ) as latest'), 'latest.last_id', '=', 'l.id')
+                    ->where('l.role_id', 15)
+                    ->select('l.id', 'u.name', 'l.remaining_amount')
+                    ->whereNull('deleted_at')
+                    ->orderBy('l.remaining_amount', 'desc')
+                    // ->whereMonth('created_at', $currentMonth)->whereYear('created_at', $currentYear)
+                    ->get();
+
+        $running_items = DB::table('receipt_items as r')
+                        ->join('items as i', 'i.id', '=', 'r.item_id') // fixed here
+                        ->select('i.id as item_id', 'i.name', DB::raw('SUM(r.item_price) AS total_sale'), DB::raw('COUNT(r.item_qty) AS sold_qty'))
+                        ->whereNull('r.deleted_at') // be specific with table alias
+                        ->groupBy('r.item_id', 'i.id', 'i.name') // better to group by selected fields for MySQL strict mode
+                        ->orderBy('total_sale', 'desc')
+                        // ->whereMonth('r.created_at', $currentMonth)->whereYear('r.created_at', $currentYear)
+                        ->limit(20)
+                        ->get()
+                        ->toArray();
+
+            // dd($running_items);
+
+            $Data['setting'] = Setting::first();
+            $Data['customers'] = $customers;
+            $Data['vendors'] = $vendors;
+            $Data['running_items'] = $running_items;
+
+
+            $Data['currentMonth'] = $currentMonth;
+            $Data['currentYear'] = $currentYear;
+            $Data['earning'] = $earning;
+            $Data['total_sale'] = $total_sale;
+            $Data['total_purchase'] = $total_purchase;
+            $Data['total_expense'] = $total_expense;
+            $Data['total_diharhi_given'] = $total_diharhi_given;
+            $Data['total_credit_sale'] = $total_credit_sale;
+            $Data['total_amount_added'] = $total_amount_added;
+            $Data['total_credit_amount'] = $total_credit_amount;
+            // $Data['total_waqar_added'] = $total_waqar_added;
+            // $Data['total_faisal_added'] = $total_faisal_added;
+            $Data['total_kabab_roll'] = $total_kabab_roll;
+            $Data['total_zinger'] = $total_zinger;
+            $Data['total_adha_pao_qeema'] = $total_adha_pao_qeema;
             $Data['usersCount'] = User::where('is_active' , 1)->count();
 
              return view('dashboard', compact('Data'));
          // return view('dashboard');
      }
 
+     public function saveDashboardDescription(Request $request)
+     {
+        $Setting = Setting::first();
+        $Setting->note_description = $request->description;
+
+        // dd($Setting);
+
+        $Setting->save();
+
+        return json_encode(array('status' => 1, 'message' => $request->all()));
+        // dd($request->all());
+     }
      public function Allcities()
-     {   
-         return view('Admin/listingOnly/City');    
+     {
+         return view('Admin/listingOnly/City');
      }
      public function AllZones()    {
          return view('Admin/listingOnly/Zone');
      }
-     public function AllShiftimes()    
+     public function AllShiftimes()
      {
          return view('Admin/listingOnly/Shift');
-     }  
+     }
      public function sidebar(Request $request, $id=0)
      {
          $SideBar = new SideBar();
- 
- 
+
+
         if($id != 0)
          {
              $id = base64_decode($request->id);
@@ -115,16 +251,16 @@ class Home extends Controller
         FetchShiftApiDataJob::dispatch();
     }
     public function FetchallHRDATA()
-    {   
+    {
         // FetchDepartmentApiDataJob::dispatch();  //smooth working
         // FetchZoneApiDataJob::dispatch();        //smooth working
-        // FetchCityApiDataJob::dispatch();        //smooth working 
-        // FetchShiftApiDataJob::dispatch();          //smooth working 
+        // FetchCityApiDataJob::dispatch();        //smooth working
+        // FetchShiftApiDataJob::dispatch();          //smooth working
         // FetchEmployeeApiDataJob::dispatch();
     }
 
     // ----------------------------------------------
-  
+
 
     public function changePassword()
     {
@@ -158,11 +294,11 @@ class Home extends Controller
         }
     }
 
-   
+
 
     public function dashboard_data(Request $request)
     {
-        
+
         $requestData = $request->all();
         if (isset($request->date) && !empty($request->date)) {
             $dates = explode('-', $request->date);

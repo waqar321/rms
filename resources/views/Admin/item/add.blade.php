@@ -1,10 +1,10 @@
 
 
-<div class="row"> 
+<div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel" id="x_panel_id">
-            
-            @include('Admin.partial.livewire.X_titles')   
+
+            @include('Admin.partial.livewire.X_titles')
 
             <div class="x_content {{ $Collapse  }}">
 
@@ -15,7 +15,7 @@
                             <div class="alert alert-danger" style="font-size: 13.5px;">
                                 {{ $error }} !!!
                             </div>
-                        </div>    
+                        </div>
                     @endforeach
                 @endif
 
@@ -30,38 +30,38 @@
                             <div class="form-group" wire:ignore>
                                 <label for="title">Item *</label>
 
-                                <input  id="title" 
-                                        class="form-control" type="text" 
+                                <input  id="title"
+                                        class="form-control" type="text"
                                         name="title"
-                                        data-rule-required="true" 
+                                        data-rule-required="true"
                                         data-msg-required="user name field is required"
                                         wire:model.debounce.500ms="Item.name"
                                         placeholder="Enter Item Name">
                                 <span class="error-container danger w-100"></span>
                             </div>
                         </div>
-                        
+
                         <!-- =========================== Category ========================== -->
 
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <div class="form-group" wire:ignore>
                                 <label for="category">Categories {{ $Item->category_id }} </label>
-                                    <select name="category" id="category" 
-                                                data-id="category" 
+                                    <select name="category" id="category"
+                                                data-id="category"
                                                 data-table="region"
                                                 data-table-field="category"
                                                 class="form-control Select2DropDown categoryClass">
-                                                
-                                            <!-- <option value="" disabled selected style="color: #131212 !important">Select Region </option>  -->
-                                            @foreach($categories as $id => $category)     
+
+                                            <option value="" disabled selected style="color: #131212 !important">Select category </option>
+                                            @foreach($categories as $id => $category)
                                                     <option value="{{ $category->id }}" {{ $category->id == $Item_category_id ? 'selected' : '' }}>
-                                                        {{ $category->name }} {{ $Item->category_id }} 
-                                                    </option>   
-                                            @endforeach  
+                                                        {{ $category->name }} {{ $Item->category_id }}
+                                                    </option>
+                                            @endforeach
                                     </select>
                             </div>
                         </div>
-                        
+
                          <!-- =========================== Description ========================== -->
 
                         <div class="col-md-12">
@@ -72,6 +72,8 @@
                                     placeholder="Enter item description..."></textarea>
                             </div>
                         </div>
+
+
 
 
                         <!-- =========================== Unit ========================== -->
@@ -89,20 +91,20 @@
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <div class="form-group" wire:ignore>
                                 <label for="unittype">Unit Types</label>
-                                    <select name="unittype" id="unittype" 
-                                                data-id="unittype" 
+                                    <select name="unittype" id="unittype"
+                                                data-id="unittype"
                                                 data-table="region"
                                                 data-table-field="unittype"
                                                 class="form-control Select2DropDown unittypeClass"
                                                 >
-                                                
-                                                <!-- <option value="" disabled selected style="color: #131212 !important">Select Region </option>  -->
-                                            @foreach($unitTypes as $id => $UnitType)     
+
+                                            <option value="" disabled selected style="color: #131212 !important">Select Unit Type </option>
+                                            @foreach($unitTypes as $id => $UnitType)
                                                     <option value="{{ $UnitType->id }}" >
-                                                        {{ $UnitType->name }} 
-                                                    </option>                           
-                                               
-                                            @endforeach  
+                                                        {{ $UnitType->name }}
+                                                    </option>
+
+                                            @endforeach
                                     </select>
                             </div>
                         </div>
@@ -127,8 +129,8 @@
                                 </select>
                             </div>
                         </div> -->
-                        
-                        
+
+
                         <!-- =========================== Price ========================== -->
                         <div class="col-md-4 col-sm-6 col-xs-12">
                             <div class="form-group">
@@ -167,12 +169,26 @@
                                     <input type="number" wire:model.debounce.500ms="Item.order" id="order" placeholder="Enter the order" class="form-control">
                                 </div>
                             </div>
+                        <!-- =========================== Description ========================== -->
+
+                        <div class="col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label for="vendor_product">Show In POS </label>
+                                <input type="checkbox" wire:model="Item.is_pos_product">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label for="vendor_product">Show In Item Purchasing </label>
+                                <input type="checkbox" wire:model="Item.is_item_purchasing_product">
+                            </div>
+                        </div>
                         <!-- =========================== Order ========================== -->
-                    
 
 
 
-                        
+
+
                         <div class="col-md-12 col-lg-12">
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary"> {{ $Item->id ? 'Update Item' : 'Save Item' }}</button>

@@ -4,12 +4,14 @@ namespace App\Http\Livewire\Admin\Partials;
 
 use Livewire\Component;
 use App\Models\Admin\SideBar as SideBarModel;
+use App\Models\Admin\Setting;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
-    
+
 class Sidebar extends Component
 {
     use WithPagination, WithFileUploads;
+    public $Setting;
     protected $paginationTheme = 'bootstrap';
     // protected $listeners = ['deletetest' => 'deletetestRecord', 'updateStatusOftest' => '', 'selectedColumns' => 'export'];
     protected $listeners = [
@@ -18,7 +20,8 @@ class Sidebar extends Component
 
     public function mount()
     {
-
+        $this->Setting = Setting::first();
+        // dd($this->Setting->image_path;
         $menus = SideBarModel::where('is_active', 1)->where('parent_id', null)->orderBy('order')->get();
         // dd($menus[1]->subMenus[0]->permisssion->title);
 
@@ -34,7 +37,7 @@ class Sidebar extends Component
 
         // ----------- for parent menu -------------------
         // --------template---------------
-        // SideBarModel::create([    
+        // SideBarModel::create([
         //     'title' => 'Manage Users',
         //     'icon' => 'fa fa-group',
         //     'url' => '/dashboard',
@@ -42,13 +45,13 @@ class Sidebar extends Component
         // ]);
 
         // --------dashboard
-        // SideBarModel::create([    
+        // SideBarModel::create([
         //     'title' => 'Manage Users',
         //     'icon' => 'fa fa-group',
         //     'url' => '/dashboard',
         //     'order' => 1,
         // ]);
-        
+
         // --------Manage Users
         // SideBarModel::create([
             //     'title' => 'Manage Users',
@@ -57,8 +60,8 @@ class Sidebar extends Component
             //     'order' => 1,
             //     'ClassNames' => ['side-bar-menus']
         // ]);
-        
-        
+
+
         // ----------- for child -------------------
         // --------template---------------
         // SideBarModel::create([
@@ -84,7 +87,7 @@ class Sidebar extends Component
     public function render()
     {
 
-        $menus = SideBarModel::where('is_active', 1)->where('parent_id', null)->orderBy('order')->get();        
+        $menus = SideBarModel::where('is_active', 1)->where('parent_id', null)->orderBy('order')->get();
 
         return view('livewire.admin.partials.sidebar', compact('menus'));
     }
@@ -95,12 +98,12 @@ class Sidebar extends Component
     public function updateOrder($SideBars)
     {
         // dd($SideBars);
-        
-        foreach($SideBars as $item) 
+
+        foreach($SideBars as $item)
         {
             SideBarModel::where('id', $item['value'])->update(['order' => $item['order']]);
         }
-        
+
         // $this->tasks = SideBarModel::orderBy('order')->get();
     }
     public function handleSidebarUpdated()

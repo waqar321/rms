@@ -1,60 +1,60 @@
 
-    $(document).ready(function () 
+    $(document).ready(function ()
     {
 
     });
 
-    function confirmDelete(id) 
+    function confirmDelete(id)
     {
         // alert(id);
         // return false;
 
         Swal.fire({
-            title: 'Are you sure?', 
+            title: 'Are you sure?',
             text: 'You won\'t be able to revert this!',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
             cancelButtonColor: '#3085d6',
             confirmButtonText: 'Yes, delete it!'
-        }).then((result) => 
+        }).then((result) =>
         {
-            if (result.isConfirmed) 
+            if (result.isConfirmed)
             {
                 //
                 // alert('delete'+ ModuleName);
                 // alert(id);
                 // return false;
-                
-                Livewire.emit('delete'+ ModuleName, id); 
+
+                Livewire.emit('delete'+ ModuleName, id);
             }
         });
     }
-    window.addEventListener('deleted_scene', event => 
+    window.addEventListener('deleted_scene', event =>
     {
         Swal.fire({
             icon: 'success',
             title: ModuleName.replace('Manage', '') + ' Deleted Successfully!',
             text: 'The ' + event.detail.name  + ' has been deleted.',
-        });                
+        });
     })
-    window.addEventListener('status_updated', event => 
-    {       
+    window.addEventListener('status_updated', event =>
+    {
         // var ModuleName =  event.detail.name;
-        
+
         // if(ModuleName == 'SidebarOperation')
         // {
         //     ModuleName = ModuleName.split("SidebarOperation");
         // }
-        
+
         Swal.fire({
             icon: 'success',
             title: ModuleName.replace('Manage', '') + ' ' +  'Updated Successfully!',
             text: 'The ' + event.detail.name  + ' has been Updated.',
-        });                
+        });
 
     })
-    window.addEventListener('created_module', event => 
+    window.addEventListener('created_module', event =>
     {
         var Message = window.location.search ? "Updated" : "Created";
 
@@ -64,9 +64,9 @@
             text: 'The ' + event.detail.name  + ' has been ' + Message,
         });                ``
     })
-    window.addEventListener('file_deleted', event => 
+    window.addEventListener('file_deleted', event =>
     {
-        if (event.detail.type == 'photo') 
+        if (event.detail.type == 'photo')
         {
             Swal.fire({
                 icon: 'info',
@@ -89,40 +89,39 @@
                 title: 'File Deleted!!!',
                 text: 'The ' + event.detail.name + "'s document has been deleted."
             });
-        }                     
+        }
     })
-    window.addEventListener('clearedUp', event => 
+    window.addEventListener('clearedUp', event =>
     {
         Swal.fire({
             icon: 'success',
             title: 'Cache Cleared Successfully',
             text: 'The Extra Un-used files has been deleted!!!.',
-        });                
+        });
     })
-    window.addEventListener('notificationSent', event => 
+    window.addEventListener('notificationSent', event =>
     {
         Swal.fire({
             icon: 'success',
             title: 'Notification Sent Successfully!',
             text: 'The Notification has been generated!!!.',
-        });              
+        });
     })
-    // document.addEventListener('livewire:load', function () 
+    // document.addEventListener('livewire:load', function ()
     // {
     //     Livewire.on('notificationSent', function () {
     //         Swal.fire({
     //             icon: 'success',
     //             title: 'Notification Sent Successfully!',
     //             text: 'The Notification has been generated!!!.',
-    //         });    
+    //         });
     //     });
     // });
-    window.addEventListener('token_created', event => 
+    window.addEventListener('token_created', event =>
     {
         Swal.fire({
             icon: 'success',
             title: 'Token Saved Successfully!',
             text: 'The Notification token has been updated on User.',
-        });                
+        });
     });
-    

@@ -1,10 +1,10 @@
 
 @push('styles')
 
- 
+
     <style>
         .testForm
-        {  
+        {
             display: block !important;
             margin-top: 0em !important;
             unicode-bidi: isolate !important;
@@ -24,7 +24,7 @@
         }
 
     </style>
-@endpush 
+@endpush
 
 @can('user_listing')
     <div class="row" data-screen-permission-id="22">
@@ -54,29 +54,29 @@
                         <input type="search" wire:model="searchByEmployeeCity" class="form-control" placeholder="Search By Employee City...">
                     </div> -->
 
-                    @include('Admin.partial.livewire.ClearDeleteButtons', ['showDeleteButton' => 'true', 'modelName' => 'ecom_admin_user'])    
-                    
+                    @include('Admin.partial.livewire.ClearDeleteButtons', ['showDeleteButton' => 'true', 'modelName' => 'ecom_admin_user'])
+
                     <ul class="nav navbar-right panel_toolbox justify-content-end">
                         <li>
                             <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
-                    </ul> 
+                    </ul>
 
                     <div class="clearfix"></div>
-                        
+
                 </div>
                 <div class="x_content">
-                    <div class="col-lg-4" id="ColumnsDropDown" wire:ignore>     
-                        
+                    <div class="col-lg-4" id="ColumnsDropDown" wire:ignore>
+
                         <!-- <button type="button" id="selectAll">Select All</button>
                         <button type="button" id="deselectAll">Deselect All</button> -->
 
                         <select id="framework1" name="framework1[]" multiple class="form-control" style="display:none;">
                                 @foreach($availableColumns as $column)
-                                   
+
                                     @if($column != 'Status' && $column != 'Action')
                                         <option value="{{ $column }}">{{ ucfirst($column) }}</option>
-                                    @endif 
+                                    @endif
                                 @endforeach
                         </select>
 
@@ -84,30 +84,30 @@
                                 @foreach($availableColumns as $column)
                                     @if($column != 'Status' && $column != 'Action')
                                         <option value="{{ $column }}">{{ ucfirst($column) }}</option>
-                                    @endif 
+                                    @endif
                                 @endforeach
                         </select>
                     </div>
                     <div class="col-lg-4">
                         <div wire:loading wire:target="resetInput" class="loader">
-                            <img  style="height:31px;" src="{{ url_secure('build/images/loadingData.gif') }}" alt="Loading123!!"> 
+                            <img  style="height:31px;" src="{{ url_secure('build/images/loadingData.gif') }}" alt="Loading123!!">
                         </div>
                         <div wire:loading wire:target="selectAllmethod" class="loader">
-                            <img  style="height:31px;" src="{{ url_secure('build/images/loadingData.gif') }}" alt="Loading123!!"> 
+                            <img  style="height:31px;" src="{{ url_secure('build/images/loadingData.gif') }}" alt="Loading123!!">
                         </div>
                     </div>
 
-                        @include('Admin.partial.livewire.exportButtons')  
+                        @include('Admin.partial.livewire.exportButtons')
 
                             <hr>
-            
+
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
                                         <th>  </th>
                                         @foreach($availableColumns as $column)
                                             <th wire:click="sortBy('{{ $column }}')">
-                                                    {{ $column }} 
+                                                    {{ $column }}
                                                     @include('Admin.partial.livewire.sort-icon', ['field' => $column])
                                             </th>
                                         @endforeach
@@ -115,24 +115,24 @@
                                 </thead>
                                 <tbody>
 
-                                    
+
                                     @if($readyToLoad)
                                         @forelse($userListing as $user)
-                                     
+
                                             <tr>
                                                 <td>
                                                     <input type="checkbox" wire:model="selectedRows.{{ $user->id }}">
                                                     <!-- <input type="checkbox" wire:model="selectUserIDS" value="{{ $user->id }}"> -->
                                                 </td>
-                                                <!-- <td data-id="{{ $user->id }}">{{ $user->employee_id }}</td> -->
+                                                <td data-id="{{ $user->id }}">{{ $user->id }}</td>
                                                 <td>{{ $user->name  }}</td>
                                                 <td>{{ $user->email }}</td>
                                                 <!-- <td>{{ $user->city->city_name ?? ' - '  }}</td> -->
 
                                                 <td>
-                                                    <?php 
+                                                    <?php
                                                         $roles = $user->roles->pluck('title')
-                                                    ?>    
+                                                    ?>
                                                     @foreach($roles as $role)
                                                         {{ $role.', ' }}
                                                     @endforeach
@@ -141,7 +141,7 @@
 
                                                 <!-- <td>{{ $user->designation }}</td> -->
                                                 <td>{{ $user->created_at }}</td>
-                                                
+
                                                 <td>
                                                     @if($user->is_active == 1)
                                                         <span class="fa fa-toggle-on toggle-icon" wire:click="updateStatus({{ $user->id }}, 0)"></span>
@@ -150,7 +150,7 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                
+
                                                     <a  href="{{ url_secure_api('manage_user/?id=' . base64_encode($user->id)) }}"><i class="fa fa-edit fa-2x"></i></a>
                                                     <button  onclick="confirmDelete('{{ $user->id }}')" style="border:0; background:none;padding:0; margin:0" class="fa fa-trash fa-2x"></button>
                                                 </td>
@@ -160,33 +160,33 @@
                                                 <td colspan="10" class="text-center"> <h2> No User Record Found!!! </h2></td>
                                             </tr>
                                         @endforelse
-                                    @endif 
+                                    @endif
 
-                                    @include('Admin.partial.livewire.loadingData') 
+                                    @include('Admin.partial.livewire.loadingData')
 
                                 </tbody>
                             </table>
-                
-                            @include('Admin.partial.livewire.pagination', ['ModelListing' => $userListing, 'Model' => 'UserListing'])       
+
+                            @include('Admin.partial.livewire.pagination', ['ModelListing' => $userListing, 'Model' => 'UserListing'])
 
                 </div>
             </div>
         </div>
     </div>
     </div>
-@endcan() 
+@endcan()
 
 @push('scripts')
 
 
 <script>
-   
+
    var AllselectedColumns;
    var Export_types;
-   
+
    $(document).ready(function()
    {
-    
+
         $('#framework').multiselect({
             nonSelectedText: 'Select Framework',
             enableFiltering: true,
@@ -194,8 +194,8 @@
             buttonWidth:'400px'
         });
 
-        
-        $('#selectAll').click(function() 
+
+        $('#selectAll').click(function()
         {
             // alert('select all');
             // var dataArray = ["Employee Code", "Name", "Email", "City", "Roles", "Designation", "Date", "Status", "Action"];
@@ -205,15 +205,15 @@
         });
 
         // Deselect All
-        $('#deselectAll').click(function() 
+        $('#deselectAll').click(function()
         {
-            
+
             // alert('deselectAll all');
             // $('#framework').multiselect('deselectAll', false); // Deselect all options
             // $('#framework').multiselect('updateButtonText'); // Update button text
         });
 
-        // $(document).on('click', '.SearchButton', function(event) 
+        // $(document).on('click', '.SearchButton', function(event)
         // {
             //     event.preventDefault();
 
@@ -231,18 +231,18 @@
 
                 //    // Clear selected options
                 //     $('#framework option:selected').prop('selected', false);
-                    
+
                 //     $('#framework').val('').multiselect('refresh');
-                //     $('#framework').multiselect('deselectAll', false);    
+                //     $('#framework').multiselect('deselectAll', false);
                 //     $('#framework').multiselect('updateButtonText');
                 // console.log('print message');
 
         // });
 
-        $('.ExportButtonLivewire').on('click', function() 
-        {       
+        $('.ExportButtonLivewire').on('click', function()
+        {
             var selectedColumns = $('#framework').val();
-            
+
             if(selectedColumns != null)
             {
                 AllselectedColumns = selectedColumns.join(', ');
@@ -259,19 +259,19 @@
                 );
             }
         });
-        $('.selectingvalue').on('click', function() 
-        {       
+        $('.selectingvalue').on('click', function()
+        {
             Livewire.emit('selectAll', $(this).data('export-type'));
         });
-        window.addEventListener('exportFile', event => 
-        {                
+        window.addEventListener('exportFile', event =>
+        {
             if(event.detail.value)
             {
                 Swal.fire(
                         'Error!',
                         'please select rows before exports: ' + Export_types,
                         'error'
-                ); 
+                );
                 return false;
             }
             else
@@ -280,17 +280,17 @@
             }
         });
 
-        
+
         // -------------------- load the dropdown data  ----------------------
-        // window.addEventListener('ResetColumns', event => 
-        // {  
+        // window.addEventListener('ResetColumns', event =>
+        // {
         //     $('#framework').val('').multiselect('refresh');
-        //     $('#framework').multiselect('deselectAll', false);    
+        //     $('#framework').multiselect('deselectAll', false);
         //     $('#framework').multiselect('updateButtonText');
         //     console.log('print message');
         // });
-    
+
     });
 </script>
 
-@endpush 
+@endpush

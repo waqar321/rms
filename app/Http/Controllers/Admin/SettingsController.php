@@ -95,6 +95,10 @@ class SettingsController extends Controller
         return view('Merchant/setting/plugins');
     }
 
+    public function settings()
+    {
+        return view('Admin/settings/index');
+    }
     public function tutorials()
     {
         return view('Admin/settings/tutorials');

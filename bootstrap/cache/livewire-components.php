@@ -1,6 +1,9 @@
 <?php return array (
   'admin.customer.index' => 'App\\Http\\Livewire\\Admin\\Customer\\Index',
+  'admin.expense-list.index' => 'App\\Http\\Livewire\\Admin\\ExpenseList\\Index',
+  'admin.expense.index' => 'App\\Http\\Livewire\\Admin\\Expense\\Index',
   'admin.item-category.index' => 'App\\Http\\Livewire\\Admin\\ItemCategory\\Index',
+  'admin.item-purchasing.index' => 'App\\Http\\Livewire\\Admin\\ItemPurchasing\\Index',
   'admin.item.index' => 'App\\Http\\Livewire\\Admin\\Item\\Index',
   'admin.ledger.index' => 'App\\Http\\Livewire\\Admin\\Ledger\\Index',
   'admin.notification.index' => 'App\\Http\\Livewire\\Admin\\Notification\\Index',
@@ -9,6 +12,8 @@
   'admin.partials.sidebar' => 'App\\Http\\Livewire\\Admin\\Partials\\Sidebar',
   'admin.partials.sidebar-operation' => 'App\\Http\\Livewire\\Admin\\Partials\\SidebarOperation',
   'admin.pos.index' => 'App\\Http\\Livewire\\Admin\\Pos\\Index',
+  'admin.report.index' => 'App\\Http\\Livewire\\Admin\\Report\\Index',
+  'admin.setting-field.index' => 'App\\Http\\Livewire\\Admin\\SettingField\\Index',
   'admin.unit-type.index' => 'App\\Http\\Livewire\\Admin\\UnitType\\Index',
   'admin.user-management.permission.index' => 'App\\Http\\Livewire\\Admin\\UserManagement\\Permission\\Index',
   'admin.user-management.products' => 'App\\Http\\Livewire\\Admin\\UserManagement\\Products',
