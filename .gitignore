@@ -3,7 +3,7 @@
 #/public/storage
 /public/.htaccess
 # /storage/
-/storage/*.key
+#/storage/*.key
 /vendor
 .env
 .env.backup
