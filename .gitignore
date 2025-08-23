@@ -3,6 +3,10 @@
 #/public/storage
 /public/.htaccess
 # /storage/
+/storage/*
+!/storage/app/
+/storage/app/*
+!/storage/app/public/
 #/storage/*.key
 /vendor
 .env

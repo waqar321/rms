@@ -111,6 +111,16 @@
 
                         <div class="container-fluid" style="margin-left: 13px; padding-top: 10px;">
                             <div class="row">
+                                 <div class="col-lg-4">
+                                    <div wire:loading wire:target="payment_to" class="loader">
+                                        <img  style="height:31px;" src="{{ url_secure('build/images/loadingData.gif') }}" alt="Loading123!!">
+                                    </div>
+                                    <div class="ReportLoader" style="display: none;" >
+                                        <img  style="height:31px;" src="{{ url_secure('build/images/loadingData.gif') }}" alt="Loading123!!">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                     <button class="btn btn-info btn-sm uppercase mr-1" type="button"> Total Sale:
                                         @if($readyToLoad)
